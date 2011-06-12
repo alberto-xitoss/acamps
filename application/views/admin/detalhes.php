@@ -1,10 +1,10 @@
-<div id="detalhes" class="wrap">
-<div id="cabecalho" class='clearfix'>
+<div id="wrap">
+<div class='clearfix'>
     
     <?php if(empty($pessoa['ds_foto'])): ?>
-        <a href="#" id="adicionar-foto"><img id="foto" src="<?php echo assets_url('image').'sem_foto.png' ?>" alt="foto" title="Clique para enviar uma foto" /></a>
+        <a href="#" id="adicionar_foto"><img id="foto" src="<?php echo assets_url('image').'sem_foto.png' ?>" alt="foto" title="Clique para enviar uma foto" /></a>
     <?php else: ?>
-        <a href="#" id="adicionar-foto"><img id="foto" src="<?php echo $pessoa['ds_foto'] ?>" alt="foto" title="Clique para substituir a foto" /></a>
+        <a href="#" id="adicionar_foto"><img id="foto" src="<?php echo $pessoa['ds_foto'] ?>" alt="foto" title="Clique para substituir a foto" /></a>
     <?php endif ?>
     
     <h2><?php echo $pessoa['id_pessoa']; ?> - <?php echo $pessoa['nm_pessoa']; ?></h2>
@@ -21,56 +21,15 @@
     }
     ?></p>
     <p>Situação: <?php echo $pessoa['ds_status']; ?></p>
-	
-	<div class="comandos">
-		<?php
-			if($pessoa['cd_tipo'] != 'p'){ // Botão Liberação/Cancelar Liberação
-			
-				if($pessoa['id_status'] == '2'){ // Aguardando liberação
-					if($this->session->userdata('permissao') & LIBERACAO){
-						echo anchor('admin/liberar/'.$pessoa['id_pessoa'], 'Liberar', 'class="liberacao confirmacao"');
-					}else{
-						echo '<span class="liberacao" title="Você não tem permissão para liberar inscritos no serviço.">Liberar</span>';
-					}
-				}elseif($pessoa['id_status'] == '1'){ // Liberado, aguardando pagamento
-					if($this->session->userdata('permissao') & LIBERACAO){
-						echo anchor('admin/reverter/'.$pessoa['id_pessoa'], 'Cancelar Liberação', 'class="liberacao confirmacao"');
-					}else{
-						echo '<span class="liberacao" title="Você não tem permissão para reverter uma liberação.">Cancelar Liberação</span>';
-					}
-				}else{ // Concluído
-					echo '<span class="liberacao" title="A inscrição foi paga. Não é possível reverter a liberação.">Cancelar Liberação</span>';
-				}
-			}
-			if($pessoa['cd_tipo'] != 'v'){ // Botão Pagamento/Estornar Pagamento
-			
-				if($pessoa['id_status'] == '1'){ // Aguardando Pagamento
-					if($this->session->userdata('permissao') & PAGAMENTO){
-						echo anchor('admin/pagar/'.$pessoa['id_pessoa'], 'Realizar Pagamento', 'class="pagamento"');
-					}else{
-						echo '<span class="pagamento" title="Você não tem permissão para realizar pagamentos">Realizar Pagamento</span>';
-					}
-				}elseif($pessoa['id_status'] == '2'){ // Aguardando liberação
-					echo '<span class="pagamento" title="A inscrição ainda não foi liberada.">Realizar Pagamento</span>';
-				}else{ // Concluído
-					if($this->session->userdata('permissao') & PAGAMENTO){
-						echo anchor('admin/reverter/'.$pessoa['id_pessoa'], 'Estornar Pagamento', 'class="pagamento confirmacao"');
-					}else{
-						echo '<span class="pagamento" title="Você não tem permissão para estornar pagamentos.">Estornar Pagamento</span>';
-					}
-				}
-			}
-		?><?php
-		if($pessoa['cd_tipo'] != 'v'): // Se não for da Comunidade de Vida
-			?><a class="boleto" target="_blank" href="<?php echo site_url('/inscricao/boleto/').'/'.md5($pessoa['id_pessoa'].$pessoa['ds_email']) ?>">Imprimir Boleto</a><?php
-		endif;
-			echo anchor('admin/excluir/'.$pessoa['id_pessoa'], 'Excluir Inscrição', 'class="excluir confirmacao"');
-		?>
-    </div>
+    <br/>
+	<?php if($pessoa['cd_tipo'] != 'v'): // Se não for da Comunidade de Vida ?>
+		<p><a target="_blank" href="<?php echo site_url('/inscricao/boleto/').'/'.md5($pessoa['id_pessoa'].$pessoa['ds_email']) ?>">Imprimir Boleto</a></p>
+	<?php endif ?>
+    <div class="excluir"><?php echo anchor('admin/excluir/'.$pessoa['id_pessoa'], 'Excluir Inscrição', 'class="confirmacao"') ?></div>
 </div>
-
-<div id="foto-upload">
-    <h2>Enviar Foto</h2>
+<?php //if(empty($pessoa['ds_foto'])): ?>
+<div id="foto_upload">
+    <h2>Adicionar Foto</h2>
     <?php echo form_open_multipart('admin/corrigir/'.$pessoa['id_pessoa']) ?>
         <p class="center"><?php
         echo form_upload(array(
@@ -81,20 +40,81 @@
         <p class="center"><?php echo form_submit('adicionar_foto','Confirmar'); ?></p>
     <?php echo form_close()?>
 </div>
+<?php //endif ?>
 
-<div id="dados">
+<?php if($pessoa['id_status'] == '1'): // Aguardando Pagamento ?>
+<div>
+    <?php if($pessoa['cd_tipo'] == 's'): // Se for do serviço ?>
+        
+        <?php if($this->session->userdata('permissao') & LIBERACAO): ?>
+            <p class="center"><?php echo anchor('admin/reverter/'.$pessoa['id_pessoa'], 'Cancelar Liberação', 'class="confirmacao"') ?></p>
+        <?php else: ?>
+            <p>Esta pessoa já foi liberada para o serviço.</p>
+            <p><?php echo anchor('admin/buscar', 'Voltar à página de busca.') ?></p>
+        <?php endif ?>
+        
+    <?php endif; ?>
+    
+	<?php if($this->session->userdata('permissao') & PAGAMENTO): ?>
+		<p align="center"><?php echo anchor('admin/pagar/'.$pessoa['id_pessoa'], 'Realizar Pagamento') ?></p>
+    <?php else: ?>
+		<p>Esta inscrição ainda não foi paga.</p>
+	<?php endif; ?>
+</div>
+<?php endif ?>
+
+<?php if($pessoa['id_status'] == '2'): // Aguardando liberação ?>
+<div>
+    
+    <?php if($this->session->userdata('permissao') & LIBERACAO): ?>
+        <p class="center"><?php echo anchor('admin/liberar/'.$pessoa['id_pessoa'], 'Liberar', 'class="confirmacao"') ?></p>
+    <?php else: ?>
+        <p>Esta inscrição ainda não foi liberada para o serviço.</p>
+        <p><strong><?php echo anchor('admin/buscar', 'Voltar à página de busca.') ?></strong></p>
+    <?php endif ?>
+    
+</div>
+<?php endif ?>
+
+<?php if($pessoa['id_status'] == '3'): // Concluído ?>
+<div>
+    
+    <?php if($pessoa['cd_tipo'] != 'v'): // Se não for da Comunidade de Vida ?>
+    
+        <?php if($this->session->userdata('permissao') & PAGAMENTO): ?>
+            <p class="center"><?php echo anchor('admin/reverter/'.$pessoa['id_pessoa'], 'Estornar Pagamento', 'class="confirmacao"') ?></p>
+        <?php else: ?>
+            <p>A inscrição desta pessoa já foi quitada.</p>
+            <p><?php echo anchor('admin/buscar', 'Voltar à página de busca.') ?></p>
+        <?php endif ?>
+        
+    <?php else: // Se for da Comunidade de Vida ?>
+        
+        <?php if($this->session->userdata('permissao') & LIBERACAO): ?>
+            <p class="center"><?php echo anchor('admin/reverter/'.$pessoa['id_pessoa'], 'Cancelar Liberação', 'class="confirmacao"') ?></p>
+        <?php else: ?>
+            <p>Esta pessoa já foi liberada para o serviço.</p>
+            <p><?php echo anchor('admin/buscar', 'Voltar à página de busca.') ?></p>
+        <?php endif ?>
+        
+    <?php endif ?>
+    
+</div>
+<?php endif ?>
+
+<div id="detalhes">
     <h2>Detalhes da Incrição</h2>
     <?php echo form_open('admin/corrigir/'.$pessoa['id_pessoa']) ?>
     <?php if($this->session->userdata('permissao') & CORRECAO): // Verificando permissão ?>
-        <input type="button" id="ativar-correcao" name="ativar_correcao" value="Ativar correção" />
-        <input type="submit" id="corrigir" name="corrigir" value="Salvar Alterações" disabled='disabled' />
-        <input type="reset" id="reset" name="reset" value="Reset" class="right" disabled='disabled' />
+        <input type="button" id="ativar_correcao" name="ativar_correcao" value="Ativar correção" />
+        <input type="submit" id="corrigir" name="corrigir" value="Salvar Alterações" class="right" disabled='disabled' />
+        <input type="reset" id="reset" name="reset" value="Reset" class="right" style='margin-right:15px' disabled='disabled' />
     <?php endif ?>
     
     <br/><br/>
     <table align="center" width="100%">
         <tr>
-            <th scope="col" width="200">Nome completo</th>
+            <th scope="col" width="25%">Nome completo</th>
             <td><?php echo form_input(array(
                 'name'=>'nm_pessoa',
                 'id'=>'nm_pessoa',
@@ -518,43 +538,24 @@
 <script>
 $(function(){
     
-    mask = $("<div />",{
-        id:'mask',
-        css:{
-        	'background-color':'#000000',
-            'height': $(document).height(),
-            'position': 'absolute',
-            'top': 0,
-            'left': 0,
-            'right': 0,
-            'z-index': 998,
-            'opacity': .5
-        }
-    });
-    $('#mask').live('click',function(){
-    	mask.remove();
-    	foto.remove();
-        $(".popup").remove();
-        return false;
-    });
+    // Tabela -> cor sim, cor não
+    $("#detalhes tr:odd").addClass('zebra');
     
     // Adicionar Foto
-    foto = $("#foto-upload").remove().addClass('popup');
-    $("#adicionar-foto").click(function(event){
+    $("#foto_upload").toggleClass('hide');
+    $("#adicionar_foto").click(function(event){
         event.preventDefault();
-        $("body").append(mask).append(foto);
-        foto.css('top', $(window).height()/2 - foto.height())
-        .css('left', $(window).width()/2 - foto.width()/2);
+        $("#foto_upload").toggleClass('hide');
     });
     
     // Botão que ativa edição dos dados de inscrição
-    $("#ativar-correcao").click(function(event){
+    $("#ativar_correcao").click(function(event){
         if($(this).hasClass('ativo')){
             $(this).removeClass('ativo').val('Ativar correção');
-            $("input:not(#ativar-correcao), select", '#dados').attr('disabled', true);
+            $("input:not(#ativar_correcao), select", '#detalhes').attr('disabled', true);
         }else{
             $(this).addClass('ativo').val('Cancelar correção');
-            $("input:not(#ativar-correcao), select", '#dados').attr('disabled', false);
+            $("input:not(#ativar_correcao), select", '#detalhes').attr('disabled', false);
         }
     });
     
@@ -563,7 +564,19 @@ $(function(){
         
         event.preventDefault();
         
-        mask.appendTo("body");
+        $("<div />",{
+            id:'mask',
+            css:{
+            	'background-color':'#000000',
+                'height': $(document).height(),
+                'position': 'absolute',
+                'top': 0,
+                'left': 0,
+                'right': 0,
+                'z-index': 98,
+                'opacity': .5
+            }
+        }).appendTo("body");
         
         var msg = '';
         if(/.+liberar.+/.test($(this).attr('href'))){
@@ -577,36 +590,35 @@ $(function(){
         }
         
         
-        popup = $("<div />",{
-            class:'popup',
+        $("<div />",{
+            id:'popup',
+            css:{
+            	'position': 'fixed',
+                'top': $(window).height()/2 - $("#popup").height()/2,
+                'left': $(window).width()/2 - $("#popup").width()/2,
+                'z-index': 99
+            },
             html: msg+'<br/><br/>'
-        }).appendTo("body")
-        .append(
+        }).appendTo("#wrap");
+        $('#popup').append(
             $('<a></a>',{
                 href: $(this).attr('href'),
-                class: 'left',
-                css:{
-	            	'margin-left': '80px'
-	            },
                 text: 'Sim'
             })
         ).append(
             $('<a></a>',{
                 href: "#",
-                class: 'right',
-                css:{
-	            	'margin-right': '80px'
-	            },
                 text: 'Não',
                 click: function(){
-                    mask.remove();
-                    $(".popup").remove();
+                    $("#mask").remove();
+                    $("#popup").remove();
                     return false;
                 }
             })
         );
-        popup.css('top', $(window).height()/2 - popup.height())
-        .css('left', $(window).width()/2 - popup.width()/2);
+        $("#popup").css('top', $(window).height()/2 - $("#popup").height()/2);
+        $("#popup").css('left', $(window).width()/2 - $("#popup").width()/2);
+        
     });
 });
 </script>
