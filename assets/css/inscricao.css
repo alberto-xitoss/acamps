@@ -1,0 +1,282 @@
+/* Estilos da página de inscrições */
+body{
+    background: url('../image/paper.jpg');
+    margin: 16px 0;
+}
+a { color: #000; text-decoration:none; }
+a:hover { color: #9a810b; }
+.wrap {
+    margin: 0 auto;
+    width: 800px;
+    position: relative;
+}
+    header {
+	
+    }
+	#logo {
+	    background-image: url("../image/acamps_logo.png");
+	    width: 207px;
+	    height: 64px;
+	    margin: 0 0 0 30px;
+	}
+    footer{
+		margin: 1em 0 0;
+		font-style: italic;
+		text-shadow: 1px 1px 0px #fff;
+    }
+    nav {
+	
+    }
+	nav ul{
+	    float: right;
+	    margin-top: -24px;
+	}
+		nav a{
+			font-size: 1.1em;
+			font-family: "Cuprum", verdana;
+		}
+	    nav li{
+			float: left;
+			background: url("../image/branco_opac75.png");
+			padding: 8px 20px;
+	    }
+	    nav li:hover{
+			background: #fff;
+			-moz-box-shadow: 0px 0px 2px #fff;
+			-webkit-box-shadow: 0px 0px 2px #fff;
+			box-shadow: 0px 0px 2px #fff;
+	    }
+	    nav li:first-child{
+			-moz-border-radius: 8px 0 0 0;
+			-webkit-border-radius: 8px 0 0 0;
+			border-radius: 8px 0 0 0;
+	    }
+	    nav li:last-child{
+			-moz-border-radius: 0 8px 0 0;
+			-webkit-border-radius: 0 8px 0 0;
+			border-radius: 0 8px 0 0;
+	    }
+    #conteudo {
+		padding: 30px;
+		background: #fff;
+		-moz-border-radius: 16px 0 16px 16px;
+		-webkit-border-radius: 16px 0 16px 16px;
+		border-radius: 16px 0 16px 16px;
+		-moz-box-shadow: 0px 0px 2px #fff;
+		-webkit-box-shadow: 0px 0px 2px #fff;
+		box-shadow: 0px 0px 2px #fff;
+    }
+	#conteudo a:hover{
+	    
+	}
+	#conteudo ul { margin: 0 0 1em 30px; }
+	#conteudo ol { margin: 0 0 1em 30px; list-style-type: decimal; }
+    
+    h1, h2, h3{
+		font-family: 'Arvo', verdana;
+		text-shadow: 1px 1px 2px rgba(0,0,0, 0.3);
+		margin: 0 0 1em;
+    }
+    h2{
+        font-size: 1.8em;
+		text-align: center;
+		font-weight: normal;
+    }
+    h3{
+        font-size: 1.3em;
+        text-align: left;
+    }
+    hr {
+        height: 0;
+        border: 0 none;
+        border-top: 1px solid #9DBC87;
+        margin: 30px 0;
+    }
+    #home {
+
+    }
+	#video{
+	    /*width: 320px;
+	    height: 240px;*/
+	    float: left;
+	    margin-right: 30px;
+	    background-color: #E2F4DC;
+	}
+	#form_links{
+	    width: 390px;
+	    padding-top: 20px;
+	    float: left;
+	}
+	#form_links{
+	    font-family: 'Arvo', verdana;
+	}
+	    #form_links *{
+			text-shadow: 1px 1px 2px rgba(0,0,0, 0.7);
+	    }
+	    #form_links h2{
+			font-size: 2em;
+			margin-bottom: 20px;
+			text-align: left;
+			font-weight: normal;
+	    }
+	    #link_participante{
+			font-size: 4em;
+			margin-bottom: 30px;
+			display: inline-block;
+	    }
+	    #link_servico, #link_cv{
+			font-size: 1.4em;
+	    }
+	#boleto{
+	    font-weight: bold;
+	    padding: 6px 10px;
+	}
+    #info { font-size: 13px; }
+    #info p{ margin: 0 0 1em 0; }
+    #form {
+        padding: 0 14%;
+    }
+        #form p {
+            position: relative;
+        }
+        #form label.campo{
+            display: inline-block;
+            text-align:left;
+            vertical-align: middle;
+			padding-top: 14px;
+        }
+        input[type=text], select{
+            width: 99%;
+            border: 1px solid #94BA75;
+            padding: 4px 2px;
+			-moz-box-shadow: 0px 0px 2px rgba(0,0,0, 0.3);
+			-webkit-box-shadow: 0px 0px 2px rgba(0,0,0, 0.3);
+			box-shadow: 0px 0px 2px rgba(0,0,0, 0.3);
+        }
+		input[type=text]:hover, input[type=text]:focus,
+		select:hover, select:focus{
+			border-color: #66914D;
+			background-color: #EFFFE5;
+		}
+        #form input[type=text].short , #form select{
+            width: 30%;
+        }
+        #form #dt_nascimento{
+			width: 160px;
+		}
+        #form input[type=radio]{
+            margin: 7px 0;
+            vertical-align: middle;
+        }
+        #form .ajuda_icone{
+            display: inline-block;
+            position: relative;
+            /* left: -18px; */
+            /* margin-right: -18px; */
+            background: url(../image/ajuda2.png) no-repeat;
+            width: 18px;
+            height: 18px;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+		#form .campo  + .ajuda_icone{
+			vertical-align: bottom;
+		}
+        #form .ajuda_texto{
+            display: none;
+            position: absolute;
+			float: left;
+            font-size: .9em;
+            width: 40%;
+            background-color: #d7e7ff;
+            border: 1px solid #6B97BF;
+            padding: 8px;
+            top: 200%;
+            left: 0;
+            z-index:2;
+        }
+		#form .erro{
+			background-color:#FFDFB9;
+		}
+		#form .erro_inline{
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            right: 101%;
+            white-space: nowrap;
+            padding: 4px 6px;
+            background-color:#FFDFB9;
+            color: #CE0000;
+            border: 1px solid #CE0000;
+            -moz-border-radius: 20px;
+            -webkit-border-radius: 20px;
+            border-radius: 20px;
+        }
+        #form .erro_onsubmit{
+            background-color: #FFDFB9;
+            border: 2px solid #CE0000;
+            margin: 9px;
+            padding: 0 8px;
+            color: #9D0606;
+        }
+        #form .erro_onsubmit p{
+			margin: 8px 0;
+	    }
+        .info {
+            background-color: #d7e7ff;
+            border: 1px solid #6896da;
+            margin: 9px 0;
+            padding: 8px;
+        }
+		.aviso {
+            background-color: #F9FFBF;
+            border: 1px solid #FFD11C;
+            margin: 9px 0;
+            padding: 8px;
+        }
+	input[type=submit], input[type=button], .button {
+	    margin-top: 30px;
+	    padding: 6px 22px;
+	    cursor: pointer;
+	    background-color: #84CC3D;
+            border: 1px solid #000;
+            -moz-border-radius: 100px;
+            -webkit-border-radius: 100px;
+            border-radius: 100px;
+            -moz-box-shadow: 2px 2px 5px rgba(0,0,0, 0.2);
+            -webkit-box-shadow: 2px 2px 5px rgba(0,0,0, 0.2);
+            box-shadow: 2px 2px 5px rgba(0,0,0, 0.2);
+	}
+	input[type=submit]:hover, input[type=button]:hover, .button:hover{
+	    background-color: #9DE554;
+	    text-shadow: 0px 0px 2px #fff;
+	    color: #000000;
+	}
+    #sucesso{
+	
+    }
+	#foto{
+	    float: left;
+	    margin-right: 16px;
+	}
+    #buscar-inscricao{
+	margin: 0 auto;
+	width: 600px;
+    }
+	#buscar-inscricao label{
+	    display: inline-block;
+	    margin-right: 10px;
+	}
+	#buscar-inscricao input[type=text]{
+		width: 260px;
+		/*border: 1px solid #85A872;
+		padding: 4px 2px;
+		-moz-box-shadow: 0px 0px 2px rgba(0,0,0, 0.3);
+		-webkit-box-shadow: 0px 0px 2px rgba(0,0,0, 0.3);
+		box-shadow: 0px 0px 2px rgba(0,0,0, 0.3);*/
+	}
+	/*#buscar-inscricao input[type=text]:hover, #buscar-inscricao input[type=text]:focus{
+	    border-color: #4A6B39;
+	}*/
+    
+    

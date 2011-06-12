@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>{title}</title>
+{css}
+{js}
+</head>
+<body>
+{conteudo}
+</body>
+</html>

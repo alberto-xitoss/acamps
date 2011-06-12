@@ -1,0 +1,252 @@
+body{
+    background-color: #BAEF8A;
+}
+a { color: #000; text-decoration:none; }
+a:hover { color: #336D19; text-decoration:none; }
+#wrap {
+    margin: 0 auto;
+    width: 760px;
+    position: relative;
+}
+    .left{ float: left; }
+    .right{ float: right; }
+    #wrap>menu, #wrap>div{
+        position: relative;
+        background: #fff;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+        border-radius: 4px;
+        border: 1px solid #8EBF63;
+        margin-top: 10px;
+        padding: 0;
+
+        background: -webkit-gradient(linear, left top, left 25, from(#f0f0f0), to(#FFF));
+        background: -moz-linear-gradient(top, #f0f0f0, #FFF 25px);
+    }
+    h2{
+        font-size: 1.2em;
+        margin-bottom: 12px;
+    }
+    h3{
+        font-size: 1.1em;
+    }
+	input[type=text], input[type=password], input[type=text][disabled], input[type=password][disabled], .textfield{
+        border: solid 1px #8EBF63;
+        padding: 5px;
+    }
+    #pagamento input[type=text][disabled], #pagamento input[type=password][disabled], .textfield{
+        color: #000;
+        background-color:#BAEF8A;
+        border: solid 1px #336D19;
+    }
+    input[type=text]:hover, input[type=password]:hover,
+    input[type=text]:focus, input[type=password]:focus{
+        border-color: #336D19;
+    }
+    .zebra{
+        background-color:#E4F4CB;
+    }
+    .vermelho{
+        background-color:#FFE1D8;
+    }
+    .vermelho.zebra{
+        background-color:#FFCEBC;
+    }
+/*
+ * Elementos do Template
+*/
+    #wrap>menu{ padding: 0 9px; }
+    #wrap>div{ padding: 12px 20px; }
+    menu ul { list-style:none; margin:0; padding:0; white-space: nowrap;}
+        menu>ul>li {
+            cursor:pointer;
+            float:left;
+            padding: 8px;
+            position:relative;
+            z-index: 99;
+        }
+        menu>ul>li:hover {
+            background-color: #E4F4CB;
+        }
+            menu>ul>li:hover>ul{
+                display: block;
+            }
+            menu>ul>li>ul {
+                background-color:#fff;
+                
+                -moz-border-radius: 4px;
+                -webkit-border-radius: 4px;
+                border-radius: 4px;
+
+                -moz-border-radius-topleft: 0;
+                -webkit-border-top-left-radius: 0;
+                border-top-left-radius: 0;
+                
+                -moz-border-radius-topright: 0;
+                -webkit-border-top-right-radius: 0;
+                border-top-right-radius: 0;
+
+                border: 1px solid #69A438;
+                border-top: none;
+                
+                display:none;
+                float:left;
+                left:-1px;
+                position:absolute;
+                top:32px;
+                /*width:100px;*/
+            }
+                menu>ul>li>ul>li {
+                    cursor:pointer;
+                    padding: 5px 10px;
+                }
+                menu>ul>li>ul>li:hover{
+                    background-color: #E4F4CB;
+                    -moz-border-radius: 4px;
+                    -webkit-border-radius: 4px;
+                    border-radius: 4px;
+                }
+/*
+ * Comuns
+*/
+    th {
+        font-weight: bold;
+    }
+    div#popup{
+        margin: 0;
+        position: fixed;
+        z-index: 999;
+        text-align: center;
+    }
+        div#popup a{
+            margin: 0 10px;
+        }
+    div#mask{
+        z-index: 998;
+        background-color: #000;
+        position: absolute;
+        top:0; /* Necessário para aparecer */
+    }
+    #detalhes th, #detalhes td, #resultado th, #resultado td{
+        padding: 5px;
+    }
+/*
+ * Página de busca
+*/
+    #consulta{
+        margin: 0 15px 5px 0;
+        width: 580px;
+    }
+/*
+ * Formulários de inscrição
+*/
+	.campo{
+		display:block;
+		margin-top:8px;
+	}
+	.importante{
+		margin: 0 -8px;
+		padding: 8px;
+		background: rgba(255,200,0,0.2);
+	}
+/*
+ * Página de detalhes
+*/
+    #foto{
+        float: left;
+        margin-right: 16px;
+    }
+    .excluir{
+        position: absolute;
+        bottom: 5px;
+        right: 8px;
+        font-size: 0.9em;
+    }
+    #detalhes input[type=button], #detalhes input[type=submit], #detalhes input[type=reset], #foto_upload input[type=submit]{
+        /*background-color: #FFDD66;
+        border: 1px solid #000;*/
+        padding: 2px 3px;
+    }
+    input[type=button]#ativar_correcao.ativo{
+        background-color: #FFE1BF;
+        color: #BF0000;
+    }
+    #detalhes input[type=text]{
+        padding: 3px 2px;
+        margin: 0;
+        background: #fff;
+        border-color: #336D19;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        width: 100%;
+    }
+    #detalhes input[type=text][disabled], #detalhes select[disabled]{
+        color: #000;
+        background: none;
+        border-color: #8EBF63;
+    }
+/*
+ * Página de pagamento
+*/
+    #avista table td, #cheque table td, #chequepre table td{
+        padding: 4px 0;
+    }
+    #avista input[type=text], #cheque input[type=text], #chequepre input[type=text],
+    #avista .textfield, #cheque .textfield, #chequepre .textfield{
+        padding: 3px 6px;
+    }
+    #cheque form div, #chequepre form div{
+        display: inline-block;
+	margin-right: 12px;
+    }
+    #chequepre .cheque {
+	display: inline-block;
+	border: #8EBF63 solid 1px;
+	margin: 10px;
+	padding: 5px;
+	width: 105px;
+    }
+    #cheque_nm_emitente, #chequepre_nm_emitente { width: 240px; }
+    #cheque_nr_telefone, #chequepre_nr_telefone { width: 110px; }
+    #cheque_nr_valor, .chequepre_nr_valor { width: 60px; }
+    #cheque_nr_comp, #chequepre_nr_comp { width: 70px; }
+    #cheque_nr_banco, #chequepre_nr_banco { width: 120px; }
+    #cheque_nr_cheque, .chequepre_nr_cheque { width: 40px; }
+    #cheque_nr_cheque_dgt, .chequepre_nr_cheque_dgt { width: 14px; }
+    #cheque_nr_agencia, #chequepre_nr_conta,
+    #cheque_nr_agencia, #chequepre_nr_conta { width: 40px; }
+    #cheque_nr_agencia_dgt, #cheque_nr_conta_dgt,
+    #chequepre_nr_agencia_dgt, #chequepre_nr_conta_dgt { width: 14px; }
+    #cheque_ds_cidade, #chequepre_ds_cidade { width: 140px; }
+    #cheque_ds_estado, #chequepre_ds_estado { width: 30px; }
+    #cheque_ds_obs, #chequepre_ds_obs { width: 670px; }
+    .chequepre_dt_pgto { width: 90px; }
+    
+/*
+ * Formulários dos relatórios
+ */
+    #pagamento table{
+        margin: 20px auto;
+    }
+    #pagamento td{
+        padding: 4px;
+    }
+    #pagamento input[type=text]{
+        padding: 4px;
+    }
+    
+    #participante td, #servico td, #cv td, #amigos td{
+        padding: 4px 0;
+    }
+	
+/*
+ * Secretaria
+ */
+	.log.secretaria tr{
+		margin: 3px 0;
+	}
+	.log.secretaria td{
+		padding: 10px 12px;
+		border: 1px solid #8EBF63;
+	}
