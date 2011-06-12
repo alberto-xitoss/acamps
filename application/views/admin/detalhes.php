@@ -34,19 +34,20 @@
 					}
 				}elseif($pessoa['id_status'] == '1'){ // Liberado, aguardando pagamento
 					if($this->session->userdata('permissao') & LIBERACAO){
-						echo anchor('admin/reverter/'.$pessoa['id_pessoa'], 'Cancelar Liberação', 'class="liberacao confirmacao"');
+						echo anchor('admin/reverter/'.$pessoa['id_pessoa'], 'Cancelar Liberação', 'class="neg liberacao confirmacao"');
 					}else{
-						echo '<span class="liberacao" title="Você não tem permissão para reverter uma liberação.">Cancelar Liberação</span>';
+						echo '<span class="neg liberacao" title="Você não tem permissão para reverter uma liberação.">Cancelar Liberação</span>';
 					}
 				}else{ // Concluído
-					echo '<span class="liberacao" title="A inscrição foi paga. Não é possível reverter a liberação.">Cancelar Liberação</span>';
+					echo '<span class="neg liberacao" title="A inscrição foi paga. Não é possível reverter a liberação.">Cancelar Liberação</span>';
 				}
 			}
+			
 			if($pessoa['cd_tipo'] != 'v'){ // Botão Pagamento/Estornar Pagamento
 			
 				if($pessoa['id_status'] == '1'){ // Aguardando Pagamento
 					if($this->session->userdata('permissao') & PAGAMENTO){
-						echo anchor('admin/pagar/'.$pessoa['id_pessoa'], 'Realizar Pagamento', 'class="pagamento"');
+						echo anchor('admin/pagar/'.$pessoa['id_pessoa'], 'Realizar Pagamento', 'id="pagar" class="pagamento"');
 					}else{
 						echo '<span class="pagamento" title="Você não tem permissão para realizar pagamentos">Realizar Pagamento</span>';
 					}
@@ -54,12 +55,13 @@
 					echo '<span class="pagamento" title="A inscrição ainda não foi liberada.">Realizar Pagamento</span>';
 				}else{ // Concluído
 					if($this->session->userdata('permissao') & PAGAMENTO){
-						echo anchor('admin/reverter/'.$pessoa['id_pessoa'], 'Estornar Pagamento', 'class="pagamento confirmacao"');
+						echo anchor('admin/reverter/'.$pessoa['id_pessoa'], 'Estornar Pagamento', 'class="neg pagamento confirmacao"');
 					}else{
-						echo '<span class="pagamento" title="Você não tem permissão para estornar pagamentos.">Estornar Pagamento</span>';
+						echo '<span class="neg pagamento" title="Você não tem permissão para estornar pagamentos.">Estornar Pagamento</span>';
 					}
 				}
 			}
+			
 		?><?php
 		if($pessoa['cd_tipo'] != 'v'): // Se não for da Comunidade de Vida
 			?><a class="boleto" target="_blank" href="<?php echo site_url('/inscricao/boleto/').'/'.md5($pessoa['id_pessoa'].$pessoa['ds_email']) ?>">Imprimir Boleto</a><?php
@@ -522,8 +524,8 @@ $(function(){
         id:'mask',
         css:{
         	'background-color':'#000000',
-            'height': $(document).height(),
-            'position': 'absolute',
+            'height': $(window).height(),
+            'position': 'fixed',
             'top': 0,
             'left': 0,
             'right': 0,
@@ -538,6 +540,21 @@ $(function(){
         return false;
     });
     
+    // Formulário de Pagamento
+    $('#pagar').click(function(event){
+    	event.preventDefault();
+    	mask.appendTo('body');
+    	var popup = $("<div />",{
+            class:'popup',
+        }).appendTo("body");
+        
+		$.get($(this).attr('href'), function(resposta) {
+			popup.html(resposta)
+			.css('top', $(window).height()/2 - popup.height()/2)
+        	.css('left', $(window).width()/2 - popup.width()/2);
+		});
+    });
+	
     // Adicionar Foto
     foto = $("#foto-upload").remove().addClass('popup');
     $("#adicionar-foto").click(function(event){

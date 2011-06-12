@@ -7,7 +7,7 @@ class Template {
     private $css_url;
     private $js_url;
     /**
-    * Este metodo é chamado atraves do arquivo hooks.php
+    * Este metodo ï¿½ chamado atraves do arquivo hooks.php
     * na pasta config.
     *
     * @return
@@ -16,7 +16,12 @@ class Template {
     {
         // Instancia do CI.
         $CI =& get_instance();
-
+		
+		if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')){
+            echo $CI->output->get_output();
+			return;
+        }
+		
         // Definindo os URL.
         $this->template_path = $CI->config->item('template_path');
         $this->css_url = $CI->config->item('css_url');
