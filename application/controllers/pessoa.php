@@ -286,7 +286,7 @@ class Pessoa extends CI_Controller {
             $this->pessoa_model->atualizar($id_pessoa, array('id_status' => '2'));
             
             $this->load->model('servico');
-            $this->servico->decrementar($pessoa->id_servico);
+            //$this->servico->decrementar($pessoa->id_servico);
         }
         
         redirect('admin/pessoa/'.$id_pessoa);

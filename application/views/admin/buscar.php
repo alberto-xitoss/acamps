@@ -18,7 +18,7 @@
         <tbody>
         	<?php foreach($resultado as $linha): ?>
                 <tr>
-                    <td><?php echo anchor('admin/pessoa/'.$linha->id_pessoa, '<span class="id_pessoa status-'.$linha->id_status.'">'.$linha->id_pessoa.'</span>'.$linha->nm_pessoa) ?></td>
+                    <td><?php echo anchor('admin/pessoa/'.$linha->id_pessoa, '<span class="id-'.$linha->cd_tipo.' status-'.$linha->id_status.'">'.$linha->id_pessoa.'</span>'.$linha->nm_pessoa) ?></td>
                     <td width="180">
                     <?php if($linha->cd_tipo == 'p'): ?>
 	                    	<span class="tipo-p familia-<?php echo strtolower($linha->cd_familia) ?>"><?php echo $linha->nm_familia ?></span>

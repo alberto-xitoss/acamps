@@ -1,18 +1,22 @@
-<?php if($tipo=='p'){ ?>
+<?php 
 
+if($tipo=='p'):
 
-<div id="participante">
+?>
+<div id="secretaria" class="wrap participante">
     <h2>Etiquetas de Participantes</h2>
     <?php if($form): ?>
+    	<div class="form">
         <?php echo form_open('admin/etiqueta/p') ?>
-            <p>Digite uma faixa de números de inscrições</p>
-            <table class="center" style="margin:0 auto">
-                <tr><td width="50">Inicial:</td><td><?php echo form_input('id_ini') ?></td></tr>
+            <p>- Digite uma faixa de números de inscrições</p>
+            <p>- Deixe em branco se quiser buscar todas as inscrições</p>
+            <table class="center">
+                <tr><td width="40">Inicial:</td><td><?php echo form_input('id_ini') ?></td></tr>
                 <tr><td>Final:</td><td><?php echo form_input('id_fim') ?></td></tr>
             </table>
-            <br/>
             <p class="center"><?php echo form_submit('verificar', 'Listar') ?></p>
         <?php echo form_close() ?>
+        </div>
     <?php else: ?>
         <?php echo form_open('admin/etiqueta/p','target="_blank"') ?>
         <table width="100%">
@@ -24,15 +28,8 @@
                 <th class="center" width="70">Tem crachá?</th>
                 <th class="center" width="70">Imprimir etiqueta?</th>
             </tr></thead><tbody>
-            <?php $swap = false;
-                foreach($pessoas as $pessoa):?>
-                <tr class='<?php
-                    if($swap)
-                        echo 'zebra ';
-                    if(!$pessoa['bl_cracha'])
-                        echo 'vermelho';
-                    $swap = !$swap;
-                ?>'>
+            <?php foreach($pessoas as $pessoa): ?>
+                <tr>
                     <td class="center"><?php echo $pessoa['id_pessoa'] ?></td>
                     <td><?php echo $pessoa['nm_pessoa'] ?></td>
                     <td><?php echo $pessoa['nm_familia'] ?></td>
@@ -52,14 +49,15 @@
         <?php echo form_close() ?>
     <?php endif ?>
 </div>
+<?php 
 
+elseif($tipo=='s'):
 
-<?php }elseif($tipo=='s'){ ?>
-
-
-<div id="servico">
+?>
+<div id="secretaria" class="wrap servico">
     <h2>Etiquetas de Serviço</h2>
     <?php if($form): ?>
+    	<div class="form">
         <?php echo form_open('admin/etiqueta/s') ?>
             <p class="center">Serviço: <?php
                 $servicos = $this->servico->listar();
@@ -69,6 +67,7 @@
             <br/>
             <p class="center"><?php echo form_submit('verificar', 'Listar') ?></p>
         <?php echo form_close() ?>
+        </div>
     <?php else: ?>
         <?php echo form_open('admin/etiqueta/s', 'target="_blank"') ?>
         <table width="100%">
@@ -106,14 +105,15 @@
         <?php echo form_close() ?>
     <?php endif ?>
 </div>
+<?php
 
+elseif($tipo=='cv'):
 
-<?php }elseif($tipo=='cv'){ ?>
-
-
-<div id="cv">
+?>
+<div id="secretaria" class="wrap cv">
     <h2>Etiquetas de Comunidade de Vida</h2>
     <?php if($form): ?>
+    	<div class="form">
         <?php echo form_open('admin/etiqueta/cv') ?>
             <p class="center">Setor: <?php
                 $setores = $this->setor->listar();
@@ -123,6 +123,7 @@
             <br/>
             <p class="center"><?php echo form_submit('verificar', 'Listar') ?></p>
         <?php echo form_close() ?>
+        </div>
     <?php else: ?>
         <?php echo form_open('admin/etiqueta/cv', 'target="_blank"') ?>
         <table width="100%">
@@ -162,12 +163,12 @@
         <?php echo form_close() ?>
     <?php endif ?>
 </div>
+<?php
 
+elseif($tipo=='amigos'):
 
-<?php }elseif($tipo=='amigos'){ ?>
-
-
-<div id="amigos">
+?>
+<div id="amigos" class="wrap">
     <h2>Etiquetas - Amigos do Acamp's</h2>
     <?php echo form_open('admin/etiqueta/amigos', 'target="_blank"') ?>
         <table width="100%">
@@ -208,6 +209,8 @@
         <p class="center"><?php echo form_submit('gerar', 'Gerar Etiquetas') ?></p>
     <?php echo form_close() ?>
 </div>
+<?php
 
+endif
 
-<?php }//endif ?>
+?>

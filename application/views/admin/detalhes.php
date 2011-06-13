@@ -39,7 +39,11 @@
 						echo '<span class="neg liberacao" title="Você não tem permissão para reverter uma liberação.">Cancelar Liberação</span>';
 					}
 				}else{ // Concluído
-					echo '<span class="neg liberacao" title="A inscrição foi paga. Não é possível reverter a liberação.">Cancelar Liberação</span>';
+					if($pessoa['cd_tipo'] == 'v' && $this->session->userdata('permissao') & LIBERACAO){
+						echo anchor('admin/reverter/'.$pessoa['id_pessoa'], 'Cancelar Liberação', 'class="neg liberacao confirmacao"');
+					}else{
+						echo '<span class="neg liberacao" title="A inscrição foi paga. Não é possível reverter a liberação.">Cancelar Liberação</span>';
+					}
 				}
 			}
 			
@@ -88,15 +92,13 @@
     <h2>Detalhes da Incrição</h2>
     <?php echo form_open('admin/corrigir/'.$pessoa['id_pessoa']) ?>
     <?php if($this->session->userdata('permissao') & CORRECAO): // Verificando permissão ?>
-        <input type="button" id="ativar-correcao" name="ativar_correcao" value="Ativar correção" />
-        <input type="submit" id="corrigir" name="corrigir" value="Salvar Alterações" disabled='disabled' />
-        <input type="reset" id="reset" name="reset" value="Reset" class="right" disabled='disabled' />
+        <input type="button" id="ativar-correcao" name="ativar_correcao" value="Ativar correção" /><input type="submit" id="corrigir" name="corrigir" value="Salvar Alterações" disabled='disabled' /><input type="reset" id="reset" name="reset" value="Reset" class="right" disabled='disabled' />
     <?php endif ?>
     
     <br/><br/>
     <table align="center" width="100%">
         <tr>
-            <th scope="col" width="200">Nome completo</th>
+            <th scope="col" width="210">Nome completo</th>
             <td><?php echo form_input(array(
                 'name'=>'nm_pessoa',
                 'id'=>'nm_pessoa',

@@ -15,7 +15,7 @@ a:hover { color: #406392; text-decoration:none; }
 h2{
 	font-size: 15px;
 	font-weight: bold;
-	margin: 0.1em 0 0.5em;
+	margin: 0.3em 0 0.7em;
 }
 table{
 	
@@ -215,13 +215,13 @@ menu ul { list-style:none; margin:0; padding:0; white-space: nowrap;}
 	overflow: auto;
 }
 	#resultado td:last-child{text-align: right;}
-	.id_pessoa{
+	.id-p, .id-s, .id-v{
 		margin: -6px 6px -6px -6px;
 		padding: 6px;
 	}
-		.status-1 {background-color: rgba(255,215,0,.2);}
-		.status-2 {background-color: rgba(255,0,0,.2);}
-		.status-3 {background-color: rgba(0,170,0,.2);}
+		.id-s.status-2 {background-color: rgba(255,0,0,.2);} /* Vermelho */
+		.status-1, .id-v.status-2 {background-color: rgba(255,215,0,.2);} /* Amarelo */
+		.status-3 {background-color: rgba(0,170,0,.2);} /* Verde */
 	
 	.tipo-p, .tipo-s, .tipo-v{
 		background: #fff;
@@ -289,12 +289,12 @@ menu ul { list-style:none; margin:0; padding:0; white-space: nowrap;}
 			filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#d8d8d8', EndColorStr='#ffffff');
 		}
 		.excluir{
+			border-color: #8D4A46;
+			padding: 1px 0 1px 20px;
 			position: absolute;
 			bottom: 0;
 			right: 0;
 			width: 114px;
-			border-color: #8D4A46;
-			
 			background-color: #ffffff;
 			background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#FFB8AE)); 
 			background-image: -webkit-linear-gradient(top, #ffffff, #FFB8AE); 
@@ -325,7 +325,7 @@ menu ul { list-style:none; margin:0; padding:0; white-space: nowrap;}
 			background: url('../image/icon-printer-16.png') no-repeat;
 		}
 		.excluir:before{
-			background: url('../image/icon-x-10.png') 3px 3px no-repeat;
+			background: url('../image/icon-x-10.png') 1px 3px no-repeat;
 		}
 		span.pagamento, span.liberacao{
 			-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
@@ -336,6 +336,7 @@ menu ul { list-style:none; margin:0; padding:0; white-space: nowrap;}
 		}
 #dados h2{
 	margin: 16px;
+	text-align: center;
 }
 #dados th, #dados td{
 	padding: 0;
@@ -346,7 +347,7 @@ menu ul { list-style:none; margin:0; padding:0; white-space: nowrap;}
 	text-align: right;
 	padding-right: 10px;
 }
-#ativar_correcao, #reset{
+#ativar-correcao, #reset{
 	margin: 0 16px;
 }
 #dados input[type=text]{
@@ -368,4 +369,59 @@ menu ul { list-style:none; margin:0; padding:0; white-space: nowrap;}
 	position: fixed;
 	z-index: 999;
 }
+/*
+ * Formulários de Inscrição
+ */
+#form{
+	padding: 16px;
+}
+#form h2{
+	text-align: center;
+}
+#form .importante{
+	background-color: #DDEDF3;
+	border-radius: 10px;
+	border: 1px solid #AFCDD8;
+	padding: 10px;
+	margin: 0 -10px;
+}
+#form label.campo{
+	display: block;
+	margin-top: 10px;
+}
+#form input[type=text]{
+	width: 500px;
+}
+#form #dt_nascimento{
+	width: 120px;
+}
+#form #nr_telefone, #form #nr_emergencia1, #form #nr_emergencia2{
+	width: 240px;
+}
+#form input[type=submit]{
+	margin-top: 16px;
+}
+/*
+ * Secretaria
+ */
+#secretaria h2{
+	margin: 16px;
+	text-align: center;
+}
+#secretaria .form{
+	width: 400px;
+	margin: 0 auto;
+}
+#secretaria .form table{
+	margin: 16px auto;
+}
+#secretaria .form tr{
+	background: none;
+}
+
+
+
+
+
+
 

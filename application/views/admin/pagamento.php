@@ -1,22 +1,6 @@
-<div class='clearfix'>
-    
-    <a href="<?php echo base_url().'admin/pessoa/'.$pessoa->id_pessoa ?>"><img id="foto" src="<?php echo (empty($pessoa->ds_foto) ? assets_url('image').'sem_foto.png' : $pessoa->ds_foto) ?>" alt="foto" title="<?php echo $pessoa->nm_cracha ?>" />
-    <h2><?php echo $pessoa->id_pessoa; ?> - <?php echo $pessoa->nm_pessoa; ?></h2></a>
-    <p>Tipo de inscrição: <?php switch($pessoa->cd_tipo){
-        case 'p':
-            echo 'Participante';
-            break;
-        case 's':
-            echo 'Serviço';
-            break;
-    }
-    ?></p>
-</div>
-<!--#########################################################################-->
-<div id="avista">
+<div>
     <h2>Tipo do Pagamento</h2>
     <?php echo form_open('admin/pagar/'.$pessoa->id_pessoa) ?>
-	<?php //echo form_hidden('id_pessoa', $pessoa->id_pessoa) ?>
     <p><?php
         echo form_radio(array(
             'id'=>'tipo_d',
@@ -24,22 +8,24 @@
             'value'=>'d',
             'checked'=>true
         ));
-        echo form_label('Dinheiro','tipo_d')?></p>
+        echo form_label('Dinheiro','tipo_d')
+	?></p>
     <p><?php
         echo form_radio(array(
             'id'=>'tipo_c',
             'name'=>'cd_tipo_pgto',
             'value'=>'c'
         ));
-        echo form_label('Cheque','tipo_c')?></p>
+        echo form_label('Cheque','tipo_c')
+	?></p>
     <p><?php
         echo form_radio(array(
             'id'=>'tipo_cp',
             'name'=>'cd_tipo_pgto',
             'value'=>'cp'
         ));
-        echo form_label('Cheque Pré-datado','tipo_cp') ?>
-    </p>
+        echo form_label('Cheque Pré-datado','tipo_cp')
+	?></p>
 	<br/>
 	<table border="0" cellspacing="0" cellpadding="0">
         <tr>

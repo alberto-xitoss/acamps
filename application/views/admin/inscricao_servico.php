@@ -1,4 +1,4 @@
-<div id="form">
+<div id="form" class="wrap">
 <h2>Formulário de Inscrição > Serviço</h2>
     <?php if(isset($erro) && $erro): ?>
         <div class="erro_onsubmit">
