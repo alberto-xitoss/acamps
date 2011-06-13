@@ -26,19 +26,19 @@ if($tipo=='p'):
                 <th width="90">Família</th>
                 <th width="130">Seminário</th>
                 <th class="center" width="70">Tem crachá?</th>
-                <th class="center" width="70">Imprimir etiqueta?</th>
+                <th class="center" width="70"><a href="#" class="todos">Imprimir etiqueta?</a></th>
             </tr></thead><tbody>
             <?php foreach($pessoas as $pessoa): ?>
                 <tr>
                     <td class="center"><?php echo $pessoa['id_pessoa'] ?></td>
                     <td><?php echo $pessoa['nm_pessoa'] ?></td>
-                    <td><?php echo $pessoa['nm_familia'] ?></td>
+                    <td><span class="tipo-p familia-<?php echo strtolower($pessoa['cd_familia']) ?>"><?php echo $pessoa['nm_familia'] ?></span></td>
                     <td><?php echo $pessoa['ds_seminario'] ?></td>
                     <td class="center"><?php if($pessoa['bl_cracha']):?>
-                        <span style="color: #039B03;">Sim</span>
-                    <?php else: ?>
-                        <span style="color: #D3120E;">Não</span>
-                    <?php endif ?>
+						<span class="sim">Sim</span>
+					<?php else: ?>
+						<span class="nao">Não</span>
+					<?php endif ?>
                     </td>
                     <td class="center"><?php echo form_checkbox('imprimir[]', $pessoa['id_pessoa'], !$pessoa['bl_cracha']) ?></td>
                 </tr>
@@ -76,7 +76,7 @@ elseif($tipo=='s'):
                 <th>Nome</th>
                 <th width="200">Servico</th>
                 <th class="center" width="70">Tem crachá?</th>
-                <th class="center" width="70">Imprimir etiqueta?</th>
+                <th class="center" width="70"><a href="#" class="todos">Imprimir etiqueta?</a></th>
             </tr></thead><tbody>
             <?php $swap = false;
                 foreach($pessoas as $pessoa):?>
@@ -91,9 +91,9 @@ elseif($tipo=='s'):
                     <td><?php echo $pessoa['nm_pessoa'] ?></td>
                     <td><?php echo $pessoa['nm_servico'] ?></td>
                     <td class="center"><?php if($pessoa['bl_cracha']):?>
-                        <span style="color: #039B03;">Sim</span>
-                    <?php else: ?>
-                        <span style="color: #D3120E;">Não</span>
+                        <span class="sim">Sim</span>
+					<?php else: ?>
+						<span class="nao">Não</span>
                     <?php endif ?>
                     </td>
                     <td class="center"><?php echo form_checkbox('imprimir[]', $pessoa['id_pessoa'], !$pessoa['bl_cracha']) ?></td>
@@ -133,7 +133,7 @@ elseif($tipo=='cv'):
                 <th width="180">Setor</th>
                 <th width="180">Servico</th>
                 <th class="center" width="70">Tem crachá?</th>
-                <th class="center" width="70">Imprimir etiqueta?</th>
+                <th class="center" width="70"><a href="#" class="todos">Imprimir etiqueta?</a></th>
             </tr></thead><tbody>
             <?php $swap = false;//$this->firephp->log($pessoas);
                 foreach($pessoas as $pessoa):?>
@@ -149,9 +149,9 @@ elseif($tipo=='cv'):
                     <td><?php echo $pessoa['nm_setor'] ?></td>
                     <td><?php echo $pessoa['nm_servico'] ?></td>
                     <td class="center"><?php if($pessoa['bl_cracha']):?>
-                        <span style="color: #039B03;">Sim</span>
-                    <?php else: ?>
-                        <span style="color: #D3120E;">Não</span>
+                        <span class="sim">Sim</span>
+					<?php else: ?>
+						<span class="nao">Não</span>
                     <?php endif ?>
                     </td>
                     <td class="center"><?php echo form_checkbox('imprimir[]', $pessoa['id_pessoa'], !$pessoa['bl_cracha']) ?></td>
@@ -177,7 +177,7 @@ elseif($tipo=='amigos'):
                 <th>Nome</th>
                 <th width="200">Família</th>
                 <th class="center" width="70">Tem crachá?</th>
-                <th class="center" width="70">Imprimir etiqueta?</th>
+                <th class="center" width="70"><a href="#" class="todos">Imprimir etiqueta?</a></th>
             </tr></thead><tbody>
             <?php $swap = false;//$this->firephp->log($pessoas);
                 foreach($pessoas as $pessoa):?>
@@ -214,3 +214,28 @@ elseif($tipo=='amigos'):
 endif
 
 ?>
+<script>
+	$(function(){
+		var op = 0;
+		
+		$("a.todos").click(function(event){
+			event.preventDefault();
+			if(op==0){
+				$("input[type=checkbox]").attr('checked', true);
+			}else if(op==1){
+				$("input[type=checkbox]").attr('checked', false);
+			}else if(op==2){
+				$("input[type=checkbox]").attr('checked', function(index,attr){
+					val = $(this).parent('td').prev('td').children('span').html();
+					if(val == "Sim"){
+						return false;
+					}else{
+						return true;
+					}
+				});
+			}
+			op = (op+1)%3;
+		});
+		
+	});
+</script>

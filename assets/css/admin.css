@@ -418,9 +418,24 @@ menu ul { list-style:none; margin:0; padding:0; white-space: nowrap;}
 #secretaria .form tr{
 	background: none;
 }
-
-
-
+#secretaria th{
+	border-bottom: 1px solid #C8C9CA;
+	text-align: left;
+	vertical-align: bottom;
+}
+#secretaria th.center{
+	text-align: center;
+}
+#secretaria td{
+	padding: 4px;
+	vertical-align: middle;
+}
+#secretaria .sim{
+	color: #039B03;
+}
+#secretaria .nao{
+	color: #D3120E;
+}
 
 
 
