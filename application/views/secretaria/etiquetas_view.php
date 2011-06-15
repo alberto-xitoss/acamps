@@ -8,8 +8,7 @@ if($tipo=='p'):
     <?php if($form): ?>
     	<div class="form">
         <?php echo form_open('admin/etiqueta/p') ?>
-            <p>- Digite uma faixa de números de inscrições</p>
-            <p>- Deixe em branco se quiser buscar todas as inscrições</p>
+            <p class="info">- Digite uma faixa de números de inscrições<br/>- Deixe em branco se quiser buscar todas as inscrições</p>
             <table class="center">
                 <tr><td width="40">Inicial:</td><td><?php echo form_input('id_ini') ?></td></tr>
                 <tr><td>Final:</td><td><?php echo form_input('id_fim') ?></td></tr>
@@ -18,7 +17,7 @@ if($tipo=='p'):
         <?php echo form_close() ?>
         </div>
     <?php else: ?>
-        <?php echo form_open('admin/etiqueta/p','target="_blank"') ?>
+        <?php echo form_open('admin/etiqueta/p') ?>
         <table width="100%">
             <thead><tr>
                 <th width="40">Inscr</th>
@@ -69,7 +68,7 @@ elseif($tipo=='s'):
         <?php echo form_close() ?>
         </div>
     <?php else: ?>
-        <?php echo form_open('admin/etiqueta/s', 'target="_blank"') ?>
+        <?php echo form_open('admin/etiqueta/s') ?>
         <table width="100%">
             <thead><tr>
                 <th width="40">Inscr</th>
@@ -125,7 +124,7 @@ elseif($tipo=='cv'):
         <?php echo form_close() ?>
         </div>
     <?php else: ?>
-        <?php echo form_open('admin/etiqueta/cv', 'target="_blank"') ?>
+        <?php echo form_open('admin/etiqueta/cv') ?>
         <table width="100%">
             <thead><tr>
                 <th width="40">Inscr</th>
@@ -170,7 +169,7 @@ elseif($tipo=='amigos'):
 ?>
 <div id="amigos" class="wrap">
     <h2>Etiquetas - Amigos do Acamp's</h2>
-    <?php echo form_open('admin/etiqueta/amigos', 'target="_blank"') ?>
+    <?php echo form_open('admin/etiqueta/amigos') ?>
         <table width="100%">
             <thead><tr>
                 <th width="40">Inscr</th>

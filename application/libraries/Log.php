@@ -6,6 +6,11 @@ class Log {
 		
 	}
 	
+	function log(){
+		
+	}
+	
+	
 }
 
 /* End of file Login.php */

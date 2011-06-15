@@ -16,7 +16,10 @@ class Pessoa extends CI_Controller {
     */
     function __construct() {
         parent::__construct();
-        $this->load->library('session');
+		
+		if(!$this->session->userdata('logado')){
+            redirect('admin/login');
+        }
     }
     
     /* index
@@ -24,12 +27,7 @@ class Pessoa extends CI_Controller {
      * Essa função nunca é chamada.
     */
     function index(){
-        // Autenticação
-        if(!$this->session->userdata('logado')){ // se NÃO está logado
-            redirect('admin/login');
-        }else{
-            redirect('admin/buscar');
-        }
+        
     }
     
     /* função detalhes
@@ -40,11 +38,6 @@ class Pessoa extends CI_Controller {
      * @param - id_pessoa
     */
     function detalhes($id_pessoa = null){
-        // Autenticação
-        if(!$this->session->userdata('logado')){ // se NÃO está logado
-            redirect('admin/login');
-            return;
-        }
         
         // Se não for passado um número de inscrição
         if(empty($id_pessoa)){
@@ -83,11 +76,6 @@ class Pessoa extends CI_Controller {
      */
     
     function corrigir($id_pessoa) {
-        // Autenticação
-        if(!$this->session->userdata('logado')){ // se NÃO está logado
-            redirect('admin/login');
-            return;
-        }
         
         // Se não for passado um número de inscrição
         if(empty($id_pessoa)){
@@ -154,11 +142,6 @@ class Pessoa extends CI_Controller {
      * @param id_pessoa - número de inscrição
     */
     function pagar($id_pessoa = 0){
-        // Autenticação
-        if(!$this->session->userdata('logado')){ // se NÃO está logado
-            redirect('admin/login');
-            return;
-        }
         
         // Se não for passado um número de inscrição
         if(empty($id_pessoa)){
@@ -207,11 +190,6 @@ class Pessoa extends CI_Controller {
      * @param id_pessoa - número de inscrição
     */
     function liberar($id_pessoa){
-        // Autenticação
-        if(!$this->session->userdata('logado')){ // se NÃO está logado
-            $this->login();
-            return;
-        }
         
         // Se não for passado um número de inscrição
         if(empty($id_pessoa)){
@@ -249,11 +227,6 @@ class Pessoa extends CI_Controller {
      * @param id_pessoa - número de inscrição
     */
     function reverter($id_pessoa){
-        // Autenticação
-        if(!$this->session->userdata('logado')){ // se NÃO está logado
-            redirect('admin/login');
-            return;
-        }
         
         // Se não for passado um número de inscrição
         if(empty($id_pessoa)){
@@ -298,11 +271,6 @@ class Pessoa extends CI_Controller {
      */
     
     function excluir($id_pessoa) {
-        // Autenticação
-        if(!$this->session->userdata('logado')){ // se NÃO está logado
-            redirect('admin/login');
-            return;
-        }
         
         // Se não for passado um número de inscrição
         if(empty($id_pessoa)){
