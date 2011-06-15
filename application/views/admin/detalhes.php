@@ -1,10 +1,10 @@
-<div id="wrap">
-<div class='clearfix'>
+<div id="detalhes" class="wrap">
+<div id="cabecalho" class='clearfix'>
     
     <?php if(empty($pessoa['ds_foto'])): ?>
-        <a href="#" id="adicionar_foto"><img id="foto" src="<?php echo assets_url('image').'sem_foto.png' ?>" alt="foto" title="Clique para enviar uma foto" /></a>
+        <a href="#" id="adicionar-foto"><img id="foto" src="<?php echo assets_url('image').'sem_foto.png' ?>" alt="foto" title="Clique para enviar uma foto" /></a>
     <?php else: ?>
-        <a href="#" id="adicionar_foto"><img id="foto" src="<?php echo $pessoa['ds_foto'] ?>" alt="foto" title="Clique para substituir a foto" /></a>
+        <a href="#" id="adicionar-foto"><img id="foto" src="<?php echo $pessoa['ds_foto'] ?>" alt="foto" title="Clique para substituir a foto" /></a>
     <?php endif ?>
     
     <h2><?php echo $pessoa['id_pessoa']; ?> - <?php echo $pessoa['nm_pessoa']; ?></h2>
@@ -21,6 +21,7 @@
     }
     ?></p>
     <p>Situação: <?php echo $pessoa['ds_status']; ?></p>
+	
 	<div class="comandos">
 		<?php
 			if($pessoa['cd_tipo'] != 'p'){ // Botão Liberação/Cancelar Liberação
@@ -73,9 +74,9 @@
 		?>
     </div>
 </div>
-<?php //if(empty($pessoa['ds_foto'])): ?>
-<div id="foto_upload">
-    <h2>Adicionar Foto</h2>
+
+<div id="foto-upload">
+    <h2>Enviar Foto</h2>
     <?php echo form_open_multipart('admin/corrigir/'.$pessoa['id_pessoa']) ?>
         <p class="center"><?php
         echo form_upload(array(
@@ -86,69 +87,8 @@
         <p class="center"><?php echo form_submit('adicionar_foto','Confirmar'); ?></p>
     <?php echo form_close()?>
 </div>
-<?php //endif ?>
 
-<?php if($pessoa['id_status'] == '1'): // Aguardando Pagamento ?>
-<div>
-    <?php if($pessoa['cd_tipo'] == 's'): // Se for do serviço ?>
-        
-        <?php if($this->session->userdata('permissao') & LIBERACAO): ?>
-            <p class="center"><?php echo anchor('admin/reverter/'.$pessoa['id_pessoa'], 'Cancelar Liberação', 'class="confirmacao"') ?></p>
-        <?php else: ?>
-            <p>Esta pessoa já foi liberada para o serviço.</p>
-            <p><?php echo anchor('admin/buscar', 'Voltar à página de busca.') ?></p>
-        <?php endif ?>
-        
-    <?php endif; ?>
-    
-	<?php if($this->session->userdata('permissao') & PAGAMENTO): ?>
-		<p align="center"><?php echo anchor('admin/pagar/'.$pessoa['id_pessoa'], 'Realizar Pagamento') ?></p>
-    <?php else: ?>
-		<p>Esta inscrição ainda não foi paga.</p>
-	<?php endif; ?>
-</div>
-<?php endif ?>
-
-<?php if($pessoa['id_status'] == '2'): // Aguardando liberação ?>
-<div>
-    
-    <?php if($this->session->userdata('permissao') & LIBERACAO): ?>
-        <p class="center"><?php echo anchor('admin/liberar/'.$pessoa['id_pessoa'], 'Liberar', 'class="confirmacao"') ?></p>
-    <?php else: ?>
-        <p>Esta inscrição ainda não foi liberada para o serviço.</p>
-        <p><strong><?php echo anchor('admin/buscar', 'Voltar à página de busca.') ?></strong></p>
-    <?php endif ?>
-    
-</div>
-<?php endif ?>
-
-<?php if($pessoa['id_status'] == '3'): // Concluído ?>
-<div>
-    
-    <?php if($pessoa['cd_tipo'] != 'v'): // Se não for da Comunidade de Vida ?>
-    
-        <?php if($this->session->userdata('permissao') & PAGAMENTO): ?>
-            <p class="center"><?php echo anchor('admin/reverter/'.$pessoa['id_pessoa'], 'Estornar Pagamento', 'class="confirmacao"') ?></p>
-        <?php else: ?>
-            <p>A inscrição desta pessoa já foi quitada.</p>
-            <p><?php echo anchor('admin/buscar', 'Voltar à página de busca.') ?></p>
-        <?php endif ?>
-        
-    <?php else: // Se for da Comunidade de Vida ?>
-        
-        <?php if($this->session->userdata('permissao') & LIBERACAO): ?>
-            <p class="center"><?php echo anchor('admin/reverter/'.$pessoa['id_pessoa'], 'Cancelar Liberação', 'class="confirmacao"') ?></p>
-        <?php else: ?>
-            <p>Esta pessoa já foi liberada para o serviço.</p>
-            <p><?php echo anchor('admin/buscar', 'Voltar à página de busca.') ?></p>
-        <?php endif ?>
-        
-    <?php endif ?>
-    
-</div>
-<?php endif ?>
-
-<div id="detalhes">
+<div id="dados">
     <h2>Detalhes da Incrição</h2>
     <?php echo form_open('admin/corrigir/'.$pessoa['id_pessoa']) ?>
     <?php if($this->session->userdata('permissao') & CORRECAO): // Verificando permissão ?>
@@ -601,7 +541,7 @@ $(function(){
         $(".popup").remove();
         return false;
     });
-	
+    
     // Formulário de Pagamento
     $('#pagar').click(function(event){
     	event.preventDefault();
@@ -618,20 +558,22 @@ $(function(){
     });
 	
     // Adicionar Foto
-    $("#foto_upload").toggleClass('hide');
-    $("#adicionar_foto").click(function(event){
+    foto = $("#foto-upload").remove().addClass('popup');
+    $("#adicionar-foto").click(function(event){
         event.preventDefault();
-        $("#foto_upload").toggleClass('hide');
+        $("body").append(mask).append(foto);
+        foto.css('top', $(window).height()/2 - foto.height())
+        .css('left', $(window).width()/2 - foto.width()/2);
     });
     
     // Botão que ativa edição dos dados de inscrição
-    $("#ativar_correcao").click(function(event){
+    $("#ativar-correcao").click(function(event){
         if($(this).hasClass('ativo')){
             $(this).removeClass('ativo').val('Ativar correção');
-            $("input:not(#ativar_correcao), select", '#detalhes').attr('disabled', true);
+            $("input:not(#ativar-correcao), select", '#dados').attr('disabled', true);
         }else{
             $(this).addClass('ativo').val('Cancelar correção');
-            $("input:not(#ativar_correcao), select", '#detalhes').attr('disabled', false);
+            $("input:not(#ativar-correcao), select", '#dados').attr('disabled', false);
         }
     });
     
@@ -640,19 +582,7 @@ $(function(){
         
         event.preventDefault();
         
-        $("<div />",{
-            id:'mask',
-            css:{
-            	'background-color':'#000000',
-                'height': $(document).height(),
-                'position': 'absolute',
-                'top': 0,
-                'left': 0,
-                'right': 0,
-                'z-index': 98,
-                'opacity': .5
-            }
-        }).appendTo("body");
+        mask.appendTo("body");
         
         var msg = '';
         if(/.+liberar.+/.test($(this).attr('href'))){
@@ -666,35 +596,36 @@ $(function(){
         }
         
         
-        $("<div />",{
-            id:'popup',
-            css:{
-            	'position': 'fixed',
-                'top': $(window).height()/2 - $("#popup").height()/2,
-                'left': $(window).width()/2 - $("#popup").width()/2,
-                'z-index': 99
-            },
+        popup = $("<div />",{
+            class:'popup',
             html: msg+'<br/><br/>'
-        }).appendTo("#wrap");
-        $('#popup').append(
+        }).appendTo("body")
+        .append(
             $('<a></a>',{
                 href: $(this).attr('href'),
+                class: 'left',
+                css:{
+	            	'margin-left': '80px'
+	            },
                 text: 'Sim'
             })
         ).append(
             $('<a></a>',{
                 href: "#",
+                class: 'right',
+                css:{
+	            	'margin-right': '80px'
+	            },
                 text: 'Não',
                 click: function(){
-                    $("#mask").remove();
-                    $("#popup").remove();
+                    mask.remove();
+                    $(".popup").remove();
                     return false;
                 }
             })
         );
-        $("#popup").css('top', $(window).height()/2 - $("#popup").height()/2);
-        $("#popup").css('left', $(window).width()/2 - $("#popup").width()/2);
-        
+        popup.css('top', $(window).height()/2 - popup.height())
+        .css('left', $(window).width()/2 - popup.width()/2);
     });
 });
 </script>
