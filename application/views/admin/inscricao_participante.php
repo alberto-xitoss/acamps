@@ -1,4 +1,4 @@
-<div id="form">
+<div id="form" class="wrap">
 <h2>Formulário de Inscrição > Participante</h2>
     <?php if(isset($erro) && $erro): ?>
         <div class="erro_onsubmit">
@@ -140,7 +140,7 @@
         'checked'=> set_radio('bl_barracao', '1'),
     ));
     echo form_label('Sim','bl_barracao_s');
-    echo nbs(8);
+    echo nbs(5);
     echo form_radio(array(
         'name'=>'bl_barracao',
         'id'=>'bl_barracao_n',

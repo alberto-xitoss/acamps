@@ -28,7 +28,7 @@ class Admin extends CI_Controller {
     */
     function __construct() {
         parent::__construct();
-        $this->load->library('session');
+        
     }
     
     /* index
@@ -115,7 +115,7 @@ class Admin extends CI_Controller {
      *
      * Página principal do sistema, com o formulário de busca de inscritos.
     */
-    function buscar($consulta = null){
+    function buscar($consulta = ''){
         
         // Autenticação
         if(!$this->session->userdata('logado')){ // se NÃO está logado

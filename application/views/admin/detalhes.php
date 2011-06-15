@@ -21,11 +21,57 @@
     }
     ?></p>
     <p>Situação: <?php echo $pessoa['ds_status']; ?></p>
-    <br/>
-	<?php if($pessoa['cd_tipo'] != 'v'): // Se não for da Comunidade de Vida ?>
-		<p><a target="_blank" href="<?php echo site_url('/inscricao/boleto/').'/'.md5($pessoa['id_pessoa'].$pessoa['ds_email']) ?>">Imprimir Boleto</a></p>
-	<?php endif ?>
-    <div class="excluir"><?php echo anchor('admin/excluir/'.$pessoa['id_pessoa'], 'Excluir Inscrição', 'class="confirmacao"') ?></div>
+	<div class="comandos">
+		<?php
+			if($pessoa['cd_tipo'] != 'p'){ // Botão Liberação/Cancelar Liberação
+			
+				if($pessoa['id_status'] == '2'){ // Aguardando liberação
+					if($this->session->userdata('permissao') & LIBERACAO){
+						echo anchor('admin/liberar/'.$pessoa['id_pessoa'], 'Liberar', 'class="liberacao confirmacao"');
+					}else{
+						echo '<span class="liberacao" title="Você não tem permissão para liberar inscritos no serviço.">Liberar</span>';
+					}
+				}elseif($pessoa['id_status'] == '1'){ // Liberado, aguardando pagamento
+					if($this->session->userdata('permissao') & LIBERACAO){
+						echo anchor('admin/reverter/'.$pessoa['id_pessoa'], 'Cancelar Liberação', 'class="neg liberacao confirmacao"');
+					}else{
+						echo '<span class="neg liberacao" title="Você não tem permissão para reverter uma liberação.">Cancelar Liberação</span>';
+					}
+				}else{ // Concluído
+					if($pessoa['cd_tipo'] == 'v' && $this->session->userdata('permissao') & LIBERACAO){
+						echo anchor('admin/reverter/'.$pessoa['id_pessoa'], 'Cancelar Liberação', 'class="neg liberacao confirmacao"');
+					}else{
+						echo '<span class="neg liberacao" title="A inscrição foi paga. Não é possível reverter a liberação.">Cancelar Liberação</span>';
+					}
+				}
+			}
+			
+			if($pessoa['cd_tipo'] != 'v'){ // Botão Pagamento/Estornar Pagamento
+			
+				if($pessoa['id_status'] == '1'){ // Aguardando Pagamento
+					if($this->session->userdata('permissao') & PAGAMENTO){
+						echo anchor('admin/pagar/'.$pessoa['id_pessoa'], 'Realizar Pagamento', 'id="pagar" class="pagamento"');
+					}else{
+						echo '<span class="pagamento" title="Você não tem permissão para realizar pagamentos">Realizar Pagamento</span>';
+					}
+				}elseif($pessoa['id_status'] == '2'){ // Aguardando liberação
+					echo '<span class="pagamento" title="A inscrição ainda não foi liberada.">Realizar Pagamento</span>';
+				}else{ // Concluído
+					if($this->session->userdata('permissao') & PAGAMENTO){
+						echo anchor('admin/reverter/'.$pessoa['id_pessoa'], 'Estornar Pagamento', 'class="neg pagamento confirmacao"');
+					}else{
+						echo '<span class="neg pagamento" title="Você não tem permissão para estornar pagamentos.">Estornar Pagamento</span>';
+					}
+				}
+			}
+			
+		?><?php
+		if($pessoa['cd_tipo'] != 'v'): // Se não for da Comunidade de Vida
+			?><a class="boleto" target="_blank" href="<?php echo site_url('/inscricao/boleto/').'/'.md5($pessoa['id_pessoa'].$pessoa['ds_email']) ?>">Imprimir Boleto</a><?php
+		endif;
+			echo anchor('admin/excluir/'.$pessoa['id_pessoa'], 'Excluir Inscrição', 'class="excluir confirmacao"');
+		?>
+    </div>
 </div>
 <?php //if(empty($pessoa['ds_foto'])): ?>
 <div id="foto_upload">
@@ -106,15 +152,13 @@
     <h2>Detalhes da Incrição</h2>
     <?php echo form_open('admin/corrigir/'.$pessoa['id_pessoa']) ?>
     <?php if($this->session->userdata('permissao') & CORRECAO): // Verificando permissão ?>
-        <input type="button" id="ativar_correcao" name="ativar_correcao" value="Ativar correção" />
-        <input type="submit" id="corrigir" name="corrigir" value="Salvar Alterações" class="right" disabled='disabled' />
-        <input type="reset" id="reset" name="reset" value="Reset" class="right" style='margin-right:15px' disabled='disabled' />
+        <input type="button" id="ativar-correcao" name="ativar_correcao" value="Ativar correção" /><input type="submit" id="corrigir" name="corrigir" value="Salvar Alterações" disabled='disabled' /><input type="reset" id="reset" name="reset" value="Reset" class="right" disabled='disabled' />
     <?php endif ?>
     
     <br/><br/>
     <table align="center" width="100%">
         <tr>
-            <th scope="col" width="25%">Nome completo</th>
+            <th scope="col" width="210">Nome completo</th>
             <td><?php echo form_input(array(
                 'name'=>'nm_pessoa',
                 'id'=>'nm_pessoa',
@@ -538,9 +582,41 @@
 <script>
 $(function(){
     
-    // Tabela -> cor sim, cor não
-    $("#detalhes tr:odd").addClass('zebra');
-    
+    mask = $("<div />",{
+        id:'mask',
+        css:{
+        	'background-color':'#000000',
+            'height': $(window).height(),
+            'position': 'fixed',
+            'top': 0,
+            'left': 0,
+            'right': 0,
+            'z-index': 998,
+            'opacity': .5
+        }
+    });
+    $('#mask').live('click',function(){
+    	mask.remove();
+    	foto.remove();
+        $(".popup").remove();
+        return false;
+    });
+	
+    // Formulário de Pagamento
+    $('#pagar').click(function(event){
+    	event.preventDefault();
+    	mask.appendTo('body');
+    	var popup = $("<div />",{
+            class:'popup',
+        }).appendTo("body");
+        
+		$.get($(this).attr('href'), function(resposta) {
+			popup.html(resposta)
+			.css('top', $(window).height()/2 - popup.height()/2)
+        	.css('left', $(window).width()/2 - popup.width()/2);
+		});
+    });
+	
     // Adicionar Foto
     $("#foto_upload").toggleClass('hide');
     $("#adicionar_foto").click(function(event){

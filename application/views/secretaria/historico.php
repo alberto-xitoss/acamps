@@ -1,4 +1,4 @@
-<div class="log secretaria">
+<div class="wrap">
 	<h2>Histórico de Impressão de Etiquetas e Fotos</h2>
 	<?php if(empty($log)): ?>
 		<p>O histórico está vazio. O serviço da secretaria ainda não foi utilizado.</p>
