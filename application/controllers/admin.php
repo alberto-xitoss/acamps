@@ -115,7 +115,7 @@ class Admin extends CI_Controller {
      *
      * Página principal do sistema, com o formulário de busca de inscritos.
     */
-    function buscar($consulta = ''){
+    function buscar($consulta = null){
         
         // Autenticação
         if(!$this->session->userdata('logado')){ // se NÃO está logado
@@ -126,8 +126,12 @@ class Admin extends CI_Controller {
         if($this->input->post('buscar')){
             // Repassando a string de consulta como parâmetro para este método
             // pra que ela apareça na URL.
-            redirect('admin/buscar/'.$this->input->post('consulta'));
-            return;
+			if($this->input->post('consulta') == '*'){
+				$consulta = '';
+			}else{
+				redirect('admin/buscar/'.$this->input->post('consulta'));
+				return;
+			}
         }
         
         $var['resultado'] = false;
@@ -145,6 +149,7 @@ class Admin extends CI_Controller {
                 }
                 
             }else{
+				if($consulta == '*'){ $consulta = ''; }
                 $var['resultado'] = $this->pessoa_model->buscar_por_nome($consulta);
             }
         }
