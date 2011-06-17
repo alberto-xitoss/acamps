@@ -535,10 +535,10 @@ class Pessoa extends CI_Controller {
             $img_config['image_library']     = 'gd2';
             $img_config['source_image']      = $file['full_path'];
             $img_config['maintain_ratio']    = TRUE;
-            if($file['image_width']>100)
-                $img_config['width']         = 100;
-            if($file['image_height']>100)
-                $img_config['height']        = 100;
+            if($file['image_width']>200)
+                $img_config['width']         = 200;
+            if($file['image_height']>200)
+                $img_config['height']        = 200;
             $img_config['quality']           = '100%';
             
             $this->load->library('image_lib', $img_config);

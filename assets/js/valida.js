@@ -55,19 +55,19 @@ var regras = [
     }
 ];
 
-var radioGroups = new Array();
+var radioGroups = [];
 
-function ativarValidacao($form){
+function ativarValidacao($form) {
 
-    allRadios = $('input[type=radio]', $form);
-    while(allRadios.size() > 0){
-        name = allRadios.get(0).name;
+    var allRadios = $('input[type=radio]', $form);
+    while (allRadios.size() > 0) {
+        var name = allRadios.get(0).name;
         radioGroups.push(name);
         allRadios = allRadios.not(document.getElementsByName(name));
     }
 
     // Validação Inline
-    for(i in regras){
+    for (i in regras) {
         $inputs = $('input[type=text].'+regras[i].classe, $form);
         $inputs.bind('change',{regex:regras[i].regex, msg:regras[i].msg},function(event){
             validaTexto(this, event.data.regex, event.data.msg);
