@@ -85,7 +85,7 @@
 
     <p>
     <?php echo form_label('Alimentação?','',array('class'=>'campo'));
-	?><span class="ajuda_icone"></span><span class="ajuda_texto">Você utilizará a alimentação fornecida por nós?</span>
+	?><span class="ajuda_icone" title="Você utilizará a alimentação fornecida por nós?"></span>
     </p>
     <p>
     <?php
@@ -154,7 +154,7 @@
     <p>
     <?php
     echo form_label('Envie sua foto <span style="color:#006bcc">(opcional)</span>','ds_foto',array('class'=>'campo'));
-    ?><span class="ajuda_icone"></span><span class="ajuda_texto">Tamanho máximo da imagem: 400x400 ou 2MB<br/>Formatos aceitos: bmp|jpg|png|gif</span>
+    ?><span class="ajuda_icone" title="Tamanho máximo da imagem: 400x400 ou 2MB<br/>Formatos aceitos: bmp|jpg|png|gif"></span>
     </p>
     <p>
     <?php
@@ -192,15 +192,14 @@
 			buttonImageOnly: true
 		});
 
-       $(".ajuda_icone").hover(function(){
-            $(this).siblings('.ajuda_texto').stop().attr('style','').animate({
-            opacity: 'show'
-            },150);
-        },function(){
-            $(this).siblings('.ajuda_texto').stop().attr('style','').animate({
-            opacity: 'hide'
-            },150);
-        });
+       $(".ajuda_icone").tipTip({
+			maxWidth: '300px',
+			edgeOffset: 8,
+			defaultPosition: 'right',
+			delay: 0,
+			fadeIn: 150,
+			fadeOut: 150
+		});
     })
 
 </script>

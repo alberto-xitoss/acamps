@@ -57,7 +57,7 @@ input[type=button], input[type=submit], input[type=reset]{
 	background-image:     -ms-linear-gradient(top, #BDC6D2, #E6ECF1); 
 	background-image:      -o-linear-gradient(top, #BDC6D2, #E6ECF1); 
 	background-image:         linear-gradient(top, #BDC6D2, #E6ECF1);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#BDC6D2', EndColorStr='#E6ECF1'); 
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#BDC6D2', EndColorStr='#E6ECF1');
 }
 input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover{
 	border-color: #000;

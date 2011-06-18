@@ -114,7 +114,7 @@
     <p>
     <?php
     echo form_label('CEP','nr_cep',array('class'=>'campo'));
-    ?><span class="ajuda_icone"></span><span class="ajuda_texto">Exemplo:<br/>&nbsp;60822-520 ou 60822520</span>
+    ?><span class="ajuda_icone" title="Exemplo:<br/>&nbsp;60822-520 ou 60822520"></span>
     </p>
     <p>
     <?php
@@ -169,7 +169,7 @@
         'class'=>'obrigatorio'
     ));
     echo form_label('Seminário','bl_seminario_s');
-    ?><span class="ajuda_icone"></span><span class="ajuda_texto">Marque esta opção se você nunca fez um Seminário de Vida no Espírito Santo.</span><?php
+    ?><span class="ajuda_icone" title="Marque esta opção se você nunca fez um Seminário de Vida no Espírito Santo."></span><?php
     echo nbs(8);
     echo form_radio(array(
         'name'=>'bl_seminario',
@@ -179,12 +179,12 @@
         'class'=>'obrigatorio'
     ));
     echo form_label('Aprofundamento','bl_seminario_a');
-    ?><span class="ajuda_icone"></span><span class="ajuda_texto">Marque esta opção se você já participou de um Seminário de Vida no Espírito Santo e deseja fazer um dos cursos de aprofundamento.</span>
+    ?><span class="ajuda_icone" title="Marque esta opção se você já participou de um Seminário de Vida no Espírito Santo e deseja fazer um dos cursos de aprofundamento."></span>
     </p>
     <p>
     <?php
     echo form_label('Alimentação?','',array('class'=>'campo'));
-    ?><span class="ajuda_icone"></span><span class="ajuda_texto">Você utilizará a alimentação fornecida por nós?</span>
+    ?><span class="ajuda_icone" title="Você utilizará a alimentação fornecida por nós?"></span>
     </p>
     <p>
     <?php
@@ -222,7 +222,7 @@
         'class'=>'obrigatorio'
     ));
     echo form_label('Sim','bl_barracao_s');
-    ?><span class="ajuda_icone"></span><span class="ajuda_texto">Marque esta opção se você for utilizar a barraca coletiva.</span><?php
+    ?><span class="ajuda_icone" title="Marque esta opção se você for utilizar a barraca coletiva."></span><?php
     echo nbs(8);
     echo form_radio(array(
         'name'=>'bl_barracao',
@@ -232,7 +232,7 @@
         'class'=>'obrigatorio'
     ));
     echo form_label('Não','bl_barracao_n');
-    ?><span class="ajuda_icone"></span><span class="ajuda_texto">Marque esta opção se você possui e irá utilizar uma barraca particular.</span>
+    ?><span class="ajuda_icone" title="Marque esta opção se você possui e irá utilizar uma barraca particular."></span>
     </p>
     <p>
     <?php
@@ -439,7 +439,7 @@
     <p>
     <?php
     echo form_label('Telefone para Emergência (1)','nr_emergencia1',array('class'=>'campo'));
-    ?><span class="ajuda_icone"></span><span class="ajuda_texto">Coloque aqui um número de telefone para ligarmos em caso de emergência.</span>
+    ?><span class="ajuda_icone" title="Coloque aqui um número de telefone para ligarmos em caso de emergência."></span>
     </p>
     <p>
     <?php
@@ -454,7 +454,7 @@
     <p>
     <?php
     echo form_label('Nome do Responsável (1)','nm_emergencia1',array('class'=>'campo'));
-    ?><span class="ajuda_icone"></span><span class="ajuda_texto">Coloque aqui o nome da pessoa com quem devemos falar se ligarmos para o número acima.</span>
+    ?><span class="ajuda_icone" title="Coloque aqui o nome da pessoa com quem devemos falar se ligarmos para o número acima."></span>
     </p>
     <p>
     <?php
@@ -469,7 +469,7 @@
     <p>
     <?php
     echo form_label('Telefone para Emergência (2) <span style="color:#006bcc">(opcional)</span>','nr_emergencia2',array('class'=>'campo'));
-    ?><span class="ajuda_icone"></span><span class="ajuda_texto">Coloque aqui outro número de telefone para ligarmos em caso de emergência.</span>
+    ?><span class="ajuda_icone" title="Coloque aqui outro número de telefone para ligarmos em caso de emergência."></span>
     </p>
     <p>
     <?php
@@ -484,7 +484,7 @@
     <p>
     <?php
     echo form_label('Nome do Responsável (2) <span style="color:#006bcc">(opcional)</span>','nm_emergencia2',array('class'=>'campo'));
-    ?><span class="ajuda_icone"></span><span class="ajuda_texto">Coloque aqui o nome da pessoa com quem devemos falar se ligarmos para o número acima.</span>
+    ?><span class="ajuda_icone" title="Coloque aqui o nome da pessoa com quem devemos falar se ligarmos para o número acima."></span>
     </p>
     <p>
     <?php
@@ -502,7 +502,7 @@
     <p>
     <?php
     echo form_label('Envie sua foto','ds_foto',array('class'=>'campo'));
-    ?><span class="ajuda_icone"></span><span class="ajuda_texto">O tamanho máximo aceito para a foto é 2MB.<br/>Formatos aceitos: bmp|jpg|png|gif</span>
+    ?><span class="ajuda_icone" title="O tamanho máximo aceito para a foto é 2MB.<br/>Formatos aceitos: bmp|jpg|png|gif"></span>
     </p>
     <p>
     <?php
@@ -513,9 +513,9 @@
         'size'=>50
     ));
     ?></p>
-	<div class="info" style="margin-top:2em;"><p>Antes de concluir sua inscrição diga-nos <strong>como ficou sabendo do Acamp's</strong>?</p>
 	<?php
-		/*foreach ($divulgacao as $meio) {
+		/*<div class="info" style="margin-top:2em;"><p>Antes de concluir sua inscrição diga-nos <strong>como ficou sabendo do Acamp's</strong>?</p>
+	foreach ($divulgacao as $meio) {
 			echo '<p>';
 			echo form_radio(array(
 				'name'    => 'meio',
@@ -525,9 +525,9 @@
 			));
 			echo form_label($meio['nm_meio'],'meio_'.$meio['id_meio']);
 			echo '</p>';
-		}*/
+		}
+	</div>*/
 	?>
-	</div>
     <p class="center"><?php echo form_submit('confirmar','Confirmar'); ?></p>
     <?php echo form_close();?>
 </div>
@@ -569,16 +569,15 @@
 			buttonImage: "<?php echo assets_url('image') ?>calendar.png",
 			buttonImageOnly: true
 		});
-
-        $(".ajuda_icone").hover(function(){
-            $(this).next('.ajuda_texto').stop().attr('style','').animate({
-            opacity: 'show'
-            },150);
-        },function(){
-            $(this).next('.ajuda_texto').stop().attr('style','').animate({
-            opacity: 'hide'
-            },150);
-        });
+		
+		$(".ajuda_icone").tipTip({
+			maxWidth: '300px',
+			edgeOffset: 8,
+			defaultPosition: 'right',
+			delay: 0,
+			fadeIn: 150,
+			fadeOut: 150
+		});
     })
     
 </script>

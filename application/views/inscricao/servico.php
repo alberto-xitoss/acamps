@@ -123,7 +123,7 @@
     <p>
     <?php
     echo form_label('CEP','nr_cep',array('class'=>'campo'));
-    ?><span class="ajuda_icone"></span><span class="ajuda_texto">Exemplo:<br/>&nbsp;60822-520 ou 60822520</span>
+    ?><span class="ajuda_icone" title="Exemplo:<br/>&nbsp;60822-520 ou 60822520"></span>
     </p>
     <p>
 	<?php
@@ -167,7 +167,7 @@
     <p>
     <?php
     echo form_label('Alimentação?','',array('class'=>'campo'));
-    ?><span class="ajuda_icone"></span><span class="ajuda_texto">Você utilizará a alimentação fornecida por nós?</span>
+    ?><span class="ajuda_icone" title="Você utilizará a alimentação fornecida por nós?"></span>
     </p>
     <p>
     <?php
@@ -205,7 +205,7 @@
         'class'=>'obrigatorio'
     ));
     echo form_label('Sim','bl_barracao_s');
-    ?><span class="ajuda_icone" style="left: 0;"></span><span class="ajuda_texto">Marque esta opção se você for utilizar a barraca coletiva.</span>
+    ?><span class="ajuda_icone" title="Marque esta opção se você for utilizar a barraca coletiva."></span>
     <?php
     echo nbs(8);
     echo form_radio(array(
@@ -216,7 +216,7 @@
         'class'=>'obrigatorio'
     ));
     echo form_label('Não','bl_barracao_n');
-    ?><span class="ajuda_icone" style="left: 0;"></span><span class="ajuda_texto">Marque esta opção se você possui e irá utilizar uma barraca particular.</span>
+    ?><span class="ajuda_icone" title="Marque esta opção se você possui e irá utilizar uma barraca particular."></span>
     </p>
     <p>
     <?php
@@ -368,7 +368,7 @@
     <p>
     <?php
     echo form_label('Telefone para Emergência (1)','nr_emergencia1',array('class'=>'campo'));
-    ?><span class="ajuda_icone"></span><span class="ajuda_texto">Coloque aqui um número de telefone para ligarmos em caso de emergência.</span>
+    ?><span class="ajuda_icone" title="Coloque aqui um número de telefone para ligarmos em caso de emergência."></span>
     </p>
     <p>
     <?php
@@ -383,7 +383,7 @@
     <p>
     <?php
     echo form_label('Nome do Responsável (1)','nm_emergencia1',array('class'=>'campo'));
-    ?><span class="ajuda_icone"></span><span class="ajuda_texto">Coloque aqui o nome da pessoa com quem devemos falar se ligarmos para o número acima.</span>
+    ?><span class="ajuda_icone" title="Coloque aqui o nome da pessoa com quem devemos falar se ligarmos para o número acima."></span>
     </p>
     <p>
     <?php
@@ -398,7 +398,7 @@
     <p>
     <?php
     echo form_label('Telefone para Emergência (2) <span style="color:#006bcc">(opcional)</span>','nr_emergencia2',array('class'=>'campo'));
-    ?><span class="ajuda_icone"></span><span class="ajuda_texto">Coloque aqui outro número de telefone para ligarmos em caso de emergência.</span>
+    ?><span class="ajuda_icone" title="Coloque aqui outro número de telefone para ligarmos em caso de emergência."></span>
     </p>
     <p>
     <?php
@@ -413,7 +413,7 @@
     <p>
     <?php
     echo form_label('Nome do Responsável (2) <span style="color:#006bcc">(opcional)</span>','nm_emergencia2',array('class'=>'campo'));
-    ?><span class="ajuda_icone"></span><span class="ajuda_texto">Coloque aqui o nome da pessoa com quem devemos falar se ligarmos para o número acima.</span>
+    ?><span class="ajuda_icone" title="Coloque aqui o nome da pessoa com quem devemos falar se ligarmos para o número acima."></span>
     </p>
     <p>
     <?php
@@ -431,7 +431,7 @@
     <p>
     <?php
     echo form_label('Envie sua foto','ds_foto',array('class'=>'campo'));
-    ?><span class="ajuda_icone"></span><span class="ajuda_texto">Tamanho máximo da imagem: 400x400 ou 2MB<br/>Formatos aceitos: bmp|jpg|png|gif</span>
+    ?><span class="ajuda_icone" title="Tamanho máximo da imagem: 400x400 ou 2MB<br/>Formatos aceitos: bmp|jpg|png|gif"></span>
     </p>
     <p>
     <?php
@@ -476,15 +476,14 @@
 			buttonImageOnly: true
 		});
 
-       $(".ajuda_icone").hover(function(){
-            $(this).next('.ajuda_texto').stop().attr('style','').animate({
-				opacity: 'show'
-            },150);
-        },function(){
-            $(this).next('.ajuda_texto').stop().attr('style','').animate({
-				opacity: 'hide'
-            },150);
-        });
+       $(".ajuda_icone").tipTip({
+			maxWidth: '300px',
+			edgeOffset: 8,
+			defaultPosition: 'right',
+			delay: 0,
+			fadeIn: 150,
+			fadeOut: 150
+		});
     })
 
 </script>

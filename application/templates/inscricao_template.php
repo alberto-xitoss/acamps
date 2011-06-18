@@ -25,29 +25,16 @@ if(ENVIRONMENT == 'production'){
 {js}
 </head>
 <body>
-  <header class="wrap">
-      <h1 id="logo" class="ir"></h1>
-  </header>
-  <nav class="wrap clearfix">
-      <ul>
-          <li><?php
-              echo anchor('/','Página Inicial');
-          ?></li><li><?php
-              echo anchor('/inscricao/adote','Adote um Jovem');
-          ?></li><?php //<li> echo anchor('http://www.acampsfortaleza.blogspot.com/',"Blog Acamp's"); </li>?><li><?php
-              echo anchor('http://www.comshalom.org','comshalom.org');
-          ?></li>
-      </ul>
-    </nav>
-    <div class="wrap">
-        <div id="conteudo" class="clearfix">
-            {conteudo}
-        </div>
-    </div>
-  <footer>
-    <div class="wrap center">
-      Comunidade Católica Shalom &copy; Todos os direitos reservados
-    </div>
-  </footer>
+	<header class="wrap">
+		<h1 id="logo" class="ir"><?php
+			echo anchor('/','Página Inicial');
+		?></h1>
+	</header>	
+	<div id="conteudo" class="wrap clearfix">
+		{conteudo}
+	</div>
+	<footer>
+		<div class="wrap center">Comunidade Católica Shalom &copy; Todos os direitos reservados</div>
+	</footer>
 </body>
 </html>

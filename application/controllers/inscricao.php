@@ -18,10 +18,13 @@ class Inscricao extends CI_Controller{
     function index(){
         // Como a página inicial tem muitas diferenças das páginas de formulário,
         // usamos o template padrão e fazemos a página separadamente
-        //$this->template = 'default';
-		
+        $this->template = 'default';
         $this->load->view('inscricao/home');
     }
+	
+	function v80(){
+		$this->load->view('inscricao/home', array('velho'=>true));
+	}
 
     function info($tipo){
         $this->title = "Acamp's > Regras de Participação";
@@ -106,6 +109,8 @@ class Inscricao extends CI_Controller{
         $this->js  []= 'valida';
         $this->css []= 'jquery.ui.theme';
         $this->css []= 'jquery.ui.datepicker';
+		$this->js  []= 'jquery.tiptip.min';
+        $this->css []= 'tiptip';
         
         $form_data['cidades'] = $this->cidade->listar();
 		$form_data['cidades'] = array_reverse($form_data['cidades'], true);
@@ -170,6 +175,8 @@ class Inscricao extends CI_Controller{
         $this->js  []= 'valida';
         $this->css []= 'jquery.ui.theme';
         $this->css []= 'jquery.ui.datepicker';
+		$this->js  []= 'jquery.tiptip.min';
+        $this->css []= 'tiptip';
 		
 		$form_data['cidades'] = $this->cidade->listar();
 		$form_data['cidades'] = array_reverse($form_data['cidades'], true);
@@ -234,6 +241,8 @@ class Inscricao extends CI_Controller{
         $this->js  []= 'valida';
         $this->css []= 'jquery.ui.theme';
         $this->css []= 'jquery.ui.datepicker';
+		$this->js  []= 'jquery.tiptip.min';
+        $this->css []= 'tiptip';
 
 		$form_data['servicos'] = $this->servico->listar();
 		$form_data['servicos'] = array_reverse($form_data['servicos'], true);

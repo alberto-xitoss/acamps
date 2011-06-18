@@ -1,7 +1,10 @@
-/* Estilos da página de inscrições */
+/* Estilos da pï¿½gina de inscriï¿½ï¿½es */
 body{
-    background: url('../image/paper.jpg');
+    background: url('../image/mosaico.jpg');
     margin: 16px 0;
+}
+body.v80{
+	background: url('../image/mosaico80.jpg');
 }
 a { color: #000; text-decoration:none; }
 a:hover { color: #9a810b; }
@@ -14,63 +17,57 @@ a:hover { color: #9a810b; }
 	
     }
 	#logo {
-	    background-image: url("../image/acamps_logo.png");
-	    width: 207px;
-	    height: 64px;
-	    margin: 0 0 0 30px;
+	    background-image: url("../image/acamps_logo2.png");
+	    width: 369px;
+	    height: 106px;
+	    margin: 0;
+	}
+	#logo.home {
+	    background-image: url("../image/acamps_logo2.png");
+	    width: 369px;
+	    height: 136px;
+	    margin: 105px 0 60px -8px;
+	}
+		#logo a{
+			display: block;
+			width: 100%;
+			height: 100%;
+		}
+	#participante {
+		background-image: url("../image/inscreva-se.png");
+	    width: 395px;
+	    height: 83px;
+	    position: absolute;
+	    top: 26px;
+	    right: -7px;
 	}
     footer{
 		margin: 1em 0 0;
 		font-style: italic;
 		text-shadow: 1px 1px 0px #fff;
     }
-    nav {
-	
-    }
-	nav ul{
-	    float: right;
-	    margin-top: -24px;
-	}
-		nav a{
-			font-size: 1.1em;
-			font-family: "Cuprum", verdana;
-		}
-	    nav li{
-			float: left;
-			background: url("../image/branco_opac75.png");
-			padding: 8px 20px;
-	    }
-	    nav li:hover{
-			background: #fff;
-			-moz-box-shadow: 0px 0px 2px #fff;
-			-webkit-box-shadow: 0px 0px 2px #fff;
-			box-shadow: 0px 0px 2px #fff;
-	    }
-	    nav li:first-child{
-			-moz-border-radius: 8px 0 0 0;
-			-webkit-border-radius: 8px 0 0 0;
-			border-radius: 8px 0 0 0;
-	    }
-	    nav li:last-child{
-			-moz-border-radius: 0 8px 0 0;
-			-webkit-border-radius: 0 8px 0 0;
-			border-radius: 0 8px 0 0;
-	    }
     #conteudo {
 		padding: 30px;
-		background: #fff;
-		-moz-border-radius: 16px 0 16px 16px;
-		-webkit-border-radius: 16px 0 16px 16px;
-		border-radius: 16px 0 16px 16px;
-		-moz-box-shadow: 0px 0px 2px #fff;
-		-webkit-box-shadow: 0px 0px 2px #fff;
-		box-shadow: 0px 0px 2px #fff;
+		background: #fff; background: rgba(255,255,255,.9);
+		border: 2px solid #000;
+		-moz-border-radius: 20px;
+		-webkit-border-radius: 20px;
+		border-radius: 20px;
     }
-	#conteudo a:hover{
-	    
-	}
-	#conteudo ul { margin: 0 0 1em 30px; }
-	#conteudo ol { margin: 0 0 1em 30px; list-style-type: decimal; }
+		#conteudo nav ul{
+			margin: -30px 0 20px -30px;
+		    float: left;
+		}
+			nav a{
+				font-size: 1.1em;
+				font-family: verdana;
+			}
+		    nav li{
+				float: left;
+				padding: 8px 20px;
+		    }
+		#conteudo ul { margin: 0 0 1em 30px; }
+		#conteudo ol { margin: 0 0 1em 30px; list-style-type: decimal; }
     
     h1, h2, h3{
 		font-family: 'Arvo', verdana;
@@ -92,40 +89,19 @@ a:hover { color: #9a810b; }
         border-top: 1px solid #9DBC87;
         margin: 30px 0;
     }
-    #home {
-
-    }
-	#video{
-	    /*width: 320px;
-	    height: 240px;*/
+	#cartaz{
 	    float: left;
 	    margin-right: 30px;
-	    background-color: #E2F4DC;
 	}
-	#form_links{
-	    width: 390px;
-	    padding-top: 20px;
-	    float: left;
+	#form-links{
+	    font-size: 140%;
+	    text-shadow: 1px 1px 2px rgba(0,0,0, 0.7);
 	}
-	#form_links{
-	    font-family: 'Arvo', verdana;
-	}
-	    #form_links *{
-			text-shadow: 1px 1px 2px rgba(0,0,0, 0.7);
-	    }
-	    #form_links h2{
-			font-size: 2em;
-			margin-bottom: 20px;
-			text-align: left;
-			font-weight: normal;
-	    }
-	    #link_participante{
-			font-size: 4em;
-			margin-bottom: 30px;
-			display: inline-block;
-	    }
-	    #link_servico, #link_cv{
-			font-size: 1.4em;
+		#form-links p{
+			margin-bottom: 0.5em;
+		}
+	    .adote-um-jovem{
+	    	font-size: 120%;
 	    }
 	#boleto{
 	    font-weight: bold;
@@ -188,8 +164,7 @@ a:hover { color: #9a810b; }
 			float: left;
             font-size: .9em;
             width: 40%;
-            background-color: #d7e7ff;
-            border: 1px solid #6B97BF;
+            background-color: #d7e7fCBFF93          border: 1px solid #6B97BF;
             padding: 8px;
             top: 200%;
             left: 0;
@@ -238,17 +213,31 @@ a:hover { color: #9a810b; }
 	    margin-top: 30px;
 	    padding: 6px 22px;
 	    cursor: pointer;
-	    background-color: #84CC3D;
-            border: 1px solid #000;
-            -moz-border-radius: 100px;
-            -webkit-border-radius: 100px;
-            border-radius: 100px;
-            -moz-box-shadow: 2px 2px 5px rgba(0,0,0, 0.2);
-            -webkit-box-shadow: 2px 2px 5px rgba(0,0,0, 0.2);
-            box-shadow: 2px 2px 5px rgba(0,0,0, 0.2);
+	    background-color: #6BB223;
+		background-image: -webkit-gradient(linear, left top, left bottom, from(#6BB223), to(#AFF469)); 
+		background-image: -webkit-linear-gradient(top, #6BB223, #AFF469); 
+		background-image:    -moz-linear-gradient(top, #6BB223, #AFF469); 
+		background-image:     -ms-linear-gradient(top, #6BB223, #AFF469); 
+		background-image:      -o-linear-gradient(top, #6BB223, #AFF469); 
+		background-image:         linear-gradient(top, #6BB223, #AFF469);
+		filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#6BB223', EndColorStr='#AFF469');
+        border: 1px solid #000;
+        -moz-border-radius: 100px;
+        -webkit-border-radius: 100px;
+        border-radius: 100px;
+        -moz-box-shadow: 2px 2px 5px rgba(0,0,0, 0.2);
+        -webkit-box-shadow: 2px 2px 5px rgba(0,0,0, 0.2);
+        box-shadow: 2px 2px 5px rgba(0,0,0, 0.2);
 	}
 	input[type=submit]:hover, input[type=button]:hover, .button:hover{
 	    background-color: #9DE554;
+		background-image: -webkit-gradient(linear, left top, left bottom, from(#9DE554), to(#E3FFC6)); 
+		background-image: -webkit-linear-gradient(top, #9DE554, #E3FFC6); 
+		background-image:    -moz-linear-gradient(top, #9DE554, #E3FFC6); 
+		background-image:     -ms-linear-gradient(top, #9DE554, #E3FFC6); 
+		background-image:      -o-linear-gradient(top, #9DE554, #E3FFC6); 
+		background-image:         linear-gradient(top, #9DE554, #E3FFC6);
+		filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#9DE554', EndColorStr='#E3FFC6');
 	    text-shadow: 0px 0px 2px #fff;
 	    color: #000000;
 	}
@@ -259,24 +248,3 @@ a:hover { color: #9a810b; }
 	    float: left;
 	    margin-right: 16px;
 	}
-    #buscar-inscricao{
-	margin: 0 auto;
-	width: 600px;
-    }
-	#buscar-inscricao label{
-	    display: inline-block;
-	    margin-right: 10px;
-	}
-	#buscar-inscricao input[type=text]{
-		width: 260px;
-		/*border: 1px solid #85A872;
-		padding: 4px 2px;
-		-moz-box-shadow: 0px 0px 2px rgba(0,0,0, 0.3);
-		-webkit-box-shadow: 0px 0px 2px rgba(0,0,0, 0.3);
-		box-shadow: 0px 0px 2px rgba(0,0,0, 0.3);*/
-	}
-	/*#buscar-inscricao input[type=text]:hover, #buscar-inscricao input[type=text]:focus{
-	    border-color: #4A6B39;
-	}*/
-    
-    
