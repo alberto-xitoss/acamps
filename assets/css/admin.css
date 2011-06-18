@@ -256,7 +256,7 @@ menu ul { list-style:none; margin:0; padding:0; white-space: nowrap;}
  */
 #detalhes #cabecalho{
 	border-bottom: 1px solid #C8C9CA;
-	height: 100px;
+	height: 160px;
 	padding: 20px 16px;
 	position: relative;
 }

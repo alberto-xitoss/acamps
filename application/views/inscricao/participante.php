@@ -9,7 +9,7 @@
 <?php echo form_open_multipart('inscricao/participante'); ?>
     <p>
     <?php
-        echo form_label('Nome Completo','nm_pessoa',array('class'=>'campo'));
+		echo form_label('Nome Completo','nm_pessoa',array('class'=>'campo'));
 	?>
     </p>
     <p>
@@ -513,22 +513,30 @@
         'size'=>50
     ));
     ?></p>
+	<div id="pesquisa"class="info" ><p>Antes de concluir sua inscrição diga-nos <strong>como ficou sabendo do Acamp's</strong>?</p>
 	<?php
-		/*<div class="info" style="margin-top:2em;"><p>Antes de concluir sua inscrição diga-nos <strong>como ficou sabendo do Acamp's</strong>?</p>
-	foreach ($divulgacao as $meio) {
-			echo '<p>';
+		echo '<ul>';
+		foreach ($divulgacao as $meio) {
+			echo '<li>';
 			echo form_radio(array(
-				'name'    => 'meio',
+				'name'    => 'id_meio',
 				'id'      => 'meio_'.$meio['id_meio'],
 				'value'   => $meio['id_meio'],
 				'checked' => set_radio('meio', $meio['id_meio']),
 			));
 			echo form_label($meio['nm_meio'],'meio_'.$meio['id_meio']);
-			echo '</p>';
+			echo '</li>';
 		}
-	</div>*/
+		echo '</ul>';
 	?>
-    <p class="center"><?php echo form_submit('confirmar','Confirmar'); ?></p>
+		<p><?php echo form_label('Alguma observação?','nm_obs',array('class'=>'campo')) ?></p>
+		<p><?php echo form_input(array(
+			'name'=> 'nm_obs',
+			'id'=> 'nm_obs',
+			'value'=> set_value('nm_obs')
+		)) ?></p>
+	</div>
+    <p class="center"><?php echo form_submit('confirmar','confirmar'); ?></p>
     <?php echo form_close();?>
 </div>
 <script>

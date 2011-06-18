@@ -52,6 +52,19 @@ class Inscricao extends CI_Controller{
                 
                 $dados = $_POST;
                 unset($dados['confirmar']);
+				
+				// Pesquisa de divulgação
+				$pesquisa = array();
+				if(isset($_POST['id_meio'])){
+					$pesquisa['id_meio'] = $_POST['id_meio'];
+					unset($dados['id_meio']);
+				}
+				if(isset($_POST['nm_obs'])){
+					$pesquisa['nm_obs'] = $_POST['nm_obs'];
+					unset($dados['nm_obs']);
+				}
+				$this->load->model('divulgacao');
+				$this->divulgacao->inserir($pesquisa);
                 
 				$dados['cd_tipo'] = 'p';
 				$dados['id_missao'] = $this->config->item('missao');
@@ -117,6 +130,8 @@ class Inscricao extends CI_Controller{
 		$form_data['cidades'][0] = 'Selecione...';
 		$form_data['cidades'] = array_reverse($form_data['cidades'], true);
 		
+		$this->load->model('divulgacao');
+		$form_data['divulgacao'] = $this->divulgacao->listar_meios();
         $this->load->view('inscricao/participante', $form_data);
     }
 
@@ -346,10 +361,10 @@ class Inscricao extends CI_Controller{
             $img_config['image_library']     = 'gd2';
             $img_config['source_image']      = $file['full_path'];
             $img_config['maintain_ratio']    = TRUE;
-            if($file['image_width']>200)
-                $img_config['width']         = 200;
-            if($file['image_height']>200)
-                $img_config['height']        = 200;
+            if($file['image_width']>160)
+                $img_config['width']         = 160;
+            if($file['image_height']>160)
+                $img_config['height']        = 160;
             $img_config['quality']           = '100%';
             
             $this->load->library('image_lib', $img_config);
@@ -380,9 +395,8 @@ class Inscricao extends CI_Controller{
         "<p><strong>IMPORTANTE - Guarde o número de sua inscrição!</strong></p>".
         "<br/>".
         "<p>Pagar via Boleto no Shalom da Paz, Rua Maria Tomásia, n&deg; 72, Aldeota, Fortaleza:</p>".
-        "<p><a href=\"http://projeto.comshalom.org/acamps/fortaleza/inscricao/boleto/".md5($id_pessoa.$ds_email)."\">Imprimir Boleto</a></p>".
+        "<p><a href=\"http://projeto.comshalom.org/acamps/".$this->config->item('missao_dir')."/inscricao/boleto/".md5($id_pessoa.$ds_email)."\">Imprimir Boleto</a></p>".
         "</html></body>";
-        // FIXME - tornar dinâmico para as diferentes missões   ^
         //***************************************************   
         $this->email->message($msg);
         
