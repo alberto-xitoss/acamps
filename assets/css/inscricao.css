@@ -40,6 +40,8 @@ a:hover { color: #9a810b; }
 	    position: absolute;
 	    top: 26px;
 	    right: -7px;
+	}#participante:hover {
+		background-image: url("../image/inscreva-se-hover.png");
 	}
     footer{
 		margin: 1em 0 0;
