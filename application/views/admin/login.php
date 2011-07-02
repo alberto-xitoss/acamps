@@ -16,7 +16,7 @@
         'maxlength'   => '20'
     )); ?>
     </p>
-    <p>
+    <p class="center">
     <?php echo form_submit('login','Login'); ?>
     </p>
     <?php echo form_close(); ?>

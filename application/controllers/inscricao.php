@@ -12,7 +12,6 @@ class Inscricao extends CI_Controller{
 		$this->load->model('cidade');
         $this->load->model('servico');
         $this->load->model('setor');
-		$this->load->library('firephp');
 	}
 
     function index(){

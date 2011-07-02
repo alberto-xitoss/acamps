@@ -84,7 +84,6 @@ class Admin extends CI_Controller {
         }
         
         $this->template = 'default';
-        $this->css[1] = 'login'; //Substituindo o css 'admin'
         $this->load->helper('form');
         $this->load->view('admin/login', $view_data);
         
