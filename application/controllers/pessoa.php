@@ -480,7 +480,7 @@ class Pessoa extends CI_Controller {
         // Campos apenas do formulário de participante
         if($cd_tipo == 'p'){
 			/*** CAMPOS OBRIGATÓRIOS ***/
-			$this->form_validation->set_rules('dt_nascimento', 'Data de nascimento', 'required');
+			$this->form_validation->set_rules('dt_nascimento', 'Data de nascimento', 'callback_data|required');
             $this->form_validation->set_rules('bl_seminario','Seminário', 'required');
 			/*** CAMPOS OBRIGATÓRIOS ***/
         }
@@ -518,7 +518,23 @@ class Pessoa extends CI_Controller {
 
         return $this->form_validation->run();
     }
-	
+	function data($str){
+        $data = preg_split('/^(0?[1-9]|[1-2][0-9]|3[0-1])\/(0?[1-9]|1[0-2])\/((?:19|20)?\d{2})$/', $str, -1, PREG_SPLIT_NO_EMPTY|PREG_SPLIT_DELIM_CAPTURE);
+        if(count($data) == 3){
+            if(checkdate($data[1], $data[0], $data[2])){
+                if($this->db->platform() == 'postgre'){
+                    return $data[0].' '.$data[1].' '.$data[2];
+                }elseif($this->db->platform() == 'mysql'){
+                    return $data[2].'-'.$data[1].'-'.$data[0];
+                }
+                
+                // FIXME - Quando há erro no form o campo de data é preenchido com este formato modificado, devemos retornar no formato dd/mm/aaaa
+            }
+        }
+        // ELSE
+        $this->form_validation->set_message('data', 'A data deve estar no formato: 20/04/1989');
+        return false;
+    }
     function _preparar_imagem($id_pessoa){
 		//Obtendo as configurações do arquivo 'config/acamps.php'
         $upload = $this->config->item('upload');
