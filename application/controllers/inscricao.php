@@ -94,7 +94,7 @@ class Inscricao extends CI_Controller{
                 $caminho_foto = $this->_preparar_imagem($view_data['id_pessoa']);
                 if($caminho_foto){
                     $this->pessoa_model->adicionar_foto($view_data['id_pessoa'], $caminho_foto);
-                    $view_data['ds_foto'] = $this->config->item('fotos_url').$caminho_foto;
+                    $view_data['ds_foto'] = $this->config->item('base_url').$this->config->item('fotos_dir').$caminho_foto;
                 }
                 // ---------------------------------------------------
                 
@@ -165,7 +165,7 @@ class Inscricao extends CI_Controller{
                 $caminho_foto = $this->_preparar_imagem($view_data['id_pessoa']);
                 if($caminho_foto){
                     $this->pessoa_model->adicionar_foto($view_data['id_pessoa'], $caminho_foto);
-                    $view_data['ds_foto'] = $this->config->item('fotos_url').$caminho_foto;
+                    $view_data['ds_foto'] = $this->config->item('base_url').$this->config->item('fotos_dir').$caminho_foto;
                 }
                 // ---------------------------------------------------
 
@@ -237,7 +237,7 @@ class Inscricao extends CI_Controller{
 				$caminho_foto = $this->_preparar_imagem($view_data['id_pessoa']);
 				if($caminho_foto){
 					$this->pessoa_model->adicionar_foto($view_data['id_pessoa'], $caminho_foto);
-					$view_data['ds_foto'] = $this->config->item('fotos_url').$caminho_foto;
+					$view_data['ds_foto'] = $this->config->item('base_url').$this->config->item('fotos_dir').$caminho_foto;
 				}
 				
                 // ---------------------------------------------------

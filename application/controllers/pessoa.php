@@ -37,38 +37,36 @@ class Pessoa extends CI_Controller {
      *
      * @param - id_pessoa
     */
-    function detalhes($id_pessoa = null){
-        
-        // Se não for passado um número de inscrição
-        if(empty($id_pessoa)){
-            redirect('admin/buscar');
-            return;
-        }
-        
-        //----------------------------------------------------------------------
-        
-        $this->load->model('pessoa_model');
-        $pessoa = $this->pessoa_model->buscar_por_id($id_pessoa, true);
-        
-        if($pessoa){
-            //$this->load->helper(array('form','url'));
-            
-            if($pessoa['cd_tipo'] == 'p'){
-                $this->load->model('familia');
-            }else{
-                $this->load->model('servico');
-            }
-            if($pessoa['cd_tipo'] == 'v'){
-                    $this->load->model('setor');
-            }else{
-                $this->load->model('cidade');
-            }
-			
-            $this->load->view('admin/detalhes', array('pessoa'=>$pessoa));
-        }else{
-            redirect('admin/buscar');
-        }
-    }
+	function detalhes($id_pessoa = null){
+
+		// Se não for passado um número de inscrição
+		if(empty($id_pessoa)){
+			redirect('admin/buscar');
+			return;
+		}
+
+		//----------------------------------------------------------------------
+
+		$this->load->model('pessoa_model');
+		$pessoa = $this->pessoa_model->buscar_por_id($id_pessoa, true);
+
+		if($pessoa){
+			if($pessoa['cd_tipo'] == 'p'){
+				$this->load->model('familia');
+			}else{
+				$this->load->model('servico');
+			}
+			if($pessoa['cd_tipo'] == 'v'){
+				$this->load->model('setor');
+			}else{
+				$this->load->model('cidade');
+			}
+
+			$this->load->view('admin/detalhes', array('pessoa'=>$pessoa));
+		}else{
+			redirect('admin/buscar');
+		}
+	}
     
     /*
      * function corrigir
