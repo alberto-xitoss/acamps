@@ -13,10 +13,10 @@ index.php
 */cache/!.htaccess
 
 /*/
+/!missao/
 /!application/
 /!assets/
 /!docs/
-/!missão/
 
 # Kubuntu
 *~*.class
