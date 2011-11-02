@@ -4,7 +4,7 @@
 $config['protocol'] = 'smtp';
 $config['smtp_host'] = 'ssl://smtp.gmail.com';
 $config['smtp_port'] = 465;
-$config['smtp_user'] = 'seu.endereço.de.email@comshalom.org';
+$config['smtp_user'] = 'seu.endereï¿½o.de.email@gmail.org';
 $config['smtp_pass'] = 'sua.senha';
 
 $config['mailtype'] = 'html';
