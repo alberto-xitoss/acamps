@@ -24,9 +24,6 @@ $config['upload'] = array(
 // Caminho para a pasta das imagens dos códigos de barras
 $config['barcode_path'] = str_replace('\\','/',FCPATH).'barcode/';
 
-// Caminho para a pasta de cache do Sistema Acamp's
-$config['cache_path'] = str_replace('\\','/',FCPATH).'cache/';
-
 // Diretório que contém as fotos dos inscritos
 $config['fotos_dir'] = 'fotos/';
 
