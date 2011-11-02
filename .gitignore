@@ -7,16 +7,15 @@ index.php
 /application/config/email.php
 
 */logs/log-*.php
-*/logs/!index.html
 */cache/*
 */cache/!index.html
 */cache/!.htaccess
 
-/*/
-/!missao/
-/!application/
-/!assets/
-/!docs/
+*/
+!application/
+!assets/
+!docs/
+!missao/
 
 # Kubuntu
 *~*.class
