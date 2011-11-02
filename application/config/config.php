@@ -16,15 +16,15 @@
 */
 
 if(ENVIRONMENT == 'development'){
-	$config['base_url'] = "URL para a aplicação no servidor de desenvolvimento";
+	$config['base_url'] = "URL para a aplicaï¿½ï¿½o no servidor de desenvolvimento";
 	//Recomendado: $config['base_url']	= 'http://localhost/acamps/'.MISSAO_DIR.'/';
 	
 }elseif(ENVIRONMENT == 'production'){
-	$config['base_url'] = "URL para a aplicação na internet";
+	$config['base_url'] = "URL para a aplicaï¿½ï¿½o na internet";
 	//Recomendado: $config['base_url']	= 'http://'.$_SERVER['SERVER_NAME'].'/acamps/'.MISSAO_DIR.'/';
 	
 }elseif(ENVIRONMENT == 'acamps'){
-	$config['base_url'] = "URL para a aplicação durante o Acampamento";
+	$config['base_url'] = "URL para a aplicaï¿½ï¿½o durante o Acampamento";
 	//Recomendado: $config['base_url']	= 'http://'.$_SERVER['SERVER_NAME'].'/acamps/';
 	
 }else{
@@ -233,7 +233,7 @@ $config['log_date_format'] = 'd/m/Y H:i:s';
 |
 */
 if(defined('CACHE_PATH')){
-	$config['cache_path'] = CACHE_PATH;
+	$config['cache_path'] = str_replace('\\','/',FCPATH).'cache/';
 }else{
 	$config['cache_path'] = '';
 }
@@ -248,7 +248,7 @@ if(defined('CACHE_PATH')){
 | See the user guide for info: http://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
-$config['encryption_key'] = 'String Aleatória De 32 caracteres';
+$config['encryption_key'] = 'String Aleatï¿½ria De 32 caracteres';
 
 /*
 |--------------------------------------------------------------------------
