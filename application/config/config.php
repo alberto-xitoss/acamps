@@ -207,7 +207,7 @@ $config['log_threshold'] = 1;
 |
 */
 if(defined('LOG_PATH')){
-	$config['log_path'] = str_replace('\\','/',FCPATH).'log/';
+	$config['log_path'] = str_replace('\\','/',FCPATH).'logs/';
 }else{
 	$config['log_path'] = '';
 }
