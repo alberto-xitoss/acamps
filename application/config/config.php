@@ -15,21 +15,7 @@
 |
 */
 
-if(ENVIRONMENT == 'development'){
-	$config['base_url'] = "URL para a aplicação no servidor de desenvolvimento";
-	//Recomendado: $config['base_url']	= 'http://localhost/acamps/'.MISSAO_DIR.'/';
-	
-}elseif(ENVIRONMENT == 'production'){
-	$config['base_url'] = "URL para a aplicação na internet";
-	//Recomendado: $config['base_url']	= 'http://'.$_SERVER['SERVER_NAME'].'/acamps/'.MISSAO_DIR.'/';
-	
-}elseif(ENVIRONMENT == 'acamps'){
-	$config['base_url'] = "URL para a aplicação durante o Acampamento";
-	//Recomendado: $config['base_url']	= 'http://'.$_SERVER['SERVER_NAME'].'/acamps/';
-	
-}else{
-	$config['base_url'] = '';
-}
+	$config['base_url']	= 'http://'.$_SERVER['SERVER_NAME'].'/acamps/'.MISSAO_DIR.'/';
 
 /*
 |--------------------------------------------------------------------------
@@ -206,11 +192,7 @@ $config['log_threshold'] = 1;
 | application/logs/ folder. Use a full server path with trailing slash.
 |
 */
-if(defined('LOG_PATH')){
-	$config['log_path'] = str_replace('\\','/',FCPATH).'log/';
-}else{
-	$config['log_path'] = '';
-}
+$config['log_path'] = str_replace('\\','/',FCPATH).'logs/';
 
 /*
 |--------------------------------------------------------------------------
@@ -218,8 +200,8 @@ if(defined('LOG_PATH')){
 |--------------------------------------------------------------------------
 |
 | Each item that is logged has an associated date. You can use PHP date
-| codes to set your own date formatting
-|
+| codes to set your own  formatting
+|date
 */
 $config['log_date_format'] = 'd/m/Y H:i:s';
 
@@ -232,11 +214,8 @@ $config['log_date_format'] = 'd/m/Y H:i:s';
 | system/cache/ folder.  Use a full server path with trailing slash.
 |
 */
-if(defined('CACHE_PATH')){
-	$config['cache_path'] = CACHE_PATH;
-}else{
-	$config['cache_path'] = '';
-}
+
+$config['cache_path'] = str_replace('\\','/',FCPATH).'cache/';
 
 /*
 |--------------------------------------------------------------------------
