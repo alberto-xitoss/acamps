@@ -169,13 +169,8 @@ if (defined('ENVIRONMENT'))
 	define('MISSAO_DIR','nomedamissao'); // Deve ser igual ao campo 'nome' do registro na tabela 'missao'
 	
 	// Configuração do FPDF
-	if(ENVIRONMENT == 'production'){
-		define('FPDF_FONTPATH', "Caminho, no servidor, para a pasta 'font' do FPDF");
-	}else{
-		define('FPDF_FONTPATH', "Caminho para a pasta 'font' do FPDF");
-		//Recomendado: define('FPDF_FONTPATH', $_SERVER['DOCUMENT_ROOT'].'/fpdf/font/');
-	}
-	
+	define('FPDF_FONTPATH', "Caminho para a pasta 'font' do FPDF");
+	//Recomendado: define('FPDF_FONTPATH', $_SERVER['DOCUMENT_ROOT'].'/acamps/assets/font/');
 	
 // --------------------------------------------------------------------
 // END OF USER CONFIGURABLE SETTINGS.  DO NOT EDIT BELOW THIS LINE
