@@ -1,21 +1,15 @@
 # Configurações do CodeIgniter
 .htaccess
 index.php
-/application/config/config.php
-/application/config/acamps.php
-/application/config/database.php
-/application/config/email.php
-
-*/logs/log-*.php
-*/cache/*
-*/cache/!index.html
-*/cache/!.htaccess
+application/config/config.php
+application/config/acamps.php
+application/config/database.php
+application/config/email.php
 
 */
 !application/
 !assets/
 !docs/
-!missao/
 
 # Kubuntu
 *~*.class

@@ -75,7 +75,7 @@ if (defined('ENVIRONMENT'))
  *
  */
 	
-	if(ENVIRONMENT == 'development'){
+	if(ENVIRONMENT == 'development' || ENVIRONMENT == 'acamps'){
 		// Entenda por CodeIgniter, o conteúdo da pasta 'system', que representa o núcleo do framework.
 		$system_path = "Caminho para a pasta do CodeIgniter";
 		// Recomendado: $system_path = $_SERVER['DOCUMENT_ROOT']."/codeigniter/ci <versão>";
@@ -83,10 +83,6 @@ if (defined('ENVIRONMENT'))
 	}elseif(ENVIRONMENT == 'production'){
 		// Se você não pretende colocar a aplicação na internet, não se preocupe com essa configuração.
 		$system_path = "Caminho para a pasta do CodeIgniter no servidor";
-		
-	}elseif(ENVIRONMENT == 'acamps'){
-		// Provavelmente será o mesmo caminho do ambiente 'development'.
-		$system_path = "Caminho para a pasta do CodeIgniter";
 		
 	}else{
 		$system_path = 'system';
@@ -107,17 +103,13 @@ if (defined('ENVIRONMENT'))
  *
  */
 	
-	if(ENVIRONMENT == 'development'){
+	if(ENVIRONMENT == 'development' || ENVIRONMENT == 'acamps'){
 		$application_folder = "Caminho para a pasta 'application'";
 		// Recomendado: $application_folder = $_SERVER['DOCUMENT_ROOT'].'/acamps/application';
 		
 	}elseif(ENVIRONMENT == 'production'){
 		// Se você não pretende colocar a aplicação na internet, não se preocupe com essa configuração.
 		$application_folder = "Caminho para a pasta 'application' dentro do servidor";
-		
-	}elseif(ENVIRONMENT == 'acamps'){
-		// Provavelmente será o mesmo caminho do ambiente 'development'.
-		$application_folder = "Caminho para a pasta 'application'";
 		
 	}else{
 		$application_folder = 'application';
