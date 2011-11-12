@@ -5,7 +5,8 @@
 **Setor de Informática**  
 
 Aplicação Web feita com o objetivo de ser um sistema completo para as inscrições
-do Acampamento de Jovens Shalom. A aplicação possui:
+do Acampamento de Jovens Shalom.  
+A aplicação possui:
 
  * Formulário de inscrição
  * Gerenciamento de pagamento e estado das inscrições
