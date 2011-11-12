@@ -229,7 +229,7 @@ $config['cache_path'] = str_replace('\\','/',FCPATH).'cache/';
 | See the user guide for info: http://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
-$config['encryption_key'] = 'String Aleat�ria De 32 caracteres';
+$config['encryption_key'] = 'String Aleatória De 32 caracteres';
 
 /*
 |--------------------------------------------------------------------------
