@@ -179,6 +179,14 @@ if (defined('ENVIRONMENT'))
 	define('FPDF_FONTPATH', "Caminho para a pasta 'font' do FPDF");
 	//Recomendado: define('FPDF_FONTPATH', $_SERVER['DOCUMENT_ROOT'].'/acamps/assets/font/');
 	
+	/*
+	 * Esta função seta a configuração date.timezone
+	 * Se você tiver acesso ao php.ini, sete o valor manualmente
+	 * Senão, descomente a linha abaixo
+	 * Você pode mudar o valor do parâmetro: http://br.php.net/manual/pt_BR/timezones.america.php
+	 */
+	//date_default_timezone_set('America/Fortaleza');
+	
 // --------------------------------------------------------------------
 // END OF USER CONFIGURABLE SETTINGS.  DO NOT EDIT BELOW THIS LINE
 // --------------------------------------------------------------------
