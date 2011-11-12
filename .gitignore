@@ -1,6 +1,5 @@
 # Configurações do CodeIgniter
 .htaccess
-index.php
 application/config/config.php
 application/config/acamps.php
 application/config/database.php
