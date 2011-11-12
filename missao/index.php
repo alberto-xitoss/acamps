@@ -168,24 +168,24 @@ if (defined('ENVIRONMENT'))
 	define('MISSAO_NOME','Nome da Missão'); // Nome escrito normalmente, com letras maiúsculas, espaços e acentos.
 	define('MISSAO_DIR','nomedamissao'); // Deve ser igual ao campo 'nome' do registro na tabela 'missao'
 	
+	// Configurando URL para assets
+	define('ASSETS_URL', 'URL para a pasta que contém os arquivos css, javascript, imagens, etc');
+	//Recomendado: define('ASSETS_URL', 'http://'.$_SERVER['SERVER_NAME'].'/acamps/assets/');
+	
+	// Se desejar usar assets customizados na pasta da missão, use o valor abaixo:
+	//define('ASSETS_URL', 'http://'.$_SERVER['SERVER_NAME'].'/acamps/'.MISSAO_DIR.'/assets/');
+	
 	// Configuração do FPDF
-	if(ENVIRONMENT == 'production'){
-		define('FPDF_FONTPATH', "Caminho, no servidor, para a pasta 'font' do FPDF");
-	}else{
-		define('FPDF_FONTPATH', "Caminho para a pasta 'font' do FPDF");
-		//Recomendado: define('FPDF_FONTPATH', $_SERVER['DOCUMENT_ROOT'].'/fpdf/font/');
-	}
+	define('FPDF_FONTPATH', "Caminho para a pasta 'font' do FPDF");
+	//Recomendado: define('FPDF_FONTPATH', $_SERVER['DOCUMENT_ROOT'].'/acamps/assets/font/');
 	
-	//---------------------
-	// Opções da aplicação
-	//---------------------
-	// Se haverá um form para os participantes se inscrevem, ou só o form interno, dentro do Sistema Admin.
-	$assign_to_config['form_online'] = TRUE;
-	// Pagamento simplificado - o form só tem a opção do tipo, o valor e o campo de desconto.
-	$assign_to_config['pagamento_simples'] = TRUE;
-	
-	$assign_to_config['id_amigos'] = 9;
-	
+	/*
+	 * Esta função seta a configuração date.timezone
+	 * Se você tiver acesso ao php.ini, sete o valor manualmente
+	 * Senão, descomente a linha abaixo
+	 * Você pode mudar o valor do parâmetro: http://br.php.net/manual/pt_BR/timezones.america.php
+	 */
+	//date_default_timezone_set('America/Fortaleza');
 	
 // --------------------------------------------------------------------
 // END OF USER CONFIGURABLE SETTINGS.  DO NOT EDIT BELOW THIS LINE
