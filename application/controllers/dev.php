@@ -8,7 +8,7 @@ class Dev extends CI_Controller {
     
     public $template = 'admin_template';
     public $title = "Sistema Acamp's";
-    public $css = array('reset', 'admin');
+    public $css = array('bootstrap', 'admin');
     public $js = array();
     
     /*

@@ -1,30 +1,30 @@
 <div id="info">
 <h2>Informações Gerais</h2>
 <p>O <strong>Acampamento de Jovens Shalom</strong> é um evento promovido pelo <strong>Projeto Juventude para Jesus</strong> da <strong>Comunidade Católica Shalom</strong> que tem como objetivo a evangelização e uma opção sadia de lazer para a juventude. É um evento multiforme, onde acontecem atividades de lazer, cursos formativos, seminário de vida no Espírito Santo e noites de fraternidade.</p>
-<p>A <strong>37ª edição do Acamp's</strong> acontecerá dos dias <strong>11 a 16 de julho de 2011</strong>, na <strong>fazenda Guarany em Pacajus</strong>, a 50km de Fortaleza.</p>
-<p class="aviso">Não deixe de ler atentamente<strong> TODAS </strong>as informações abaixo</p>
+<p>A <strong>38&ordf; edição do Acamp's</strong> acontecerá dos dias <strong>11 a 16 de julho de 2011</strong>, na <strong>fazenda Guarany em Pacajus</strong>, a 50km de Fortaleza.</p>
+<p class="alert-message">Não deixe de ler atentamente<strong> TODAS </strong>as informações abaixo</p>
 
 <h3>O que preciso para me inscrever?</h3>
 <ul>
-	<li>Você poderá preencher seus dados no formulário da página a seguir, imprimir o boleto e pagar no estande do Acamp's, na rua Maria Tomásia, 72, Aldeota, Fortaleza, Ceará.</li>
+	<li>Você poderá preencher seus dados no formulário da página a seguir, imprimir o boleto e pagar no estande do Acamp's, na rua Maria Tomásia, n&ordm; 72, Aldeota, Fortaleza, Ceará.</li>
 	<li>Quem não se inscrever pela internet deve levar duas fotografias 3x4 recentes.</li>
 	<li>Apresentar a carteira de identidade ou certidão de nascimento do participante.</li>
 	<li>Valor correspondente à taxa de inscrição.</li>
 </ul>
-<p class='info'>O valor da inscrição é <strong><?php if($tipo=='participante') echo 'R$ 180,00'; else if($tipo=='servico') echo 'R$ 100,00'; ?></strong> (À vista ou cheque).<br/>
-O prazo para inscrever-se é até o dia <strong>09/07/2011</strong>.</p>
-<p class="aviso">Só pode participar do Acamp's quem tem entre 14 e 28 anos!</p>
+<div class='alert-message success'><p>O valor da inscrição é <strong><?php if($tipo=='participante') echo 'R$ 180,00'; else if($tipo=='servico') echo 'R$ 100,00'; ?></strong> (À vista ou cheque).</p>
+<p>O prazo para se inscrever é até o dia <strong>14/01/2012</strong>.</p></div>
+<p class="alert-message">Só pode participar do Acamp's quem tem entre 14 e 28 anos!</p>
 
 <h3>O que levar?</h3>
 <ul>
 	<li>Bíblia, caderno, caneta, terço, copo, prato e talheres;</li>
-	<li>Barraca (opcional), lanterna, cadeado, colchonete, travesseiro, lençóis;</li>
+	<li>Barraca (opcional), lanterna, cadeado, colchonete, travesseiro, lençól;</li>
 	<li>Trajes esportivos e de banho, tênis;</li>
 	<li>Roupa para a missa (calça comprida);</li>
 	<li>Toalha, sabonete, xampu, creme dental, escova de dente, protetor solar, repelente, etc.</li>
 </ul>
-<p class="info">Marque seus objetos com seu nome e número de inscrição.<p/>
-<p class="aviso">Não  leve objetos de valor (celular, câmera, etc.), pois não nos responsabilizamos por eventuais extravios.</p>
+<p class="alert-message info">Marque seus objetos com seu nome e número de inscrição.<p/>
+<p class="alert-message">Não  leve objetos de valor (celular, câmera, etc.), pois não nos responsabilizamos por eventuais extravios.</p>
 
 <h3>Saída</h3>
 
@@ -50,5 +50,5 @@ O prazo para inscrever-se é até o dia <strong>09/07/2011</strong>.</p>
 	<li>PLANTÃO DE INFORMAÇÃO durante o evento: (085) 8690 1014, 8661 1319, 8846 6951, 8616 7293.</li>
 	<li>A Rádio Shalom AM 690 trará irformações diariamente.</li>
 </ol>
-<p class="center"><br/><?php echo anchor('/inscricao/'.$tipo, 'Continuar Inscrição &raquo;')//echo anchor('/inscricao/buscarinscricao/'.$tipo, 'Continuar Inscrição &raquo;') ?></p>
+<p class="center"><?php echo anchor('/inscricao/'.$tipo, 'Continuar Inscrição &raquo;', array('class'=>'btn primary large', 'id'=>'continuar'))//echo anchor('/inscricao/buscarinscricao/'.$tipo, 'Continuar Inscrição &raquo;') ?></p>
 </div>

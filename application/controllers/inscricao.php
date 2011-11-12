@@ -4,8 +4,8 @@ class Inscricao extends CI_Controller{
 
     public $template = 'inscricao_template';
     public $title = 'Acampamento de Jovens Shalom';
-    public $css = array('reset', 'inscricao');
-    public $js = array();
+    public $css = array('bootstrap', 'inscricao');
+    public $js = array('jquery.min');
 
 	function __construct() {
 		parent::__construct();
@@ -20,10 +20,6 @@ class Inscricao extends CI_Controller{
         $this->template = 'default';
         $this->load->view('inscricao/home');
     }
-	
-	function v80(){
-		$this->load->view('inscricao/home', array('velho'=>true));
-	}
 
     function info($tipo){
         $this->title = "Acamp's > Regras de Participação";
@@ -117,12 +113,12 @@ class Inscricao extends CI_Controller{
             
         }
         
-        $this->title = "Acamp's > Formulário de Incrição";
+        $this->title = "Acamp's > Formulário de Inscrição";
+		$this->js  []= 'jquery-ui.min';
+		$this->js  []= 'jquery.ui.datepicker-pt-BR';
         $this->js  []= 'valida';
         $this->css []= 'jquery.ui.theme';
         $this->css []= 'jquery.ui.datepicker';
-		$this->js  []= 'jquery.tiptip.min';
-        $this->css []= 'tiptip';
         
         $form_data['cidades'] = $this->cidade->listar();
 		$form_data['cidades'] = array_reverse($form_data['cidades'], true);
@@ -186,11 +182,11 @@ class Inscricao extends CI_Controller{
         }
 
         $this->title = "Acamp's > Formulário de Incrição > Serviço";
+		$this->js  []= 'jquery-ui.min';
+		$this->js  []= 'jquery.ui.datepicker-pt-BR';
         $this->js  []= 'valida';
         $this->css []= 'jquery.ui.theme';
         $this->css []= 'jquery.ui.datepicker';
-		$this->js  []= 'jquery.tiptip.min';
-        $this->css []= 'tiptip';
 		
 		$form_data['cidades'] = $this->cidade->listar();
 		$form_data['cidades'] = array_reverse($form_data['cidades'], true);
@@ -252,11 +248,11 @@ class Inscricao extends CI_Controller{
         }
 
         $this->title = "Acamp's > Formulário de Incrição > Comunidade de Vida";
+		$this->js  []= 'jquery-ui.min';
+		$this->js  []= 'jquery.ui.datepicker-pt-BR';
         $this->js  []= 'valida';
         $this->css []= 'jquery.ui.theme';
         $this->css []= 'jquery.ui.datepicker';
-		$this->js  []= 'jquery.tiptip.min';
-        $this->css []= 'tiptip';
 
 		$form_data['servicos'] = $this->servico->listar();
 		$form_data['servicos'] = array_reverse($form_data['servicos'], true);

@@ -18,7 +18,7 @@ class Admin extends CI_Controller {
 
     public $template = 'admin_template';
     public $title = "Sistema Acamp's";
-    public $css = array('reset', 'admin');
+    public $css = array('bootstrap', 'admin');
     public $js = array();
 
     /* Admin - construtor
@@ -80,7 +80,6 @@ class Admin extends CI_Controller {
             }else{
                 $view_data['erro'] = true;
             }
-            
         }
         
         $this->template = 'default';
