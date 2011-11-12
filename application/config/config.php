@@ -202,7 +202,7 @@ $config['log_path'] = str_replace('\\','/',FCPATH).'logs/';
 |--------------------------------------------------------------------------
 |
 | Each item that is logged has an associated date. You can use PHP date
-| codes to set your own  formatting date
+| codes to set your own date formatting
 |
 */
 $config['log_date_format'] = 'd/m/Y H:i:s';

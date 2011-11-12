@@ -29,5 +29,6 @@ $config['fotos_dir'] = 'fotos/';
 
 // Caminhos e URL do sistema de template
 $config['template_path'] = APPPATH.'templates/';
-$config['js_url'] = 'http://'.$_SERVER['SERVER_NAME'].'/acamps/assets/js/';
-$config['css_url'] = 'http://'.$_SERVER['SERVER_NAME'].'/acamps/assets/css/';
+$config['js_url'] = ASSETS_URL.'js/';
+$config['css_url'] = ASSETS_URL.'css/';
+$config['img_url'] = ASSETS_URL.'image/';
