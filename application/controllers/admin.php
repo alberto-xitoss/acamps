@@ -28,7 +28,6 @@ class Admin extends CI_Controller {
     */
     function __construct() {
         parent::__construct();
-        
     }
     
     /* index
@@ -156,6 +155,41 @@ class Admin extends CI_Controller {
         $this->load->view('admin/buscar', $var);
 		
     }
+	
+	function init(){
+		
+		// Por enquanto só é disponível para desenvolvimento
+		if(ENVIRONMENT != 'development'){
+			show_404('');
+		}
+		$this->template = 'default';
+		$this->load->model('setup');
+		
+		try{
+			
+			$params = array(
+				'missao'			=> 'Fortaleza',
+				'valor_part'		=> 180.00,
+				'valor_serv'		=> 100.00,
+				'id_pessoa_inicial' => 2000,
+				'usuario'			=> 'mauro',
+				'senha'				=> 'gadelha',
+			);
+			
+			$this->setup->cria_tabelas($params);
+			//sleep(30);
+			$this->setup->inicializa_tabelas($params);
+			
+		}catch(Exception $ex){
+			echo '<p><strong>Erro na criação do banco</strong></p><p>'.$ex->getMessage().'</p>';
+		}
+		
+		// Para o futuro:
+		//$this->setup->cria_tabela_pessoa_anterior();
+		//$this->setup->cria_tabela_alimentacao();
+		//$this->setup->cria_tabela_portaria();
+		
+	}
     
 }
 

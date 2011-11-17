@@ -40,7 +40,7 @@ class Inscricao extends CI_Controller{
 
     function participante(){
         if($this->input->post('confirmar')){
-            if($this->_validar()){
+            if($this->_validar('p')){
                 
                 $this->load->model('pessoa_model');
                 $this->load->model('familia');
@@ -65,20 +65,23 @@ class Inscricao extends CI_Controller{
 				$dados['id_missao'] = $this->config->item('missao');
 				
                 // Normalizando Nome
-                $dados['nm_pessoa'] = ucwords(strtolower($dados['nm_pessoa']));
-				$dados['nm_cracha'] = ucwords(strtolower($dados['nm_cracha']));
+                $dados['nm_pessoa'] = $this->_normaliza_nome($dados['nm_pessoa']);
+				$dados['nm_cracha'] = $this->_normaliza_nome($dados['nm_cracha']);
                 
+				// Normalizando Data de Nascimento
+				$dados['dt_nascimento'] = $this->_normaliza_data($dados['dt_nascimento']);
+				
 				// Status -> Pendente Pagamento
                 $dados['id_status'] = 1;
 				
                 // Escolhendo Família
                 // ---------------------------------------------------
                 $dados['id_familia'] = $this->familia->familia_menor();
-				
                 // ---------------------------------------------------
-                // Gravando registro de inscrição e retornando o número de inscrição gerado
 				
+                // Gravando registro de inscrição e retornando o número de inscrição gerado
                 $view_data['id_pessoa'] = $this->pessoa_model->inscrever($dados);
+                $view_data['nm_pessoa'] = $dados['nm_pessoa'];
                 $view_data['nm_cracha'] = $dados['nm_cracha'];
                 $view_data['cd_tipo']   = $dados['cd_tipo'];
                 $view_data['ds_email']  = $dados['ds_email'];
@@ -132,7 +135,7 @@ class Inscricao extends CI_Controller{
 
     function servico(){
         if($this->input->post('confirmar')){
-            if($this->_validar()){
+            if($this->_validar('s')){
                 
                 $this->load->model('pessoa_model');
 
@@ -143,14 +146,18 @@ class Inscricao extends CI_Controller{
 				$dados['id_missao'] = $this->config->item('missao');
 				
                 // Normalizando Nome
-                $dados['nm_pessoa'] = ucwords(strtolower($dados['nm_pessoa']));
-				$dados['nm_cracha'] = ucwords(strtolower($dados['nm_cracha']));
+                $dados['nm_pessoa'] = $this->_normaliza_nome($dados['nm_pessoa']);
+				$dados['nm_cracha'] = $this->_normaliza_nome($dados['nm_cracha']);
+                
+				// Normalizando Data de Nascimento
+				$dados['dt_nascimento'] = $this->_normaliza_data($dados['dt_nascimento']);
                 
                 $dados['id_status'] = 2; // Status -> Pendente Liberação
 
                 // Gravando registro de inscrição e retornando o número de inscrição gerado
                 $view_data['id_pessoa'] = $this->pessoa_model->inscrever($dados);
                 $view_data['nm_cracha'] = $dados['nm_cracha'];
+                $view_data['nm_pessoa'] = $dados['nm_pessoa'];
 				$view_data['cd_tipo']   = $dados['cd_tipo'];
                 $view_data['ds_email']  = $dados['ds_email'];
                 
@@ -204,7 +211,7 @@ class Inscricao extends CI_Controller{
     function cv(){
 
         if($this->input->post('confirmar')){
-            if($this->_validar()){
+            if($this->_validar('v')){
 				
                 $this->load->model('pessoa_model');
 
@@ -215,14 +222,18 @@ class Inscricao extends CI_Controller{
 				$dados['id_missao'] = $this->config->item('missao');
 				
                 // Normalizando Nome
-                $dados['nm_pessoa'] = ucwords(strtolower($dados['nm_pessoa']));
-				$dados['nm_cracha'] = ucwords(strtolower($dados['nm_cracha']));
+                $dados['nm_pessoa'] = $this->_normaliza_nome($dados['nm_pessoa']);
+				$dados['nm_cracha'] = $this->_normaliza_nome($dados['nm_cracha']);
+                
+				// Normalizando Data de Nascimento
+				$dados['dt_nascimento'] = $this->_normaliza_data($dados['dt_nascimento']);
                 
                 $dados['id_status'] = 2; // Status -> Pendente Liberação
 
                 // Gravando registro de inscrição e retornando o número de inscrição gerado
                 $view_data['id_pessoa'] = $this->pessoa_model->inscrever($dados);
                 $view_data['nm_cracha'] = $dados['nm_cracha'];
+                $view_data['nm_pessoa'] = $dados['nm_pessoa'];
                 $view_data['cd_tipo']   = $dados['cd_tipo'];
                 //$view_data['ds_email']  = $dados['ds_email'];
                 
@@ -283,7 +294,7 @@ class Inscricao extends CI_Controller{
         }
     }
     
-    function _validar(){
+    function _validar($cd_tipo){
 
         $this->load->library('form_validation');
         
@@ -293,12 +304,11 @@ class Inscricao extends CI_Controller{
         $this->form_validation->set_rules('dt_nascimento', 'Data de nascimento', 'required|callback_data');
         $this->form_validation->set_rules('ds_sexo', 'Sexo', 'required');
         $this->form_validation->set_rules('bl_alimentacao', 'Alimentação', 'required');
-        $this->form_validation->set_rules('bl_alergia_alimento', 'Alergia a alimentos?', 'required');
-        if($this->input->post('bl_alergia_alimento') == '1'){
+        
+		$this->form_validation->set_rules('bl_alergia_alimento', 'Alergia a alimentos?', 'integer'); // Gambiarra para que o campo seja repopulado após erro no formulário
+        if($this->input->post('bl_alergia_alimento')){
             $this->form_validation->set_rules('nm_alergia_alimento', 'Alergia a quais alimentos?', 'trim|required');
         }
-        
-        $cd_tipo = $this->input->post('cd_tipo');
         
         // Campos apenas do formulário de participante
         if($cd_tipo == 'p'){
@@ -307,11 +317,13 @@ class Inscricao extends CI_Controller{
             if($this->input->post('bl_fez_comunhao') == '0'){
                 $this->form_validation->set_rules('bl_fazer_comunhao','Deseja fazer?', 'required');
             }
+			$this->form_validation->set_rules('nr_emergencia1','Telefone para Emergência (1)', 'required');
+            $this->form_validation->set_rules('nm_emergencia1','Nome do Responsável (1)', 'required');
         }
         
         // Campos comuns aos formulários de participante e serviço
         if($cd_tipo == 'p' || $cd_tipo == 's'){
-            $this->form_validation->set_rules('ds_foto', 'Foto', 'required');
+            //$this->form_validation->set_rules('ds_foto', 'Foto', 'required');
             $this->form_validation->set_rules('nr_rg', 'RG', 'trim|required|numeric');
             $this->form_validation->set_rules('ds_endereco','Endereço', 'trim|required');
             $this->form_validation->set_rules('nr_cep','CEP', 'trim|required|callback_cep');
@@ -319,27 +331,29 @@ class Inscricao extends CI_Controller{
             $this->form_validation->set_rules('id_cidade','Cidade', 'required');
             $this->form_validation->set_rules('bl_barracao','Utilizará o barracão?', 'required');
             $this->form_validation->set_rules('bl_transporte','Precisará de transporte do acampamento?', 'required');
-            $this->form_validation->set_rules('bl_alergia_remedio','Alergia a remédios?',  'required');
-            if($this->input->post('bl_alergia_remedio') == '1'){
+            
+			$this->form_validation->set_rules('bl_alergia_remedio','Alergia a remédios?',  'integer'); // Gambiarra para que o campo seja repopulado após erro no formulário
+            if($this->input->post('bl_alergia_remedio')){
                 $this->form_validation->set_rules('nm_alergia_remedio','Alergia a quais remédios?', 'trim|required');
             }
-            $this->form_validation->set_rules('ds_email','E-mail', 'trim|required|valid_email');
+            
+			$this->form_validation->set_rules('ds_email','E-mail', 'trim|required|valid_email');
             $this->form_validation->set_rules('nr_telefone','Telefone ', 'trim|required|telefone');
         }
         
-        // Campos comuns aos formulários de serviço e CV
+        // Campo comum aos formulários de serviço e CV
         if($cd_tipo == 's' || $cd_tipo == 'v'){
             $this->form_validation->set_rules('id_servico','Serviço', 'required');
         }
         
-        // Campos apenas do formulário de CV
+        // Campo apena do formulário de CV
         if($cd_tipo == 'v'){
             $this->form_validation->set_rules('id_setor','Setor', 'required');
         }
 
         return $this->form_validation->run();
     }
-
+	
     function _preparar_imagem($id_pessoa){
         //Obtendo as configurações do arquivo 'config/acamps.php'
         $upload = $this->config->item('upload');
@@ -372,6 +386,28 @@ class Inscricao extends CI_Controller{
             return false;
         }
     }
+	
+	/* 
+	 * Colocar esta função num Helper
+	 */
+	function _normaliza_nome($nome){
+		return ucwords(strtolower($nome));
+	}
+
+	/* 
+	 * Colocar esta função num Helper
+	 */
+	function _normaliza_data($data){
+		// Normalizando data, de acordo com o BD
+		if($this->db->platform() == 'postgre'){
+			return implode( ' ', explode('/', $data) );
+		}elseif($this->db->platform() == 'mysql'){
+			$dt_array = explode( '/',$data );
+			return $dt_array[2].'-'.$dt_array[1].'-'.$dt_array[0];
+		}else{
+			$data;
+		}
+	}
     
     function _enviar_email($id_pessoa, $nm_pessoa, $ds_email){
         $this->load->library('email');
@@ -424,13 +460,7 @@ class Inscricao extends CI_Controller{
         $data = preg_split('/^(0?[1-9]|[1-2][0-9]|3[0-1])\/(0?[1-9]|1[0-2])\/((?:19|20)?\d{2})$/', $str, -1, PREG_SPLIT_NO_EMPTY|PREG_SPLIT_DELIM_CAPTURE);
         if(count($data) == 3){
             if(checkdate($data[1], $data[0], $data[2])){
-                if($this->db->platform() == 'postgre'){
-                    return $data[0].' '.$data[1].' '.$data[2];
-                }elseif($this->db->platform() == 'mysql'){
-                    return $data[2].'-'.$data[1].'-'.$data[0];
-                }
-                
-                // FIXME - Quando há erro no form o campo de data é preenchido com este formato modificado, devemos retornar no formato dd/mm/aaaa
+                return implode('/', $data);
             }
         }
         // ELSE

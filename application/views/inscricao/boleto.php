@@ -43,7 +43,7 @@ table{
   <tr>
     <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
-        <td width="16%" valign="bottom"><img src="<?php echo assets_url('image') ?>logo_boleto.jpg" alt="Shalom/PJJ" width="102" height="30" /></td>
+        <td width="16%" valign="bottom"><img src="<?php echo $this->config->item('img_url') ?>logo_boleto.jpg" alt="Shalom/PJJ" width="102" height="30" /></td>
         <td width="62%" valign="bottom" style="text-align: center; font-weight: bold; font-size: 16px;">Comunidade Cat&oacute;lica Shalom<span style="text-align: center"></span></td>
         <td width="22%" valign="bottom" style="text-align: right; font-weight: bold; font-size: 16px;">Recibo do Sacado</td>
       </tr>
@@ -88,7 +88,7 @@ table{
   
   
   <tr>
-    <td><img src="<?php echo assets_url('image')?>tesoura.gif" alt="---------" width='640'  style="margin:10px 0;" /></td>
+    <td><img src="<?php echo $this->config->item('img_url') ?>tesoura.gif" alt="---------" width='640'  style="margin:10px 0;" /></td>
   </tr>
 
   
@@ -96,7 +96,7 @@ table{
   <tr>
     <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
-        <td width="16%" valign="bottom"><img src="<?php echo assets_url('image') ?>logo_boleto.jpg" alt="Shalom/PJJ" width="102" height="30" /></td>
+        <td width="16%" valign="bottom"><img src="<?php echo $this->config->item('img_url') ?>logo_boleto.jpg" alt="Shalom/PJJ" width="102" height="30" /></td>
         <td width="79%" valign="bottom" style="text-align: center; font-weight: bold; font-family: Arial, Helvetica, sans-serif; font-size: 16px;">Comunidade Cat&oacute;lica Shalom<span style="text-align: center"> - Projeto Juventude para Jesus</span></td>
         <td width="5%" valign="bottom" style="text-align: right; font-weight: bold; font-family: Arial, Helvetica, sans-serif; font-size: 16px;">&nbsp;</td>
       </tr>
@@ -150,7 +150,7 @@ table{
   
   
   <tr>
-    <td><img src="<?php echo assets_url('image')?>tesoura.gif" alt="---------" width='640'  style="margin:10px 0;" /></td>
+    <td><img src="<?php echo $this->config->item('img_url') ?>tesoura.gif" alt="---------" width='640'  style="margin:10px 0;" /></td>
   </tr>
   
   

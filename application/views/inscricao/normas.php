@@ -50,5 +50,5 @@
 	<li>PLANTÃO DE INFORMAÇÃO durante o evento: (085) 8690 1014, 8661 1319, 8846 6951, 8616 7293.</li>
 	<li>A Rádio Shalom AM 690 trará irformações diariamente.</li>
 </ol>
-<p class="center"><?php echo anchor('/inscricao/'.$tipo, 'Continuar Inscrição &raquo;', array('class'=>'btn primary large', 'id'=>'continuar'))//echo anchor('/inscricao/buscarinscricao/'.$tipo, 'Continuar Inscrição &raquo;') ?></p>
+<p class="center"><?php echo anchor('/inscricao/'.$tipo, 'Continuar Inscrição &raquo;', array('class'=>'btn success large', 'id'=>'continuar'))//echo anchor('/inscricao/buscarinscricao/'.$tipo, 'Continuar Inscrição &raquo;') ?></p>
 </div>

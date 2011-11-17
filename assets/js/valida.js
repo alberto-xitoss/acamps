@@ -30,16 +30,16 @@ var regras = [
         classe: 'telefone',
         regex: /^(\(?\d{2}\)?\s?)?\d{4}(-|\s)?\d{4}$/i,
         /* Formatos de telefone
-         * 85 87866662
+		 * 87866662
          * 8587866662
+		 * 85 87866662
          * (85)87866662
          * (85) 87866662
-         * 87866662
-         * 85 8786-6662
+		 * 8786-6662
          * 858786-6662
+		 * 85 8786-6662
          * (85)8786-6662
          * (85) 8786-6662
-         * 8786-6662
          */
         msg: 'Telefone inválido!'
     },
@@ -119,7 +119,7 @@ function ativarValidacao($form) {
         
         if(!OK){
             //Seleciona o primeiro campo com erro
-            $('.erro:first', this).focus();
+            $('input.error:first', this).focus();
             return false;
         }
     });
@@ -127,7 +127,6 @@ function ativarValidacao($form) {
 }
 function validaTexto(input, regex, msg){
     if($(input).val() == ''){
-        //escondeErro(input);
         if($(input).data('obrigatorio')){
             mostraErro(input, 'Campo obrigatório!');
             return false;
@@ -136,7 +135,6 @@ function validaTexto(input, regex, msg){
             return true;
         }
     }else{
-        //escondeErro(input);
         if(!regex.test( $(input).val() )){
             mostraErro(input, msg);
             return false;
@@ -185,34 +183,40 @@ function validaRadio(radio){
  * Retorna FALSE sempre que o valor ZERO estiver selecionado
  */
 function validaSelect(select){
-    if($(select).val() == '0'){
-        mostraErro(select, 'Campo obrigatório!');
-        return false;
-    }else{
-        escondeErro(select);
-        return true;
-    }
-
+	if($(select).val() == '0'){
+		mostraErro(select, 'Campo obrigatório!');
+		return false;
+	}else{
+		escondeErro(select);
+		return true;
+	}
 }
 
 function mostraErro(input, msg){
-    if(!$(input).hasClass('erro')){
-        $(input).addClass('erro');
-        $('<span>',{
-            'class': "erro_inline",
-            text: msg,
-            click: function(){
-                escondeErro($(this).prev());
-            }
-        }).hide().insertAfter($(input)).fadeIn(200);
-    }else{
-        $(input).next().text(msg);
-    }
+	input = $(input);
+	if(!input.hasClass('error')){
+		input.addClass('error');
+		input.parents('.clearfix').addClass('error');
+		
+		span = $('<span>',{
+			'class': "help-inline",
+			text: msg
+		});
+		if(input.attr('type') == 'radio'){
+			span.appendTo(input.parent());
+		}else{
+			span.insertAfter(input);
+		}
+	}else{
+		input.next().text(msg);
+	}
 }
 
 function escondeErro(input){
-    if($(input).hasClass('erro')){
-        $(input).removeClass('erro');
-        $(input).next().fadeOut(200).remove();
-    }
+	input = $(input);
+	if(input.hasClass('error')){
+		input.removeClass('error');
+		input.siblings('span.help-inline').remove();
+		input.parents('.clearfix').removeClass('error');
+	}
 }

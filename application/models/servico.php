@@ -8,9 +8,12 @@ class Servico extends CI_Model{
      * function buscar
      * @param $id_servico
      */
-    function buscar($id_servico) {
+    function buscar($id_servico = 0) {
+		if($id_servico == 0)
+			return false;
+		
         $this->db->select('id_servico,nm_servico,nm_coordenador,nr_pessoas,nr_limite_pessoas');
-        $this->db->where('id_missao', $this->config->item('missao'));
+        //$this->db->where('id_missao', $this->config->item('missao'));
         $this->db->where('id_servico', $id_servico);
         $query = $this->db->get($this->table);
         
@@ -25,7 +28,7 @@ class Servico extends CI_Model{
 
     function listar(){
         $this->db->select('id_servico,nm_servico,nm_coordenador,nr_pessoas,nr_limite_pessoas');
-        $this->db->where('id_missao', $this->config->item('missao'));
+        //$this->db->where('id_missao', $this->config->item('missao'));
         $this->db->order_by("nm_servico", "asc");
         $query = $this->db->get($this->table);
 

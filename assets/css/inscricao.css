@@ -24,7 +24,7 @@ footer{
 	margin: 1em 0 0;
 }
 #conteudo {
-	background: #FFF; background: rgba(255,255,255,.9);
+	background: #FFF; background: rgba(255,255,255, 1);
 	padding: 10px;
 }
 /*
@@ -55,46 +55,19 @@ input:focus, textarea:focus {
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 4px rgba(138, 219, 63, 0.6);
 }
 #pesquisa h3 { font-weight: normal; }
-#form .erro{
-	background-color:#FFDFB9;
-}
-#form .erro_inline{
-	cursor: pointer;
-	position: absolute;
-	top: 0;
-	right: 101%;
-	white-space: nowrap;
-	padding: 4px 6px;
-	background-color:#FFDFB9;
-	color: #CE0000;
-	border: 1px solid #CE0000;
-	-moz-border-radius: 20px;
-	-webkit-border-radius: 20px;
-	border-radius: 20px;
-}
-#form .erro_onsubmit{
-	background-color: #FFDFB9;
-	border: 2px solid #CE0000;
-	margin: 9px;
-	padding: 0 8px;
-	color: #9D0606;
-}
-#form .erro_onsubmit p{
-	margin: 8px 0;
-}
+input[type=file] + .help-inline { margin-left:150px; }
 /*
 
 Página de Sucesso
 
 */
-#boleto{
-	font-weight: bold;
-	padding: 6px 10px;
-}
-#sucesso{
-
-}
-#foto{
+#sucesso img{
 	float: left;
 	margin-right: 16px;
+}
+#sucesso img+p{
+	font-size:1.2em;
+	line-height:2em;
+	height: 160px;
+	margin-bottom: 18px;
 }
