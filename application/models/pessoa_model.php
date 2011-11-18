@@ -9,23 +9,44 @@ class Pessoa_model extends CI_Model{
 	
     function inscrever($dados){
 		
-		if($dados['dt_nascimento'] == ''){
-			unset($dados['dt_nascimento']);
-		}
+		// Setando valores default para os campos booleanos
+		
 		if(!isset($dados['bl_alimentacao'])){
 			$dados['bl_alimentacao'] = '1'; // TRUE
 		}
+		
 		if($dados['cd_tipo']!='v' && !isset($dados['bl_barracao'])){
 			$dados['bl_barracao'] = '1'; // TRUE
 		}
+		
 		if($dados['cd_tipo']!='v' && !isset($dados['bl_transporte'])){
 			$dados['bl_transporte'] = '1'; // TRUE
 		}
+		
 		if($dados['cd_tipo']=='p' && !isset($dados['bl_fez_comunhao'])){
 			$dados['bl_fez_comunhao'] = '1'; // TRUE
 		}
+		
 		if($dados['cd_tipo']=='p' && !isset($dados['bl_fazer_comunhao'])){
-			$dados['bl_fazer_comunhao'] = '0'; // TRUE
+			$dados['bl_fazer_comunhao'] = '0'; // FALSE
+		}
+		
+		// Normalizando Nome
+		if(isset($dados['nm_pessoa'])){
+			$dados['nm_pessoa'] = normaliza_nome($dados['nm_pessoa']);
+		}
+		if(isset($dados['nm_cracha'])){
+			$dados['nm_cracha'] = normaliza_nome($dados['nm_cracha']);
+		}
+		
+		// Normalizando Data de Nascimento
+		if(isset($dados['dt_nascimento'])){
+			
+			if($dados['dt_nascimento'] == ''){
+				unset($dados['dt_nascimento']);
+			}else{
+				$dados['dt_nascimento'] = normaliza_data($dados['dt_nascimento']);
+			}
 		}
 		
 		$this->db->insert($this->table,$dados);
@@ -352,6 +373,12 @@ class Pessoa_model extends CI_Model{
     function atualizar($id_pessoa, $campos){
         
         foreach($campos as $campo => $valor){
+			if($campo == 'nm_pessoa'){
+				$valor = normaliza_nome($valor);
+			}
+			if($campo == 'nm_cracha'){
+				$valor = normaliza_nome($valor);
+			}
             $this->db->set($campo, $valor);
         }
         $this->db->where('id_pessoa',$id_pessoa);

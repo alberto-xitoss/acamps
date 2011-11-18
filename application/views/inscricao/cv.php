@@ -1,186 +1,103 @@
 <h2>Formulário de Inscrição > Comunidade de Vida</h2>
 <div id="form">
     <?php if(isset($erro) && $erro): ?>
-        <div class="erro_onsubmit"
+        <div class="alert-message block-message error">
         <?php echo validation_errors(); ?>
-        </div><br/>
+        </div>
     <?php endif; ?>
-    
 <?php echo form_open_multipart('inscricao/cv'); ?>
-    <p>
-    <?php echo form_label('Nome Completo','nm_pessoa',array('class'=>'campo')); ?>
-    </p>
-    <p>
-    <?php echo form_input(array(
-            'name'=>'nm_pessoa',
-            'id'=>'nm_pessoa',
-            'value'=> set_value('nm_pessoa'),
-            'class'=>'obrigatorio somenteLetras'
-	)); ?>
-    </p>
-    <p>
-    <?php echo form_label('Nome no Crachá','nm_cracha',array('class'=>'campo')); ?>
-    </p>
-    <p>
-    <?php echo form_input(array(
-            'name'=>'nm_cracha',
-            'id'=>'nm_cracha',
-            'value'=> set_value('nm_cracha'),
-            'class'=>'obrigatorio somenteLetras'
-    )); ?>
-    </p>
-    <p>
-    <?php echo form_label('Data de Nascimento','dt_nascimento',array('class'=>'campo')); ?>
-    </p>
-    <p>
-    <?php echo form_input(array(
-        'name'=>'dt_nascimento',
-        'id'=>'dt_nascimento',
-        'value'=> set_value('dt_nascimento'),
-        'class'=>'short obrigatorio data'
-    )); ?>
-    </p>
-    <p>
-    <?php echo form_label('Sexo','',array('class'=>'campo')); ?>
-    </p>
-    <p>
-    <?php
-    echo form_radio(array(
-        'name'=>'ds_sexo',
-        'id'=>'ds_sexo_h',
-        'value'=>'h',
-        'checked'=> set_radio('ds_sexo', 'h'),
-        'class'=>'obrigatorio'
-    ));
-    echo form_label('Homem','ds_sexo_h');
-    echo nbs(5);
-    echo form_radio(array(
-        'name'=>'ds_sexo',
-        'id'=>'ds_sexo_m',
-        'value'=>'m',
-        'checked'=> set_radio('ds_sexo', 'm'),
-        'class'=>'obrigatorio'
-    ));
-    echo form_label('Mulher','ds_sexo_m');
-    ?>
-    </p>
-
-    <hr/>
-
-    <p>
-		<?php echo form_label('Serviço','',array('class'=>'campo')); ?>
-    </p>
-    <p>
-		<?php echo form_dropdown('id_servico', $servicos, $this->input->post('id_servico'), 'class="obrigatorio"'); ?>
-    </p>
-
-    <p>
-		<?php echo form_label('Setor','',array('class'=>'campo')) ?>
-    </p>
-    <p>
-		<?php echo form_dropdown('id_setor', $setores, $this->input->post('id_setor'), 'class="obrigatorio"') ?>
-    </p>
-
-    <hr/>
-
-    <p>
-    <?php echo form_label('Alimentação?','',array('class'=>'campo'));
-	?><span class="ajuda_icone" title="Você utilizará a alimentação fornecida por nós?"></span>
-    </p>
-    <p>
-    <?php
-    echo form_radio(array(
-        'name'=>'bl_alimentacao',
-        'id'=>'bl_alimentacao_s',
-        'value'=>'1',
-        'checked'=> set_radio('bl_alimentacao', '1'),
-        'class'=>'obrigatorio'
-    ));
-    echo form_label('Sim','bl_alimentacao_s');
-    echo nbs(5);
-    echo form_radio(array(
-        'name'=>'bl_alimentacao',
-        'id'=>'bl_alimentacao_n',
-        'value'=>'0',
-        'checked'=> set_radio('bl_alimentacao', '0'),
-        'class'=>'obrigatorio'
-    ));
-    echo form_label('Não','bl_alimentacao_n');
-    ?>
-    </p>
-
-    <hr/>
-
-    <p>
-    <?php echo form_label('Alergia a alimentos?','',array('class'=>'campo')); ?>
-    </p>
-    <p>
-    <?php
-    echo form_radio(array(
-        'name'=>'bl_alergia_alimento',
-        'id'=>'bl_alergia_alimento_s',
-        'value'=>'1',
-        'checked'=> set_radio('bl_alergia_alimento', '1'),
-        'class'=>'obrigatorio'
-    ));
-    echo form_label('Sim','bl_alergia_alimento_s');
-    echo nbs(5);
-    echo form_radio(array(
-        'name'=>'bl_alergia_alimento',
-        'id'=>'bl_alergia_alimento_n',
-        'value'=>'0',
-        'checked'=> set_radio('bl_alergia_alimento', '0'),
-        'class'=>'obrigatorio'
-    ));
-    echo form_label('Não','bl_alergia_alimento_n');
-    ?>
-    </p>
-    <p>
-    <?php echo form_label('Qual?','nm_alergia_alimento',array('class'=>'campo')); ?>
-    </p>
-    <p>
-    <?php
-    echo form_input(array(
-        'name'=>'nm_alergia_alimento',
-        'id'=>'nm_alergia_alimento',
-        'value'=> set_value('nm_alergia_alimento'),
-        'class'=>'somenteAlfanumerico'
-    ));
-    ?>
-    </p>
-
-    <hr/>
-
-    <p>
-    <?php
-    echo form_label('Envie sua foto <span style="color:#006bcc">(opcional)</span>','ds_foto',array('class'=>'campo'));
-    ?><span class="ajuda_icone" title="Tamanho máximo da imagem: 400x400 ou 2MB<br/>Formatos aceitos: bmp|jpg|png|gif"></span>
-    </p>
-    <p>
-    <?php
-    echo form_upload(array(
-        'name'=>'ds_foto',
-        'value'=> set_value('ds_foto'),
-        'class'=>'',
-        'size'=>50
-    ));
-    ?></p>
-    <p class="center"><?php echo form_submit('confirmar','Confirmar'); ?></p>
-    <?php echo form_close();?>
+<fieldset>
+	<!-- Nome Completo -->
+	<div class="clearfix">
+		<label for="nm_pessoa">Nome Completo</label>
+		<div class="input"><input type="text" class="obrigatorio somenteLetras xlarge" id="nm_pessoa" value="<?php echo set_value('nm_pessoa') ?>" name="nm_pessoa"></div>
+	</div>
+	<!-- Nome no Crachá -->
+	<div class="clearfix">
+		<label for="nm_cracha">Nome no Crachá</label>
+		<div class="input"><input type="text" class="obrigatorio somenteLetras xlarge" id="nm_cracha" value="<?php echo set_value('nm_cracha') ?>" name="nm_cracha"></div>
+	</div>
+	<!-- Data de Nascimento -->
+	<div class="clearfix">
+		<label for="dt_nascimento">Data de Nascimento</label>
+		<div class="input"><input type="text" class="obrigatorio data small" id="dt_nascimento" value="<?php echo set_value('dt_nascimento') ?>" name="dt_nascimento"></div>
+	</div>
+	<!-- Sexo -->
+	<div class="clearfix">
+		<label>Sexo</label>
+		<div class="input"><ul class="inputs-list">
+			<li><label for="ds_sexo_h"><input type="radio" class="obrigatorio" id="ds_sexo_h" value="h" name="ds_sexo" <?php if(set_radio('ds_sexo', 'h')) echo 'checked' ?>>Homem</label></li>
+			<li><label for="ds_sexo_m"><input type="radio" class="obrigatorio" id="ds_sexo_m" value="m" name="ds_sexo" <?php if(set_radio('ds_sexo', 'm')) echo 'checked' ?>>Mulher</label></li>
+		</ul></div>
+	</div>
+</fieldset>
+<hr/>
+<fieldset>
+	<!-- Serviço -->
+	<div class="clearfix">
+		<label for="id_servico">Servico</label>
+		<div class="input"><?php echo form_dropdown('id_servico', $servicos, $this->input->post('id_servico'), 'class="obrigatorio"'); ?></div>
+	</div>
+<hr/>
+	<!-- Setor -->
+	<div class="clearfix">
+		<label for="id_setor">Setor</label>
+		<div class="input"><?php echo form_dropdown('id_setor', $setores, $this->input->post('id_setor'), 'class="obrigatorio"') ?></div>
+	</div>
+</fieldset>
+<hr/>
+<fieldset>
+	<!-- Alimentação -->
+	<div class="clearfix">
+		<label>Você utilizará a alimentação fornecida por nós?</label>
+		<div class="input">
+			<ul class="inputs-list">
+				<li><label for="bl_alimentacao_s"><input type="radio" class="obrigatorio" id="bl_alimentacao_s" value="1" name="bl_alimentacao" <?php if(set_radio('bl_alimentacao', '1')) echo 'checked' ?>>Sim</label></li>
+				<li><label for="bl_alimentacao_n"><input type="radio" class="obrigatorio" id="bl_alimentacao_n" value="0" name="bl_alimentacao" <?php if(set_radio('bl_alimentacao', '0')) echo 'checked' ?>>Não</label></li>
+			</ul>
+		</div>
+	</div>
+<hr/>
+	<!-- Alergia a Alimentos -->
+	<div class="clearfix">
+		<label for="nm_alergia_alimento">Você tem alergia a alimentos?</label>
+		<div class="input input-prepend">
+			<label class="add-on"><input type="checkbox" name="bl_alergia_alimento" value="1" id="bl_alergia_alimento"  <?php if(set_checkbox('bl_alergia_alimento', '1')) echo 'checked' ?>/></label>
+			<input type="text" class="somenteAlfanumerico xlarge" id="nm_alergia_alimento" value="" name="nm_alergia_alimento">
+		</div>
+	</div>
+<hr/>
+	<!-- Foto -->
+	<div class="clearfix">
+		<label class="campo" for="ds_foto">Envie sua foto para o seu crachá</label>
+		<div class="input">
+			<input type="file" size="32" class="obrigatorio" value="<?php echo set_value('ds_foto') ?>" name="ds_foto" id="ds_foto"><span class="help-block">O tamanho máximo aceito para a foto é 2MB.<br>Formatos aceitos: bmp | jpg | png | gif</span>
+		</div>
+	</div>
+</fieldset>
+	<p class="center"><input type="submit" value="Confirmar" name="confirmar" class="btn success large" /></p>
+	<?php echo form_close();?>
 </div>
 <script>
 
     $(function(){
-		$('#bl_alergia_alimento_s').click(function(){
-            $('#nm_alergia_alimento').attr('disabled',false).addClass('obrigatorio').change();
+		
+		$('#nm_alergia_alimento').attr('disabled',true);
+		
+		$('#bl_alergia_alimento').change(function(){
+			checkbox = $(this);
+            if( checkbox.attr('checked') == "checked" ){
+				$('#nm_alergia_alimento').attr('disabled',false).addClass('obrigatorio').change();
+				checkbox.parent('label').addClass('active');
+			}else{
+				$('#nm_alergia_alimento').attr('disabled',true).removeClass('obrigatorio').change();
+				checkbox.parent('label').removeClass('active');
+			}
         });
-        $('#bl_alergia_alimento_n').click(function(){
-            $('#nm_alergia_alimento').attr('disabled',true).removeClass('obrigatorio').removeData('obrigatorio').change();
-        });
+		
+		ativarValidacao($("#form form"));
 
-       ativarValidacao($("#form form"));
-
-       $('#dt_nascimento').datepicker({
+		$('#dt_nascimento').datepicker({
 			yearRange: '1980:2000',
 			changeMonth: true,
 			changeYear: true,
@@ -188,18 +105,9 @@
 				$(this).change();
 			},
 			showOn: "button",
-			buttonImage: "<?php echo assets_url('image') ?>calendar.png",
+			buttonImage: "<?php echo $this->config->item('img_url'); ?>calendar.png",
 			buttonImageOnly: true
 		});
-
-       $(".ajuda_icone").tipTip({
-			maxWidth: '300px',
-			edgeOffset: 8,
-			defaultPosition: 'right',
-			delay: 0,
-			fadeIn: 150,
-			fadeOut: 150
-		});
-    })
+	})
 
 </script>

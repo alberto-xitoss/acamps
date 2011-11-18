@@ -33,7 +33,7 @@ class Inscricao extends CI_Controller{
         $this->load->view('inscricao/adote');
     }
 
-    function buscarinscricao($tipo){
+    function buscar_inscricao($tipo){
         $this->title = "Acamp's > Buscar inscrição de Acamp's passado";
         $this->load->view('inscricao/busca', array('tipo'=>$tipo));
     }
@@ -65,11 +65,11 @@ class Inscricao extends CI_Controller{
 				$dados['id_missao'] = $this->config->item('missao');
 				
                 // Normalizando Nome
-                $dados['nm_pessoa'] = $this->_normaliza_nome($dados['nm_pessoa']);
-				$dados['nm_cracha'] = $this->_normaliza_nome($dados['nm_cracha']);
+                //$dados['nm_pessoa'] = normaliza_nome($dados['nm_pessoa']);
+				//$dados['nm_cracha'] = normaliza_nome($dados['nm_cracha']);
                 
 				// Normalizando Data de Nascimento
-				$dados['dt_nascimento'] = $this->_normaliza_data($dados['dt_nascimento']);
+				//$dados['dt_nascimento'] = normaliza_data($dados['dt_nascimento']);
 				
 				// Status -> Pendente Pagamento
                 $dados['id_status'] = 1;
@@ -113,7 +113,7 @@ class Inscricao extends CI_Controller{
             }
         }elseif($this->input->post('buscar_inscricao')){
             $this->load->model('pessoa_model');
-            
+            // TODO
         }
         
         $this->title = "Acamp's > Formulário de Inscrição";
@@ -146,11 +146,11 @@ class Inscricao extends CI_Controller{
 				$dados['id_missao'] = $this->config->item('missao');
 				
                 // Normalizando Nome
-                $dados['nm_pessoa'] = $this->_normaliza_nome($dados['nm_pessoa']);
-				$dados['nm_cracha'] = $this->_normaliza_nome($dados['nm_cracha']);
+                // $dados['nm_pessoa'] = normaliza_nome($dados['nm_pessoa']);
+				// $dados['nm_cracha'] = normaliza_nome($dados['nm_cracha']);
                 
 				// Normalizando Data de Nascimento
-				$dados['dt_nascimento'] = $this->_normaliza_data($dados['dt_nascimento']);
+				// $dados['dt_nascimento'] = normaliza_data($dados['dt_nascimento']);
                 
                 $dados['id_status'] = 2; // Status -> Pendente Liberação
 
@@ -209,7 +209,6 @@ class Inscricao extends CI_Controller{
     }
 
     function cv(){
-
         if($this->input->post('confirmar')){
             if($this->_validar('v')){
 				
@@ -222,11 +221,11 @@ class Inscricao extends CI_Controller{
 				$dados['id_missao'] = $this->config->item('missao');
 				
                 // Normalizando Nome
-                $dados['nm_pessoa'] = $this->_normaliza_nome($dados['nm_pessoa']);
-				$dados['nm_cracha'] = $this->_normaliza_nome($dados['nm_cracha']);
-                
+                // $dados['nm_pessoa'] = $this->_normaliza_nome($dados['nm_pessoa']);
+				// $dados['nm_cracha'] = $this->_normaliza_nome($dados['nm_cracha']);
+				
 				// Normalizando Data de Nascimento
-				$dados['dt_nascimento'] = $this->_normaliza_data($dados['dt_nascimento']);
+				// $dados['dt_nascimento'] = $this->_normaliza_data($dados['dt_nascimento']);
                 
                 $dados['id_status'] = 2; // Status -> Pendente Liberação
 
@@ -243,6 +242,7 @@ class Inscricao extends CI_Controller{
                 // ---------------------------------------------------
 				$caminho_foto = $this->_preparar_imagem($view_data['id_pessoa']);
 				if($caminho_foto){
+					// Trocar a função 'adicionar_foto' por 'atualizar'
 					$this->pessoa_model->adicionar_foto($view_data['id_pessoa'], $caminho_foto);
 					$view_data['ds_foto'] = $this->config->item('base_url').$this->config->item('fotos_dir').$caminho_foto;
 				}
@@ -386,28 +386,6 @@ class Inscricao extends CI_Controller{
             return false;
         }
     }
-	
-	/* 
-	 * Colocar esta função num Helper
-	 */
-	function _normaliza_nome($nome){
-		return ucwords(strtolower($nome));
-	}
-
-	/* 
-	 * Colocar esta função num Helper
-	 */
-	function _normaliza_data($data){
-		// Normalizando data, de acordo com o BD
-		if($this->db->platform() == 'postgre'){
-			return implode( ' ', explode('/', $data) );
-		}elseif($this->db->platform() == 'mysql'){
-			$dt_array = explode( '/',$data );
-			return $dt_array[2].'-'.$dt_array[1].'-'.$dt_array[0];
-		}else{
-			$data;
-		}
-	}
     
     function _enviar_email($id_pessoa, $nm_pessoa, $ds_email){
         $this->load->library('email');

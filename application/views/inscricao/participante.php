@@ -59,9 +59,7 @@
 		<div class="input"><?php echo form_dropdown('id_cidade', $cidades, $this->input->post('id_cidade'), 'class="obrigatorio"'); ?></div>
 	</div>
 </fieldset>
-
 <hr/>
-
 <fieldset>
 	<!-- Seminário/Aprofundamento -->
 	<div class="clearfix">
@@ -104,9 +102,7 @@
 		</div>
 	</div>
 </fieldset>
-
 <hr>
-
 <fieldset>
 	<!-- Já fez 1ª Eucaristia? -->
 	<div class="clearfix">
@@ -129,9 +125,7 @@
 		</div>
 	</div>
 </fieldset>
-
 <hr/>
-
 <fieldset>
 	<!-- ALergia a Remédios -->
 	<div class="clearfix">
@@ -224,8 +218,8 @@
 		</ul>
 	</div>
 </fieldset>
-    <p class="center"><input type="submit" value="Confirmar" name="confirmar" class="btn success large" /></p>
-    <?php echo form_close();?>
+	<p class="center"><input type="submit" value="Confirmar" name="confirmar" class="btn success large" /></p>
+	<?php echo form_close();?>
 </div>
 <script>
 

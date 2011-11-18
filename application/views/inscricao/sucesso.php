@@ -4,9 +4,8 @@
     <img src="<?php echo $ds_foto ?>" alt="foto" title="<?php echo $nm_cracha ?>" />
 <?php endif; ?>
 
-<p><?php echo $nm_cracha ?><br/>
-<?php echo $nm_pessoa ?><br/>
-Número de Inscrição: <span class="destaque3"><?php echo $id_pessoa ?></span></p>
+<p><?php echo $nm_pessoa ?><br/>
+Número de Inscrição: <span class="highlight success"><?php echo $id_pessoa ?></span></p>
 
 <p class="alert-message"><strong>IMPORTANTE - Guarde o número de sua inscrição!</strong></p>
 

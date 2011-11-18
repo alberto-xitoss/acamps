@@ -66,7 +66,7 @@ if(ENVIRONMENT == 'development'){
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url', 'html', 'form');
+$autoload['helper'] = array('url', 'html', 'form', 'acamps');
 
 
 /*
