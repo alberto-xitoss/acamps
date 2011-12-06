@@ -21,10 +21,10 @@ class Divulgacao extends CI_Model {
 	}
 	
 	function inserir($dados) {
-		if(isset($dados['id_meio']) && isset($dados['nm_obs'])){
+		//if(isset($dados['id_meio']) || isset($dados['nm_obs'])){
 			$this->db->insert($this->tabela['pesquisa'], $dados);
 			return true;
-		}
-		return false;
+		//}
+		//return false;
 	}
 }

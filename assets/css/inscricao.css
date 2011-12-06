@@ -1,32 +1,150 @@
 /* Estilos da página de inscrições */
+html{
+	background: #89AA42 url("../image/background.png");
+}
 body{
-    background: #89AA42;
+    background: url("../image/back-overlay.png") center top no-repeat;
 	color: #383838;
 }
 a { color: #383838; text-decoration:none; }
-a:hover { color: #89AA42; }
+a:hover { color: #44aa00; }
 .container {
-    width: 800px;
+    width: 900px;
     position: relative;
 }
-#logo {
-	background-image: url("../image/acamps_logo.png");
-	width: 207px;
-	height: 64px;
-	margin: 0;
+/*
+
+Topo da Página
+
+*/
+header div, #header div { margin: 0; position: absolute; }
+header a, #header a, #comshalom a {
+	display:block;
+	width:100%;
+	height:100%;
 }
-	#logo a{
-		display: block;
-		width: 100%;
-		height: 100%;
-	}
-footer{
-	margin: 1em 0 0;
+#logo {
+	background-image:url("../image/acamps_logo.png");
+	width:553px; height:204px;
+	position:relative;
+	top:27px; left:-20px;
+}
+#periodo {
+	background-image:url("../image/periodo.png");
+	width:289px; height:153px;
+	top:38px; right:70px;
+}
+/*
+
+Conteúdo
+
+*/
+#video-frame {
+	background-image: url("../image/video-frame.png");
+	width: 465px; height: 407px;
+	position: relative;
+	top:0; left:24px;
+}
+#video{
+	width:400px; height:300px;
+	margin: 17px 0 0 32px;
+}
+#insc-links {
+	width:260px; position: relative;
+	top:70px; right:100px;
+}
+#insc-links h2{
+	margin: 0; line-height:48px; position: relative;
+	cursor: pointer;
+	
+	-webkit-border-radius: 40px;
+	-moz-border-radius: 40px;
+	border-radius: 40px;
+	-moz-background-clip: padding; -webkit-background-clip: padding-box; background-clip: padding-box;
+	
+	-webkit-box-shadow: 0px 2px 1px #ffffff inset, 0px -1px 1px rgba(0,0,0,.6) inset;
+	-moz-box-shadow: 0px 2px 1px #ffffff inset, 0px -1px 1px rgba(0,0,0,.6) inset;
+	box-shadow: 0px 2px 1px #ffffff inset, 0px -1px 1px rgba(0,0,0,.6) inset;
+	
+	background-color: #ffff3c;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#ffff3c), to(#ffd800));
+	background-image: -webkit-linear-gradient(top, #ffff3c, #ffd800);
+	background-image:    -moz-linear-gradient(top, #ffff3c, #ffd800);
+	background-image:     -ms-linear-gradient(top, #ffff3c, #ffd800);
+	background-image:      -o-linear-gradient(top, #ffff3c, #ffd800);
+	background-image:         linear-gradient(top, #ffff3c, #ffd800);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffff3c', EndColorStr='#ffd800');
+}
+#insc-links div{	
+	background: #fff;
+	margin:-12px 18px 0; padding:30px 20px 8px;
+	
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	
+	-webkit-box-shadow: 0px -3px 1px #d7e3aa inset, 0px 2px 3px rgba(0,0,0,.4);
+	-moz-box-shadow: 0px -3px 1px #d7e3aa inset, 0px 2px 3px rgba(0,0,0,.4);
+	box-shadow: 0px -3px 1px #d7e3aa inset, 0px 2px 3px rgba(0,0,0,.4);
+}
+#insc-links p{
+	font-size: 1.1em;
+	line-height: 1.6em;
+}
+#participante{
+	font-weight: bold;
 }
 #conteudo {
-	background: #FFF; background: rgba(255,255,255, 1);
-	padding: 10px;
+	background: #ffffff;
+	width: 800px; padding:20px;
+	
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	
+	-webkit-box-shadow: 0px -3px 1px #d7e3aa inset, 0px 2px 3px rgba(0,0,0,.4);
+	-moz-box-shadow: 0px -3px 1px #d7e3aa inset, 0px 2px 3px rgba(0,0,0,.4);
+	box-shadow: 0px -3px 1px #d7e3aa inset, 0px 2px 3px rgba(0,0,0,.4);
 }
+/*
+
+Rodapé
+
+*/
+footer, #footer {
+	height:140px; margin-top: 70px; padding-top: 17px;
+	background-color: #ffffff;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#dcdcdc));
+	background-image: -webkit-linear-gradient(top, #ffffff, #dcdcdc);
+	background-image:    -moz-linear-gradient(top, #ffffff, #dcdcdc);
+	background-image:     -ms-linear-gradient(top, #ffffff, #dcdcdc);
+	background-image:      -o-linear-gradient(top, #ffffff, #dcdcdc);
+	background-image:         linear-gradient(top, #ffffff, #dcdcdc);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffffff', EndColorStr='#dcdcdc');
+	-webkit-box-shadow: 0px 0px 14px rgba(0,0,0, .4);
+	-moz-box-shadow: 0px 0px 14px rgba(0,0,0, .4);
+	box-shadow: 0px 0px 14px rgba(0,0,0, .4);
+}
+.column-3 {
+	width: 300px;
+	float: left;
+}
+footer h2, #footer h2 {
+	margin-bottom:0.5em;
+	text-align: left;
+}
+#social p{ font-size:1.2em; font-weight:bold; }
+#social img{ vertical-align: middle; margin-right: 7px; }
+#pjj {
+	background-image: url("../image/pjj_logo.png");
+	width:117px; height:80px;
+}
+#comshalom {
+	background-image: url("../image/shalom_logo.png");
+	width:140px; height:66px;
+	position:relative; top:14px; left:30px;
+}
+/* ffffff - dcdcdc */
 /*
 
 Página de Informações

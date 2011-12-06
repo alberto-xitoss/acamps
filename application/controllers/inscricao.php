@@ -54,10 +54,11 @@ class Inscricao extends CI_Controller{
 					$pesquisa['id_meio'] = $_POST['id_meio'];
 					unset($dados['id_meio']);
 				}
-				if(isset($_POST['nm_obs'])){
-					$pesquisa['nm_obs'] = $_POST['nm_obs'];
-					unset($dados['nm_obs']);
-				}
+				// if(isset($_POST['nm_obs'])){
+					// $pesquisa['nm_obs'] = $_POST['nm_obs'];
+					// unset($dados['nm_obs']);
+				// }
+				
 				$this->load->model('divulgacao');
 				$this->divulgacao->inserir($pesquisa);
                 

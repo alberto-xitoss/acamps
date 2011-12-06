@@ -6,7 +6,6 @@
         </div>
     <?php endif; ?>
 <?php echo form_open_multipart('inscricao/participante'); ?>
-<fieldset>
 	<!-- Nome Completo -->
 	<div class="clearfix">
 		<label for="nm_pessoa">Nome Completo</label>
@@ -35,9 +34,7 @@
 			<li><label for="ds_sexo_m"><input type="radio" class="obrigatorio" id="ds_sexo_m" value="m" name="ds_sexo" <?php if(set_radio('ds_sexo', 'm')) echo 'checked' ?>>Mulher</label></li>
 		</ul></div>
 	</div>
-</fieldset>
 <hr/>
-<fieldset>
 	<!-- Endereço -->
 	<div class="clearfix">
 		<label for="ds_endereco">Endereço</label>
@@ -58,9 +55,7 @@
 		<label for="id_cidade">Cidade</label>
 		<div class="input"><?php echo form_dropdown('id_cidade', $cidades, $this->input->post('id_cidade'), 'class="obrigatorio"'); ?></div>
 	</div>
-</fieldset>
 <hr/>
-<fieldset>
 	<!-- Seminário/Aprofundamento -->
 	<div class="clearfix">
 		<label>O que fará no período da tarde?<span class="help-block">Se você nunca participou de um Seminário de Vida no Espírito Santo, marque esta opção.</span></label>
@@ -101,9 +96,7 @@
 			</ul>
 		</div>
 	</div>
-</fieldset>
 <hr>
-<fieldset>
 	<!-- Já fez 1ª Eucaristia? -->
 	<div class="clearfix">
 		<label>Já fez primeira eucaristia?</label>
@@ -124,9 +117,7 @@
 			</ul>
 		</div>
 	</div>
-</fieldset>
 <hr/>
-<fieldset>
 	<!-- ALergia a Remédios -->
 	<div class="clearfix">
 		<label for="nm_alergia_remedio">Você tem alergia a remédios?</label>
@@ -143,9 +134,7 @@
 			<input type="text" class="somenteAlfanumerico xlarge" id="nm_alergia_alimento" value="" name="nm_alergia_alimento">
 		</div>
 	</div>
-</fieldset>
 <hr/>
-<fieldset>
 	<!-- E-mail -->
 	<div class="clearfix">
 		<label for="ds_email">E-mail</label>
@@ -197,11 +186,7 @@
 			<input type="file" size="32" class="obrigatorio" value="<?php echo set_value('ds_foto') ?>" name="ds_foto" id="ds_foto"><span class="help-block">O tamanho máximo aceito para a foto é 2MB.<br>Formatos aceitos: bmp | jpg | png | gif</span>
 		</div>
 	</div>
-</fieldset>
-
 <!-- Pesquisa -->
-
-<fieldset>
 	<div id="pesquisa" class="alert-message block-message info form-stacked" ><h3>Antes de concluir sua inscrição diga-nos <strong>como ficou sabendo do Acamp's</strong>?</h3>
 		<ul class="inputs-list">
 		<?php foreach ($divulgacao as $meio): ?>
@@ -217,7 +202,6 @@
 		<?php endforeach ?>
 		</ul>
 	</div>
-</fieldset>
 	<p class="center"><input type="submit" value="Confirmar" name="confirmar" class="btn success large" /></p>
 	<?php echo form_close();?>
 </div>

@@ -12,7 +12,7 @@ Número de Inscrição: <span class="highlight success"><?php echo $id_pessoa ?>
 <?php if($cd_tipo != 'v'): ?>
 	<p>Você receberá um e-mail confirmando sua inscrição. Este e-mail contém seu número de inscrição e o link para você imprimir o Boleto de Pagamento, caso não possa imprimir agora.</p>
 	
-	<p>O boleto deve ser pago no Estande do Acamp's, no Shalom da Paz, Rua Maria Tomásia, nº 72, Aldeota, Fortaleza:</p>
+	<p>O boleto deve ser pago no Estande do Acamp's, no Shalom da Paz, Rua Maria Tomásia, nº 72, Aldeota, Fortaleza.</p>
 	
 	<p class="alert-message block-message info">Quando for pagar sua inscrição é necessário que você leve um documento com foto.<br/>
 	Ex: <em>Documento de Identidade</em>, <em>Carteira de Estudante</em></p>

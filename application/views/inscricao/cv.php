@@ -6,7 +6,6 @@
         </div>
     <?php endif; ?>
 <?php echo form_open_multipart('inscricao/cv'); ?>
-<fieldset>
 	<!-- Nome Completo -->
 	<div class="clearfix">
 		<label for="nm_pessoa">Nome Completo</label>
@@ -30,12 +29,10 @@
 			<li><label for="ds_sexo_m"><input type="radio" class="obrigatorio" id="ds_sexo_m" value="m" name="ds_sexo" <?php if(set_radio('ds_sexo', 'm')) echo 'checked' ?>>Mulher</label></li>
 		</ul></div>
 	</div>
-</fieldset>
 <hr/>
-<fieldset>
 	<!-- Serviço -->
 	<div class="clearfix">
-		<label for="id_servico">Servico</label>
+		<label for="id_servico">Serviço</label>
 		<div class="input"><?php echo form_dropdown('id_servico', $servicos, $this->input->post('id_servico'), 'class="obrigatorio"'); ?></div>
 	</div>
 <hr/>
@@ -44,9 +41,7 @@
 		<label for="id_setor">Setor</label>
 		<div class="input"><?php echo form_dropdown('id_setor', $setores, $this->input->post('id_setor'), 'class="obrigatorio"') ?></div>
 	</div>
-</fieldset>
 <hr/>
-<fieldset>
 	<!-- Alimentação -->
 	<div class="clearfix">
 		<label>Você utilizará a alimentação fornecida por nós?</label>
@@ -74,7 +69,6 @@
 			<input type="file" size="32" class="obrigatorio" value="<?php echo set_value('ds_foto') ?>" name="ds_foto" id="ds_foto"><span class="help-block">O tamanho máximo aceito para a foto é 2MB.<br>Formatos aceitos: bmp | jpg | png | gif</span>
 		</div>
 	</div>
-</fieldset>
 	<p class="center"><input type="submit" value="Confirmar" name="confirmar" class="btn success large" /></p>
 	<?php echo form_close();?>
 </div>

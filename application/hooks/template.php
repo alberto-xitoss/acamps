@@ -7,7 +7,7 @@ class Template {
     private $css_url;
     private $js_url;
     /**
-    * Este metodo � chamado atraves do arquivo hooks.php
+    * Este metodo é chamado atraves do arquivo hooks.php
     * na pasta config.
     *
     * @return
@@ -72,8 +72,8 @@ class Template {
 			// Substitui libs js locais pelas do Google CDN
 			if(ENVIRONMENT == 'production'){
 				$view = preg_replace('/http.*jquery\.min\.js/', "http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js", $view);
-				$view = preg_replace('/http.*jquery-ui\.min\.js/', '"http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"', $view);
-				$view = preg_replace('/http.*jquery\.ui\.datepicker\.js/', '"http://jquery-ui.googlecode.com/svn/trunk/ui/i18n/jquery.ui.datepicker-pt-BR.js"', $view);
+				$view = preg_replace('/http.*jquery-ui\.min\.js/', "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js", $view);
+				$view = preg_replace('/http.*jquery\.ui\.datepicker.*js/', "http://jquery-ui.googlecode.com/svn/trunk/ui/i18n/jquery.ui.datepicker-pt-BR.js", $view);
 			}
         }else{
             $view = $output;
