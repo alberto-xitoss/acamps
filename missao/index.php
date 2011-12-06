@@ -169,15 +169,12 @@ if (defined('ENVIRONMENT'))
 	define('MISSAO_DIR','nomedamissao'); // Deve ser igual ao campo 'nome' do registro na tabela 'missao'
 	
 	// Configurando URL para assets
-	define('ASSETS_URL', 'URL para a pasta que contém os arquivos css, javascript, imagens, etc');
-	//Recomendado: define('ASSETS_URL', 'http://'.$_SERVER['SERVER_NAME'].'/acamps/assets/');
-	
+	define('ASSETS_URL', 'http://'.$_SERVER['SERVER_NAME'].'/acamps/assets/');
 	// Se desejar usar assets customizados na pasta da missão, use o valor abaixo:
 	//define('ASSETS_URL', 'http://'.$_SERVER['SERVER_NAME'].'/acamps/'.MISSAO_DIR.'/assets/');
 	
 	// Configuração do FPDF
-	define('FPDF_FONTPATH', "Caminho para a pasta 'font' do FPDF");
-	//Recomendado: define('FPDF_FONTPATH', $_SERVER['DOCUMENT_ROOT'].'/acamps/assets/font/');
+	define('FPDF_FONTPATH', $_SERVER['DOCUMENT_ROOT'].'/acamps/assets/font/');
 	
 	/*
 	 * Esta função seta a configuração date.timezone
