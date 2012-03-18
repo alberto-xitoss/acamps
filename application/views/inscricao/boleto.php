@@ -1,12 +1,12 @@
 <?php 
 switch($cd_tipo){
   case 'p':
-    $valor = '180,00';
-    $vencimento = '14/01/2010';
+    $valor = '190,00';
+    $vencimento = '14/01/2012';
     break;
   case 's':
-    $valor = '100,00';
-    $vencimento = '14/01/2010';
+    $valor = '110,00';
+    $vencimento = '14/01/2012';
     break;
 }
 ?>
@@ -167,7 +167,7 @@ table{
     <p style="font-size: 12px; text-align: right;"><br />
       ___________________________________<br />
     Assinatura do Pai ou Respons&aacute;vel</p><br/>
-    <p style="font-size: 12px; text-align: right;">Fortaleza, ____ de _______________ de 2010</p>
+    <p style="font-size: 12px; text-align: right;">Fortaleza, ____ de _______________ de <?php echo date("Y") ?></p>
     <br /></td>
   </tr>
 

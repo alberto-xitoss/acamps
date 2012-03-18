@@ -1,8 +1,8 @@
-<?php
+ï»¿<?php
 
 /* Secretaria
 *
-* Contém as funções usadas apenas pela secretaria.
+* ContÃ©m as funÃ§Ãµes usadas apenas pela secretaria.
 */
 
 class Secretaria extends CI_Controller {
@@ -10,26 +10,26 @@ class Secretaria extends CI_Controller {
 	public $template = 'admin_template';
 	public $title = "Sistema Acamp's > Secretaria";
 	public $css = array('bootstrap', 'admin');
-	public $js = array();
+	public $js = array('jquery.min');
 
 	/* Secretaria - construtor
 	*
-	* No contrutor carregamos apenas a biblioteca Session porque ela será
+	* No contrutor carregamos apenas a biblioteca Session porque ela serÃ¡
 	* usada em todo o Controller.
 	*/
 	function __construct() {
 		parent::__construct();
 
-		// Autenticação
+		// AutenticaÃ§Ã£o
 		if(!$this->session->userdata('logado')){
-			// se NÃO está logado, vai para a tela de login
+			// se NÃƒO estÃ¡ logado, vai para a tela de login
 			redirect('admin/login');
 		}
 	}
 
 	/* index
 	*
-	* Essa função nunca é chamada.
+	* Essa funÃ§Ã£o nunca Ã© chamada.
 	*/
 	function index(){
 
@@ -37,235 +37,245 @@ class Secretaria extends CI_Controller {
 
 	function historico() {
 
-	$log = simplexml_load_file(CACHE_PATH.'secretaria/log.xml');
+		$log = simplexml_load_file(CACHE_PATH.'secretaria/log.xml');
 
-	$view['log'] = array();
-	foreach($log->children() as $registro){
-	if($registro->tipo == 'p'){
-	$registro->tipo = 'Participante';
-	}elseif($registro->tipo == 's'){
-	$registro->tipo = 'Serviço';
-	}elseif($registro->tipo == 'cv'){
-	$registro->tipo = 'Comunidade de Vida';
-	}elseif($registro->tipo == 'amigos'){
-	$registro->tipo = "Amigos do Acamp's";
-	}
-	$view['log'] []= $registro;
-	}
+		$view['log'] = array();
+		foreach($log->children() as $registro){
+		if($registro->tipo == 'p'){
+		$registro->tipo = 'Participante';
+		}elseif($registro->tipo == 's'){
+		$registro->tipo = 'ServiÃ§o';
+		}elseif($registro->tipo == 'cv'){
+		$registro->tipo = 'Comunidade de Vida';
+		}elseif($registro->tipo == 'amigos'){
+		$registro->tipo = "Amigos do Acamp's";
+		}
+		$view['log'] []= $registro;
+		}
 
-	$this->load->view('/secretaria/historico', $view);
+		$this->load->view('/secretaria/historico', $view);
 
 	}
 
 	function etiqueta($cd_tipo, $folha=false) {
 
-	if($this->input->post('gerar')){
+		if($this->input->post('gerar')){
 
-	$this->load->model('pessoa_model');
+			$this->load->model('pessoa_model');
 
-	if($cd_tipo == 'p'){
-	$ids = $this->input->post('imprimir');
-	$pessoas = $this->pessoa_model->etiqueta_participante($ids);
+			if($cd_tipo == 'p'){
+				$ids = $this->input->post('imprimir');
+				$pessoas = $this->pessoa_model->etiqueta_participante($ids);
 
-	}elseif($cd_tipo == 's'){
-	$ids = $this->input->post('imprimir');
-	$pessoas = $this->pessoa_model->etiqueta_servico($ids);
+			}elseif($cd_tipo == 's'){
+				$ids = $this->input->post('imprimir');
+				$pessoas = $this->pessoa_model->etiqueta_servico($ids);
 
-	}elseif($cd_tipo == 'cv'){
-	$ids = $this->input->post('imprimir');
-	$pessoas = $this->pessoa_model->etiqueta_cv($ids);
+			}elseif($cd_tipo == 'cv'){
+				$ids = $this->input->post('imprimir');
+				$pessoas = $this->pessoa_model->etiqueta_cv($ids);
 
-	}elseif($cd_tipo == 'amigos'){
-	$ids = $this->input->post('imprimir');
-	$pessoas = $this->pessoa_model->etiqueta_servico($ids);
+			}elseif($cd_tipo == 'amigos'){
+				$ids = $this->input->post('imprimir');
+				$pessoas = $this->pessoa_model->etiqueta_servico($ids);
 
-	foreach($pessoas as $i => $pessoa){
-	$pessoas[$i]['cd_familia'] = $this->input->post($pessoa['id_pessoa']);
-	$pessoas[$i]['cd_tipo'] = 'amigos';
-	}
-	}
+				foreach($pessoas as $i => $pessoa){
+					$pessoas[$i]['cd_familia'] = $this->input->post($pessoa['id_pessoa']);
+					$pessoas[$i]['cd_tipo'] = 'amigos';
+				}
+			}
 
-	$this->load->library('fpdf');
+			$this->load->library('fpdf');
 
-	$nome_pdf_etiquetas = $this->_pdf_etiquetas($pessoas);
+			$nome_pdf_etiquetas = $this->_pdf_etiquetas($pessoas);
 
-	$nome_pdf_fotos = "";
-	if(ENVIRONMENT != 'acamps'){
-	$nome_pdf_fotos = $this->_pdf_fotos($ids);
-	}
+			$nome_pdf_fotos = "";
+			if(ENVIRONMENT != 'acamps'){
+				$nome_pdf_fotos = $this->_pdf_fotos($ids);
+			}
 
-	$log = simplexml_load_file(CACHE_PATH.'secretaria/log.xml');
-	$registro = $log->addChild('registro');
-	$registro->addChild('data', date('d/m/Y H:i'));
-	$registro->addChild('tipo', $cd_tipo);
-	$registro->addChild('fotos', $nome_pdf_fotos);
-	$registro->addChild('etiquetas', $nome_pdf_etiquetas);
-	$log->asXML(CACHE_PATH.'secretaria/log.xml');
+			$log = simplexml_load_file(CACHE_PATH.'secretaria/log.xml');
+			$registro = $log->addChild('registro');
+			$registro->addChild('data', date('d/m/Y H:i'));
+			$registro->addChild('tipo', $cd_tipo);
+			$registro->addChild('fotos', $nome_pdf_fotos);
+			$registro->addChild('etiquetas', $nome_pdf_etiquetas);
+			$log->asXML(CACHE_PATH.'secretaria/log.xml');
 
-	$this->load->view('secretaria/gerado',array(
-	'etiquetas' => $nome_pdf_etiquetas,
-	'fotos' => $nome_pdf_fotos
-	));
+			$this->load->view('secretaria/gerado',array(
+				'etiquetas' => $nome_pdf_etiquetas,
+				'fotos' => $nome_pdf_fotos
+			));
 
-	}elseif($this->input->post('verificar')){
+		}elseif($this->input->post('verificar')){
 
-	$this->load->model('pessoa_model');
-	if($cd_tipo == 'p'){
+			$this->load->model('pessoa_model');
+			if($cd_tipo == 'p'){
 
-	$id_ini = $this->input->post('id_ini');
-	if(!$id_ini) $id_ini = 0;
-	$id_fim = $this->input->post('id_fim');
-	if(!$id_fim) $id_fim = 999999;
+				$id_ini = $this->input->post('id_ini');
+				if(!$id_ini) $id_ini = 0;
+				$id_fim = $this->input->post('id_fim');
+				if(!$id_fim) $id_fim = 999999;
 
-	$var['pessoas'] = $this->pessoa_model->verifica_etiqueta_participante($id_ini, $id_fim);
-	if(count($var['pessoas'])==0){
-	redirect('admin/etiqueta/p');
-	}
+				$var['pessoas'] = $this->pessoa_model->verifica_etiqueta_participante($id_ini, $id_fim);
+				if(count($var['pessoas'])==0){
+					redirect('admin/etiqueta/p');
+				}
 
-	$var['id_ini'] = $id_ini;
-	$var['id_fim'] = $id_fim;
+				$var['id_ini'] = $id_ini;
+				$var['id_fim'] = $id_fim;
 
-	}elseif($cd_tipo == 's'){
+			}elseif($cd_tipo == 's'){
+				
+				$id_servico = $this->input->post('id_servico');
 
-	$id_servico = $this->input->post('id_servico');
+				$var['pessoas'] = $this->pessoa_model->verifica_etiqueta_servico($id_servico);
+				if(count($var['pessoas'])==0){
+					redirect('admin/etiqueta/s');
+				}
 
-	$var['pessoas'] = $this->pessoa_model->verifica_etiqueta_servico($id_servico);
-	if(count($var['pessoas'])==0){
-	redirect('admin/etiqueta/s');
-	}
+				$var['id_servico'] = $id_servico;
 
-	$var['id_servico'] = $id_servico;
+			}elseif($cd_tipo == 'cv'){
 
-	}elseif($cd_tipo == 'cv'){
+				$id_setor = $this->input->post('id_setor');
 
-	$id_setor = $this->input->post('id_setor');
+				$var['pessoas'] = $this->pessoa_model->verifica_etiqueta_cv($id_setor);
+				if(count($var['pessoas'])==0){
+					redirect('admin/etiqueta/cv');
+				}
 
-	$var['pessoas'] = $this->pessoa_model->verifica_etiqueta_cv($id_setor);
-	if(count($var['pessoas'])==0){
-	redirect('admin/etiqueta/cv');
-	}
+				$var['id_setor'] = $id_setor;
 
-	$var['id_setor'] = $id_setor;
+			}
 
-	}
+			$var['tipo'] = $cd_tipo;
+			$var['form'] = false;
+			$this->load->view('secretaria/etiquetas_view', $var);
 
-	$var['tipo'] = $cd_tipo;
-	$var['form'] = false;
-	$this->load->view('secretaria/etiquetas_view', $var);
+		}else{
 
-	}else{
+		if($cd_tipo == 'amigos'){
 
-	if($cd_tipo == 'amigos'){
+		$var['tipo'] = $cd_tipo;
 
-	$var['tipo'] = $cd_tipo;
+		$this->load->model('pessoa_model');
+		$var['pessoas'] = $this->pessoa_model->verifica_etiqueta_amigos();
 
-	$this->load->model('pessoa_model');
-	$var['pessoas'] = $this->pessoa_model->verifica_etiqueta_amigos();
+		//if(count($var['pessoas'])==0){
+		//    redirect('admin/etiqueta/cv');
+		//}
 
-	//if(count($var['pessoas'])==0){
-	//    redirect('admin/etiqueta/cv');
-	//}
+		$this->load->model('familia');
+		$this->load->view('secretaria/etiquetas_view', $var);
+		return;
+		}
 
-	$this->load->model('familia');
-	$this->load->view('secretaria/etiquetas_view', $var);
-	return;
-	}
+		$this->load->model('servico');
+		$this->load->model('setor');
+		$var['tipo'] = $cd_tipo;
+		$var['form'] = true; // Mostrar o form de verificaÃ§Ã£o das etiquetas
+		$this->load->view('secretaria/etiquetas_view', $var);
 
-	$this->load->model('servico');
-	$this->load->model('setor');
-	$var['tipo'] = $cd_tipo;
-	$var['form'] = true; // Mostrar o form de verificação das etiquetas
-	$this->load->view('secretaria/etiquetas_view', $var);
-
-	}
+		}
 	}
 
 	/*
 	* function a4
 	* 
-	* TODO Refatorar para que o tamanho da folha seja dinâmico. Definir variáveis para
-	* o tamanho das etiquetas, das margens, dos espaçamento, etc.
+	* TODO Refatorar para que o tamanho da folha seja dinÃ¢mico. Definir variÃ¡veis para
+	* o tamanho das etiquetas, das margens, dos espaÃ§amento, etc.
 	*/
 	function _pdf_etiquetas($pessoas) {
 
-	$barcode_path = $this->config->item('barcode_path');
+		$barcode_path = $this->config->item('barcode_path');
 
-	$pdf = new FPDF(array('orientation'=>'P', 'unit'=>'mm', 'size'=>'A4'));
+		//$pdf = new FPDF(array('orientation'=>'P', 'unit'=>'mm', 'size'=>'A4'));
+		$pdf = new FPDF(array('orientation'=>'P', 'unit'=>'mm', 'size'=>'Letter'));
 
-	//Papel A4 210 x 297
-	$pdf->SetMargins(5,8); // 4 no meio
-	$pdf->SetAutoPageBreak(true,8);
+		//Papel A4 210 x 297
+		//$pdf->SetMargins(5,6); // 4 no meio
+		//$pdf->SetAutoPageBreak(true,8);
+		
+		//Papel Carta
+		$this->fpdf->SetMargins(4,13); // 5 no meio
+		//$this->fpdf->SetAutoPageBreak(true,13);
 
-	$pdf->SetFont('Arial', '', 9);
+		$pdf->SetFont('Arial', '', 9);
 
-	$d = 0;
-	foreach($pessoas as $pessoa){
-	if($d%20 == 0){
-	$pdf->AddPage();
-	$x = $pdf->GetX()+102;
-	$y = $pdf->GetY()-25.5;
-	}
-	if($d%2 == 0){
-	$x -= 102;
-	$y += 25.5;
-	}else{
-	$x += 102;
-	}
-	$pdf->SetXY($x, $y);
+		$d = 0;
+		foreach($pessoas as $pessoa){
+			if($d%18 == 0){
+				$pdf->AddPage();
+				//$x = $pdf->GetX()+102;
+				//$y = $pdf->GetY()-25.5;
+				$x = $pdf->GetX()-105.5;
+				$y = $pdf->GetY()-25.5;
+			}
+			if($d%2 == 0){
+				//$x -= 102;
+				//$y += 25.5;
+				$x -= 105.5;
+				$y += 25.5;
+			}else{
+				//$x += 102;
+				$x += 105.5;
+			}
+			$pdf->SetXY($x, $y);
+			
+			$pdf->SetXY($x+3, $y);
+			$pdf->SetFont('', 'B', 13);
+			// Nome escolhido para o crachÃ¡
+			$pdf->Write(12.3,utf8_decode($pessoa['nm_cracha']));
 
-	$pdf->SetXY($x+3, $y);
-	$pdf->SetFont('', 'B', 13);
-	// Nome escolhido para o crachá
-	$pdf->Write(12.3,utf8_decode($pessoa['nm_cracha']));
+			$pdf->SetXY($x+3, $y+7);
+			$pdf->SetFont('', '', 9);
+			// Nome completo
+			$pdf->Write(8.6,utf8_decode($pessoa['nm_pessoa']));
+			
+			$pdf->SetXY($x+3, $y+10.9);
+			$pdf->SetFont('', 'B', 10);
+			// SeminÃ¡rio/Aprofundamento ou Nome do serviÃ§o
+			if($pessoa['cd_tipo'] == 'amigos'){
+				$pdf->Write(10.3, utf8_decode('SeminÃ¡rio'));
+			}elseif($pessoa['cd_tipo'] == 'p'){
+				$pdf->Write(10.3,utf8_decode($pessoa['ds_seminario']));
+			}else{
+				$pdf->Write(10.3,utf8_decode($pessoa['nm_servico']));
+			}
+			
+			$pdf->SetXY($x+3, $y+16.9);
+			$pdf->SetFont('', '', 9);
+			// Cidade ou Setor da CV
+			if($pessoa['cd_tipo'] == 'v'){
+				$pdf->Write(8.5, 'CV: '.utf8_decode($pessoa['nm_setor']));
+			}else{
+				$pdf->Write(8.5,utf8_decode($pessoa['nm_cidade']).' / '.$pessoa['cd_estado']);
+			}
+			
+			$pdf->SetXY($x+69, $y); // CorreÃ§Ã£o para etiqueta 2011.1
+			if($pessoa['cd_tipo'] == 'p' || $pessoa['cd_tipo'] == 'amigos'){
+				$pdf->Cell(11,19,$pessoa['id_pessoa'].' / '.$pessoa['cd_familia'],0,0,'C');
+			}else{
+				$pdf->Cell(11,19,$pessoa['id_pessoa'],0,0,'C');
+			}
+			
+			// Gerando imagem do cÃ³digo de barras, se ela ainda nÃ£o existir
+			if(!file_exists($barcode_path.$pessoa['id_pessoa'].'.png')){
+				$this->_barcode($pessoa['id_pessoa']);
+			}
 
-	$pdf->SetXY($x+3, $y+7);
-	$pdf->SetFont('', '', 9);
-	// Nome completo
-	$pdf->Write(8.6,utf8_decode($pessoa['nm_pessoa']));
+			$pdf->SetXY($x+67, $y+11.6); // CorreÃ§Ã£o para etiqueta 2011.1
+			// Imprimindo cÃ³digo de barras no PDF
+			$pdf->Image($barcode_path.$pessoa['id_pessoa'].'.png');
 
-	$pdf->SetXY($x+3, $y+10.9);
-	$pdf->SetFont('', 'B', 10);
-	// Seminário/Aprofundamento ou Nome do serviço
-	if($pessoa['cd_tipo'] == 'amigos'){
-	$pdf->Write(10.3, utf8_decode('Seminário'));
-	}elseif($pessoa['cd_tipo'] == 'p'){
-	$pdf->Write(10.3,utf8_decode($pessoa['ds_seminario']));
-	}else{
-	$pdf->Write(10.3,utf8_decode($pessoa['nm_servico']));
-	}
+			$d++;
+		}
 
-	$pdf->SetXY($x+3, $y+16.9);
-	$pdf->SetFont('', '', 9);
-	// Cidade ou Setor da CV
-	if($pessoa['cd_tipo'] == 'v'){
-	$pdf->Write(8.5, 'CV: '.utf8_decode($pessoa['nm_setor']));
-	}else{
-	$pdf->Write(8.5,utf8_decode($pessoa['nm_cidade']).' / '.$pessoa['cd_estado']);
-	}
-
-	$pdf->SetXY($x+59, $y); // Correção para etiqueta 2011.1
-	if($pessoa['cd_tipo'] == 'p' || $pessoa['cd_tipo'] == 'amigos'){
-	$pdf->Cell(11,19,$pessoa['id_pessoa'].' / '.$pessoa['cd_familia'],0,0,'C');
-	}else{
-	$pdf->Cell(11,19,$pessoa['id_pessoa'],0,0,'C');
-	}
-
-	// Gerando imagem do código de barras, se ela ainda não existir
-	if(!file_exists($barcode_path.$pessoa['id_pessoa'].'.png')){
-	$this->_barcode($pessoa['id_pessoa']);
-	}
-
-	$pdf->SetXY($x+57, $y+11.6); // Correção para etiqueta 2011.1
-	// Imprimindo código de barras no PDF
-	$pdf->Image($barcode_path.$pessoa['id_pessoa'].'.png');
-
-	$d++;
-	}
-
-	$nome = 'etiquetas '.date('d-m H-i').'.pdf';
-	// Salvando no servidor
-	$pdf->Output(CACHE_PATH.'secretaria/'.$nome,'F');
-	return $nome;
+		$nome = 'etiquetas '.date('d-m H-i').'.pdf';
+		// Salvando no servidor
+		$pdf->Output(CACHE_PATH.'secretaria/'.$nome,'F');
+		return $nome;
 	}
 
 	function _pdf_fotos($ids){
@@ -362,7 +372,7 @@ class Secretaria extends CI_Controller {
 	}else{
 	$this->fpdf->Cell(11,19,$pessoa['id_pessoa'],0,0,'C');
 	}
-	//Código de Barras
+	//CÃ³digo de Barras
 	if(!file_exists($this->config->item('barcode_path').$pessoa['id_pessoa'].'.png')){
 	$this->_barcode($pessoa['id_pessoa']);
 	}
@@ -382,7 +392,7 @@ class Secretaria extends CI_Controller {
 	function _barcode($id_pessoa=0) {
 	$this->load->helper('barcode');
 	$bar = encode_128C($id_pessoa);
-	barcode_image($this->config->item('barcode_path').$id_pessoa.'.png', $bar,1,20);
+	barcode_image($this->config->item('barcode_path').$id_pessoa.'.png', $bar,1,30);
 	}
 
 }

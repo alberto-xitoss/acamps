@@ -14,4 +14,6 @@ A aplicação possui:
  * Gerenciamento dos inscritos da Comunidade de Vida
  * Impressão de crachás
  * Relatórios
+ 
+[Documentação](https://github.com/informaticapjj/acamps/wiki)
 

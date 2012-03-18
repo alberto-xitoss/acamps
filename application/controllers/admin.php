@@ -19,7 +19,7 @@ class Admin extends CI_Controller {
     public $template = 'admin_template';
     public $title = "Sistema Acamp's";
     public $css = array('bootstrap', 'admin');
-    public $js = array();
+    public $js =  array('jquery.min');
 
     /* Admin - construtor
      *
@@ -112,47 +112,52 @@ class Admin extends CI_Controller {
      *
      * Página principal do sistema, com o formulário de busca de inscritos.
     */
-    function buscar($consulta = null){
+    function buscar(){
         
         // Autenticação
         if(!$this->session->userdata('logado')){ // se NÃO está logado
             $this->login();
             return;
         }
-        
+		
+        $var['resultado'] = false;
         if($this->input->post('buscar')){
-            // Repassando a string de consulta como parâmetro para este método
-            // pra que ela apareça na URL.
-			if($this->input->post('consulta') == '*'){
+			
+			// Para escrever a string de consulta novamente no campo de busca, ao retornar a página de resultados
+			$var['consulta'] = $this->input->post('consulta');
+			
+			// Salva a última consulta numa variável de sessão
+			$this->session->set_userdata('ultima_consulta', $var['consulta']);
+			
+		}else if($this->session->userdata('ultima_consulta')){
+			
+			// Recupera o valor da última consulta
+			$var['consulta'] = $this->session->userdata('ultima_consulta');
+		}
+		
+		if(isset($var['consulta'])){
+			
+			if($var['consulta'] == '*'){
 				$consulta = '';
 			}else{
-				redirect('admin/buscar/'.$this->input->post('consulta'));
-				return;
+				$consulta = $var['consulta'];
+			}
+			
+			$this->load->model('pessoa_model');
+			
+			// Se a string de consulta contém números, busca pela inscrição
+			// Senão busca pelo nome
+			if(strpbrk($consulta, '0123456789')){
+				$pessoa= $this->pessoa_model->buscar_por_id($consulta);
+				if($pessoa){
+					$var['resultado'] = array( $pessoa );
+				}
+			}else{
+				$var['resultado'] = $this->pessoa_model->buscar_por_nome($consulta);
 			}
         }
-        
-        $var['resultado'] = false;
-        if(isset($consulta)){
-            $this->load->model('pessoa_model');
-            
-            // Se contém números, busca pela inscrição
-            // Senão busca pelo nome
-            if(strpbrk($consulta, '0123456789')){
-                $pessoa= $this->pessoa_model->buscar_por_id($consulta);
-                if($pessoa){
-                    $var['resultado'] []= $pessoa;
-                }else{
-                    $var['resultado'] = array();
-                }
-                
-            }else{
-				if($consulta == '*'){ $consulta = ''; }
-                $var['resultado'] = $this->pessoa_model->buscar_por_nome($consulta);
-            }
-        }
-        
-        $this->load->helper(array('form','url'));
-        $this->load->view('admin/buscar', $var);
+		
+		$this->load->view('admin/buscar', $var);
 		
     }
 	
@@ -169,8 +174,8 @@ class Admin extends CI_Controller {
 			
 			$params = array(
 				'missao'			=> 'Fortaleza',
-				'valor_part'		=> 180.00,
-				'valor_serv'		=> 100.00,
+				'valor_part'		=> 190.00,
+				'valor_serv'		=> 110.00,
 				'id_pessoa_inicial' => 2000,
 				'usuario'			=> 'mauro',
 				'senha'				=> 'gadelha',

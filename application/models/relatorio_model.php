@@ -13,29 +13,29 @@ class Relatorio_model extends CI_Model{
     var $custom = 'relatorio_custom';
     
     function sintetico(){
-        $query = $this->db->query("SELECT cd_tipo, id_status, count(*) as pessoas
+        $query = $this->db->query('SELECT cd_tipo, id_status, count(*) AS pessoas
                                   FROM pessoa
-								  WHERE id_missao = ".$this->config->item('missao').
-                                 'GROUP BY cd_tipo, id_status'
+								  WHERE id_missao = '.$this->config->item('missao').
+                                ' GROUP BY cd_tipo, id_status'
 								  );
         $tabelas['numeros'] = array();
         foreach($query->result() as $linha){
             $tabelas['numeros'][$linha->cd_tipo][$linha->id_status] = $linha->pessoas;
         }
         //----------------------------------------------------------------------
-		$query = $this->db->query('select cd_tipo, ds_sexo, count(*) as pessoas
+		$query = $this->db->query('SELECT cd_tipo, ds_sexo, count(*) AS pessoas
 									FROM pessoa
-									where id_status = 3 AND id_missao = '.$this->config->item('missao').
-								   'group by cd_tipo, ds_sexo');
+									WHERE id_status = 3 AND id_missao = '.$this->config->item('missao').
+								  ' GROUP BY cd_tipo, ds_sexo');
         $tabelas['sexo'] = array();
         foreach($query->result() as $linha){
             $tabelas['sexo'][$linha->cd_tipo][$linha->ds_sexo] = $linha->pessoas;
         }
         //----------------------------------------------------------------------
-        $query = $this->db->query('SELECT cd_tipo, bl_alimentacao, count(*) as pessoas
+        $query = $this->db->query('SELECT cd_tipo, bl_alimentacao, count(*) AS pessoas
                                   FROM pessoa
                                   WHERE pessoa.id_status = 3 AND id_missao = '.$this->config->item('missao').
-                                 'GROUP BY cd_tipo,bl_alimentacao
+                                ' GROUP BY cd_tipo,bl_alimentacao
                                   ORDER BY cd_tipo');
         $tabelas['alimentacao'] = array();
         foreach($query->result() as $linha){
@@ -46,10 +46,10 @@ class Relatorio_model extends CI_Model{
             }
         }
         //----------------------------------------------------------------------
-        $query = $this->db->query('SELECT cd_tipo, bl_transporte, count(*) as pessoas
+        $query = $this->db->query('SELECT cd_tipo, bl_transporte, count(*) AS pessoas
                                     FROM pessoa
                                     WHERE pessoa.id_status = 3 AND id_missao = '.$this->config->item('missao').
-                                   'GROUP BY cd_tipo,bl_transporte
+                                  ' GROUP BY cd_tipo,bl_transporte
                                     ORDER BY cd_tipo');
         $tabelas['transporte'] = array();
         foreach($query->result() as $linha){
@@ -60,10 +60,10 @@ class Relatorio_model extends CI_Model{
             }
         }
         //----------------------------------------------------------------------
-        $query = $this->db->query('SELECT cd_tipo, bl_barracao, count(*) as pessoas
+        $query = $this->db->query('SELECT cd_tipo, bl_barracao, count(*) AS pessoas
                                     FROM pessoa
                                     WHERE pessoa.id_status = 3 AND id_missao = '.$this->config->item('missao').
-                                   'GROUP BY cd_tipo,bl_barracao
+                                  ' GROUP BY cd_tipo,bl_barracao
                                     ORDER BY cd_tipo');
         $tabelas['barracao'] = array();
         foreach($query->result() as $linha){
@@ -74,10 +74,10 @@ class Relatorio_model extends CI_Model{
             }
         }
         //----------------------------------------------------------------------
-        $query = $this->db->query("SELECT bl_seminario, count(*) as pessoas
+        $query = $this->db->query("SELECT bl_seminario, count(*) AS pessoas
                                     FROM pessoa
                                     WHERE pessoa.id_status = 3 AND cd_tipo='p' AND id_missao = ".$this->config->item('missao').
-                                    'GROUP BY bl_seminario');
+                                   ' GROUP BY bl_seminario');
         $tabelas['seminario'] = array();
         foreach($query->result() as $linha){
             if($linha->bl_seminario){
@@ -87,10 +87,10 @@ class Relatorio_model extends CI_Model{
             }
         }
         //----------------------------------------------------------------------
-        $query = $this->db->query("SELECT bl_fazer_comunhao, count(*) as pessoas
+        $query = $this->db->query("SELECT bl_fazer_comunhao, count(*) AS pessoas
                                     FROM pessoa
                                     WHERE pessoa.id_status = 3 AND cd_tipo='p' AND id_missao = ".$this->config->item('missao').
-                                    "GROUP BY bl_fazer_comunhao");
+                                  " GROUP BY bl_fazer_comunhao");
         $tabelas['eucaristia'] = array();
         foreach($query->result() as $linha){
             if($linha->bl_fazer_comunhao){

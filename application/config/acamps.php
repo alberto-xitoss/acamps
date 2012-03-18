@@ -8,6 +8,8 @@ $config['missao'] = MISSAO_ID;
 $config['missao_nome'] = MISSAO_NOME;
 $config['missao_dir'] = MISSAO_DIR;
 
+$config['id_amigos'] = ID_AMIGOS;
+
 $config['modules_locations'] = array(
 	APPPATH.'modules/' => '../modules/',
 );
@@ -23,6 +25,7 @@ $config['upload'] = array(
 
 // Caminho para a pasta das imagens dos códigos de barras
 $config['barcode_path'] = str_replace('\\','/',FCPATH).'barcode/';
+define('CACHE_PATH', str_replace('\\','/',FCPATH).'cache/');
 
 // Diretório que contém as fotos dos inscritos
 $config['fotos_dir'] = 'fotos/';

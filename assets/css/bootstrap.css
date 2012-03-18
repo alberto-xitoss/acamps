@@ -300,7 +300,7 @@ fieldset legend {
   padding-left: 150px;
   font-size: 19.5px;
   line-height: 1;
-  color: #404040;
+  color: #000000;
   *padding: 0 0 5px 145px;
   /* IE6-7 */
 
@@ -335,7 +335,7 @@ label {
   float: left;
   width: 130px;
   text-align: right;
-  color: #404040;
+  color: #000000;
 }
 form .input {
   margin-left: 150px;
@@ -353,7 +353,7 @@ select,
   padding: 4px;
   font-size: 13px;
   line-height: 18px;
-  color: #606060;
+  color: #000000;
   border: 1px solid #ccc;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -427,9 +427,9 @@ input, textarea {
 input:focus, textarea:focus {
   outline: 0;
   border-color: rgba(82, 168, 236, 0.8);
-  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
-  -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 5px rgba(82, 168, 236, 0.6);
+  -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 5px rgba(82, 168, 236, 0.6);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 5px rgba(82, 168, 236, 0.6);
 }
 input[type=file]:focus, input[type=checkbox]:focus, select:focus {
   -webkit-box-shadow: none;
@@ -686,10 +686,7 @@ textarea[readonly] {
   display: block;
   float: none;
   width: auto;
-  font-weight: bold;
   text-align: left;
-  line-height: 20px;
-  padding-top: 0;
 }
 .form-stacked .clearfix {
   margin-bottom: 9px;
@@ -933,7 +930,6 @@ table .headerSortUp.purple, table .headerSortDown.purple {
 }
 .topbar a {
   color: #bfbfbf;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
 .topbar h3 a:hover, .topbar .brand:hover, .topbar ul .active > a {
   background-color: #333;
@@ -1821,11 +1817,11 @@ button.btn::-moz-focus-inner, input[type=submit].btn::-moz-focus-inner {
   margin-top: 7px;
 }
 .modal.fade {
-  -webkit-transition: opacity .3s linear, top .3s ease-out;
-  -moz-transition: opacity .3s linear, top .3s ease-out;
-  -ms-transition: opacity .3s linear, top .3s ease-out;
-  -o-transition: opacity .3s linear, top .3s ease-out;
-  transition: opacity .3s linear, top .3s ease-out;
+  -webkit-transition: opacity .2s linear, top .2s ease-out;
+  -moz-transition: opacity .2s linear, top .2s ease-out;
+  -ms-transition: opacity .2s linear, top .2s ease-out;
+  -o-transition: opacity .2s linear, top .2s ease-out;
+  transition: opacity .2s linear, top .2s ease-out;
   top: -25%;
 }
 .modal.fade.in {

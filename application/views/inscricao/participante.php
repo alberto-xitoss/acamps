@@ -61,7 +61,7 @@
 		<label>O que fará no período da tarde?<span class="help-block">Se você nunca participou de um Seminário de Vida no Espírito Santo, marque esta opção.</span></label>
 		<div class="input">
 			<ul class="inputs-list">
-				<li><label for="bl_seminario_s"><input type="radio" class="obrigatorio" id="bl_seminario_s" value="1" name="bl_seminario" <?php if(set_radio('bl_seminario', '1')) echo 'checekd' ?>>Seminário de Vida no Espírito Santo</label></li>
+				<li><label for="bl_seminario_s"><input type="radio" class="obrigatorio" id="bl_seminario_s" value="1" name="bl_seminario" <?php if(set_radio('bl_seminario', '1')) echo 'checked' ?>>Seminário de Vida no Espírito Santo</label></li>
 				<li><label for="bl_seminario_a"><input type="radio" class="obrigatorio" id="bl_seminario_a" value="0" name="bl_seminario" <?php if(set_radio('bl_seminario', '0')) echo 'checked' ?>>Aprofundamento</label></li>
 			</ul>
 		</div>
@@ -210,7 +210,6 @@
     $(function(){
         
         // Alterando obrigatoriedade dos campos de alergia
-		
 		$('#nm_alergia_remedio').attr('disabled',true);
 		$('#nm_alergia_alimento').attr('disabled',true);
 		

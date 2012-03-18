@@ -1,4 +1,4 @@
-<div id="login">
+<div id="login" class="form-stacked">
     <?php echo form_open('admin/login'); ?>
     <?php echo form_label('Login','nm_usuario'); ?>
     <p>
@@ -17,7 +17,7 @@
     )); ?>
     </p>
     <p class="center">
-    <?php echo form_submit('login','Login'); ?>
+    <?php echo form_submit('login', 'Login', 'class="btn primary"'); ?>
     </p>
     <?php echo form_close(); ?>
 </div>

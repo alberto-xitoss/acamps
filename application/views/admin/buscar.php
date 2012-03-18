@@ -1,15 +1,7 @@
-<div id="buscar">
-    <?php
-    echo form_open('admin/buscar');
-    echo form_input(array(
-            'name'        => 'consulta',
-            'id'          => 'consulta',
-            'maxlength'   => '20'
-        ));
-    
-    echo form_submit('buscar', 'Buscar');
-    echo form_close();
-    ?>
+<div id="busca">
+    <?php echo form_open('admin/buscar') ?>
+	<input type="text" maxlength="20" id="consulta" value="<?php if(isset($consulta))echo $consulta ?>" name="consulta"><input type="submit" class="btn primary" value="Buscar" name="buscar" id="buscar">
+    <?php echo form_close() ?>
 </div>
 
 <div id="resultado">
@@ -18,7 +10,12 @@
         <tbody>
         	<?php foreach($resultado as $linha): ?>
                 <tr>
-                    <td><?php echo anchor('admin/pessoa/'.$linha->id_pessoa, '<span class="id-'.$linha->cd_tipo.' status-'.$linha->id_status.'">'.$linha->id_pessoa.'</span>'.$linha->nm_pessoa) ?></td>
+                    <td><?php
+						echo anchor('admin/pessoa/'.$linha->id_pessoa,
+							'<span class="id-'.$linha->cd_tipo.' status-'.$linha->id_status.'">' .
+							$linha->id_pessoa .
+							'</span>' .
+							$linha->nm_pessoa) ?></td>
                     <td width="180">
                     <?php if($linha->cd_tipo == 'p'): ?>
 	                    	<span class="tipo-p familia-<?php echo strtolower($linha->cd_familia) ?>"><?php echo $linha->nm_familia ?></span>
@@ -39,6 +36,3 @@
 <div id="detalhes-min">
 	detalhes-min
 </div>
-<script>
-	
-</script>

@@ -27,7 +27,7 @@ class Servico extends CI_Model{
     }
 
     function listar(){
-        $this->db->select('id_servico,nm_servico,nm_coordenador,nr_pessoas,nr_limite_pessoas');
+        $this->db->select('id_servico, nm_servico, nm_coordenador, nr_limite_pessoas');
         //$this->db->where('id_missao', $this->config->item('missao'));
         $this->db->order_by("nm_servico", "asc");
         $query = $this->db->get($this->table);
@@ -38,17 +38,7 @@ class Servico extends CI_Model{
         }
         
         return $servicos;
-    } 
-    
-    /* function incrementar($id_servico){
-        // Incrementa o contador de pessoas na equipe de serviço
-        $query = $this->db->query('UPDATE servico SET nr_pessoas = nr_pessoas+1 WHERE id_servico = '.$id_servico.' AND id_missao = '.$this->config->item('missao'));
     }
-    
-    function decrementar($id_servico){
-        // Decrementa o contador de pessoas na equipe de serviço
-        $query = $this->db->query('UPDATE servico SET nr_pessoas = nr_pessoas-1 WHERE id_servico = '.$id_servico.' AND id_missao = '.$this->config->item('missao'));
-    } */
     
 }
 

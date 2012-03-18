@@ -52,6 +52,16 @@
 			</ul>
 		</div>
 	</div>
+	<!-- Transporte -->
+	<div class="clearfix">
+		<label>Você precisará de transporte para o acampamento?</label>
+		<div class="input">
+			<ul class="inputs-list">
+				<li><label for="bl_transporte_s"><input type="radio" class="obrigatorio" id="bl_transporte_s" value="1" name="bl_transporte" <?php if(set_radio('bl_transporte', '1')) echo 'checked' ?>>Sim</label></li>
+				<li><label for="bl_transporte_n"><input type="radio" class="obrigatorio" id="bl_transporte_n" value="0" name="bl_transporte" <?php if(set_radio('bl_transporte', '0')) echo 'checked' ?>>Não</label></li>
+			</ul>
+		</div>
+	</div>
 <hr/>
 	<!-- Alergia a Alimentos -->
 	<div class="clearfix">

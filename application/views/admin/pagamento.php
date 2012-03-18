@@ -1,72 +1,54 @@
-<div>
-    <h2>Tipo do Pagamento</h2>
-    <?php echo form_open('admin/pagar/'.$pessoa->id_pessoa) ?>
-    <p><?php
-        echo form_radio(array(
-            'id'=>'tipo_d',
-            'name'=>'cd_tipo_pgto',
-            'value'=>'d',
-            'checked'=>true
-        ));
-        echo form_label('Dinheiro','tipo_d')
-	?></p>
-    <p><?php
-        echo form_radio(array(
-            'id'=>'tipo_c',
-            'name'=>'cd_tipo_pgto',
-            'value'=>'c'
-        ));
-        echo form_label('Cheque','tipo_c')
-	?></p>
-    <p><?php
-        echo form_radio(array(
-            'id'=>'tipo_cp',
-            'name'=>'cd_tipo_pgto',
-            'value'=>'cp'
-        ));
-        echo form_label('Cheque Pré-datado','tipo_cp')
-	?></p>
-	<br/>
-	<table border="0" cellspacing="0" cellpadding="0">
-        <tr>
-            <td width="100px">Valor a Pagar:</td>
-            <td><span id='avista_apagar'class="textfield"><?php printf('%.2f' ,$pessoa->nr_a_pagar) ?></span>
-            <?php echo form_hidden('nr_a_pagar', sprintf('%.2f' ,$pessoa->nr_a_pagar)) ?></td>
-        </tr>
-		<?php if($this->session->userdata('permissao') & DESCONTO): // Verificando Permissão do usuário ?>
-			<tr>
-				<td>Desconto:</td>
-				<td><input id="avista_desconto" name="nr_desconto" type="text" /></td>
-			</tr>
-			<tr>
-				<td>Total:</td>
-				<td><span id='avista_total' class="textfield"><?php printf('%.2f' ,$pessoa->nr_a_pagar) ?></span>
-				<?php echo form_hidden('nr_pago', sprintf('%.2f' ,$pessoa->nr_a_pagar)) ?></td>
-			</tr>
-		<?php endif ?>
-        <tr>
-            <td>Valor Pago:</td>
-            <td><input id="avista_pago" name="avista_pago" type="text" /></td>
-        </tr>
-        <tr>
-            <td>Troco:</td>
-            <td><span id="avista_troco" class="textfield">0.00</span></td>
-        </tr>
-    </table>
-	<p align="center" style="margin-top:30px"><?php echo form_submit('pagar', 'Efetuar Pagamento', 'id="pagar"'); ?></p>
-    <?php echo form_close() ?>
+<?php echo form_open('admin/pagar/'.$pessoa->id_pessoa) ?>
+<div class="modal-header"><a class="close" href="#">×</a><h3>Pagamento</h3></div>
+<div class="modal-body">
+<p><strong>Tipo do Pagamento</strong></p>
+<ul class="inputs-list">
+<li><label for="tipo_d"><input type="radio" id="tipo_d" value="d" name="cd_tipo_pgto" checked />Dinheiro</label></li>
+<li><label for="tipo_c"><input type="radio" id="tipo_c" value="c" name="cd_tipo_pgto"/>Cheque</label></li>
+<li><label for="tipo_cp"><input type="radio" id="tipo_cp" value="cp" name="cd_tipo_pgto"/>Cheque Pré-datado</label></li>
+</ul>
+<table border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th width="100px">Valor a Pagar:</th>
+		<td><span id='avista_apagar'class="textfield"><?php printf('%.2f' ,$pessoa->nr_a_pagar) ?></span>
+		<?php echo form_hidden('nr_a_pagar', sprintf('%.2f' ,$pessoa->nr_a_pagar)) ?></td>
+	</tr>
+	<?php if($this->session->userdata('permissao') & DESCONTO): // Verificando Permissão do usuário ?>
+		<tr>
+			<th>Desconto:</th>
+			<td><input id="avista_desconto" name="nr_desconto" type="text" /></td>
+		</tr>
+		<tr>
+			<th>Total:</th>
+			<td><span id='avista_total' class="textfield"><?php printf('%.2f' ,$pessoa->nr_a_pagar) ?></span>
+			<?php echo form_hidden('nr_pago', sprintf('%.2f' ,$pessoa->nr_a_pagar)) ?></td>
+		</tr>
+	<?php endif ?>
+	<tr>
+		<th>Valor Pago:</th>
+		<td><input id="avista_pago" name="avista_pago" type="text" /></td>
+	</tr>
+	<tr>
+		<th>Troco:</th>
+		<td><span id="avista_troco" class="textfield">0.00</span></td>
+	</tr>
+</table>
 </div>
+<div class="modal-footer">
+<p align="center"><input type="submit" id="pagar" class="btn success" value="Efetuar Pagamento" name="pagar" /></p>
+</div>
+<?php echo form_close() ?>
 <script>
 
     var Pagamento = {
-	valor: parseFloat(<?php echo '"'.$pessoa->nr_a_pagar.'"' ?>),
-	pago: 0.0,
-	desconto: 0.0,
-	total: parseFloat(<?php echo '"'.$pessoa->nr_a_pagar.'"' ?>),
-	troco: 0.0
+		valor: parseFloat(<?php echo '"'.$pessoa->nr_a_pagar.'"' ?>),
+		pago: 0.0,
+		desconto: 0.0,
+		total: parseFloat(<?php echo '"'.$pessoa->nr_a_pagar.'"' ?>),
+		troco: 0.0
     }
     
-    $(function(){
+    //$(function(){
         $("#avista_pagar").click(function(){
 			if(Pagamento.pago < Pagamento.total){
 				alert("Verifique se todos os campos estão preenchidos corretamente!");
@@ -113,7 +95,7 @@
             }
         });
         
-    });
+    //});
     
     // Funções auxiliares
     function formataValor(v){

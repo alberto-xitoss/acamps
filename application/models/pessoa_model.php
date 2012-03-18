@@ -106,12 +106,21 @@ class Pessoa_model extends CI_Model{
             return false;
         }else{
 			
-			if($this->db->platform() == 'postgre' && $array){
-                foreach($resultado as $campo => $valor){
-                    if(substr($campo,0,2)=='bl'){
-                        $resultado[$campo] = ($valor=='t'?true:false);
-                    }
-                }
+			if($this->db->platform() == 'postgre'){
+				if($array){
+					foreach($resultado as $campo => $valor){
+						if(substr($campo,0,2)=='bl'){
+							$resultado[$campo] = ($valor=='t'?true:false);
+						}
+					}
+				}else{
+					$vars = get_object_vars($resultado);
+					foreach($vars as $campo => $valor){
+						if(substr($campo,0,2)=='bl'){
+							$resultado->$campo = ($valor=='t'?true:false);
+						}
+					}
+				}
             }
 			
 			if($array && !empty($resultado['ds_foto'])){
@@ -143,7 +152,7 @@ class Pessoa_model extends CI_Model{
                      ->join('servico', 'pessoa.id_servico = servico.id_servico', 'left')
                      ->join('setor', 'pessoa.id_setor = setor.id_setor', 'left')
                      ->join('missao', 'pessoa.id_missao = missao.id_missao')
-                     ->like('lower(pessoa.nm_pessoa)',strtolower($nm_pessoa))
+                     ->like('pessoa.nm_pessoa',normaliza_nome($nm_pessoa))
                      ->where('pessoa.id_missao', $this->config->item('missao'))
                      ->order_by("nm_pessoa", "asc")
                      ->order_by("id_pessoa", "asc"); 
@@ -385,7 +394,7 @@ class Pessoa_model extends CI_Model{
         $this->db->where('id_missao', $this->config->item('missao'));
         $this->db->update($this->table);
         
-        log_message('ERROR', 'Pessoa Atualizada -> '.$id_pessoa);
+        //log_message('ERROR', 'Pessoa Atualizada -> '.$id_pessoa);
     }
 
     function excluir($id_pessoa){
@@ -487,6 +496,7 @@ class Pessoa_model extends CI_Model{
     }
     
     function verifica_etiqueta_servico($id_servico=0){
+		echo $id_servico;
         $this->db->select(" pessoa.id_pessoa,
                             pessoa.nm_pessoa,
                             pessoa.bl_cracha,
@@ -494,7 +504,7 @@ class Pessoa_model extends CI_Model{
                 ->from("pessoa")
                 ->join("servico", "pessoa.id_servico = servico.id_servico")
                 ->where("pessoa.id_status = 3")
-                ->where("pessoa.id_servico <> ".$this->config->item('id_amigos'))
+                ->where("pessoa.id_servico <> ".ID_AMIGOS)
                 ->where("pessoa.cd_tipo = 's'");
         if($id_servico){
             $this->db->where('pessoa.id_servico', $id_servico);
