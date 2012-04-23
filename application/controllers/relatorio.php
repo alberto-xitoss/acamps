@@ -4,7 +4,7 @@
  * Description of Relatorio
  *
  */
-class Relatorio extends CI_Controller {
+class Relatorio extends MY_Controller {
     
     public $template = 'admin_template';
     public $title = "Sistema Acamp's";

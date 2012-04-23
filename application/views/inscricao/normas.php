@@ -1,7 +1,7 @@
 <div id="info">
 <h2>Informações Gerais</h2>
 <p>O <strong>Acampamento de Jovens Shalom</strong> é um evento promovido pelo <strong>Projeto Juventude para Jesus</strong> da <strong>Comunidade Católica Shalom</strong> que tem como objetivo a evangelização e uma opção sadia de lazer para a juventude. Contamos com uma intensa programação de atividades de lazer, cursos formativos e noites de diversão descontraída.</p>
-<p>A <strong>38&ordf; edição do Acamp's</strong> acontecerá dos dias <strong>16 a 21 de janeiro de 2012</strong>, na <strong>fazenda Guarany em Pacajus</strong>, a 50km de Fortaleza.</p>
+<p>A <strong>39&ordf; edição do Acamp's</strong> acontecerá dos dias <strong>2 a 7 de julho de 2012</strong>, na <strong>fazenda Guarany em Pacajus</strong>, a 50km de Fortaleza.</p>
 <?php if($tipo=='servico'): ?>
 <p class="alert-message">Esta é uma <strong>pré-inscrição</strong>. Antes de pagar e concluir sua inscrição será necessária a <strong>aprovação do coordenador</strong> da equipe na qual você se inscrever.</p>
 <?php endif; ?>

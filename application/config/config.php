@@ -15,7 +15,7 @@
 |
 */
 
-$config['base_url']	= 'http://'.$_SERVER['SERVER_NAME'].'/acamps/'.MISSAO_DIR.'/';
+$config['base_url']	= 'http://'.$_SERVER['SERVER_NAME'].'/acamps/'.basename(FCPATH).'/';
 
 /*
 |--------------------------------------------------------------------------

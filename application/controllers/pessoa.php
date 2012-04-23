@@ -4,7 +4,7 @@
  * Description of pessoa
  *
  */
-class Pessoa extends CI_Controller {
+class Pessoa extends MY_Controller {
     
     public $template = 'admin_template';
     public $title = "Sistema Acamp's";

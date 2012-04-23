@@ -2,8 +2,35 @@
 
 class Missao_model extends CI_Model {
 	
+	var $tabela = 'missao';
+	
 	function __construct() {
 		parent::__construct();
+	}
+	
+	function id_missao()
+	{
+		
+	}
+	
+	function nm_missao()
+	{
+		
+	}
+	
+	function form_online()
+	{
+		
+	}
+	
+	function pagamento_simples()
+	{
+		
+	}
+	
+	function id_amigos()
+	{
+		
 	}
 	
 	function onibus($id_pessoa = 0){

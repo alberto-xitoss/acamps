@@ -10,7 +10,6 @@ class Log {
 		
 	}
 	
-	
 }
 
 /* End of file Login.php */

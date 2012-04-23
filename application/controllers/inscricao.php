@@ -1,6 +1,6 @@
 <?php
 
-class Inscricao extends CI_Controller{
+class Inscricao extends MY_Controller{
 
     public $template = 'inscricao_template';
     public $title = 'Acampamento de Jovens Shalom';
@@ -67,11 +67,6 @@ class Inscricao extends CI_Controller{
 				
 				// Status -> Pendente Pagamento
                 $dados['id_status'] = 1;
-				
-                // // Escolhendo Família
-                // // ---------------------------------------------------
-                // $dados['id_familia'] = $this->familia->familia_menor();
-                // // ---------------------------------------------------
 				
                 // Gravando registro de inscrição e retornando o número de inscrição gerado
                 $view_data['id_pessoa'] = $this->pessoa_model->inscrever($dados);

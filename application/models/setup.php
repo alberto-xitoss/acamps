@@ -179,6 +179,8 @@ class Setup extends CI_Model {
 				if($table == 'pessoa' && $this->db->platform() == 'mysql'){
 					$this->db->query('ALTER TABLE pessoa AUTO_INCREMENT = '.$params['id_pessoa_inicial']);
 				}
+				
+				
 			}
 		}
 		
