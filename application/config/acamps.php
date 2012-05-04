@@ -26,7 +26,8 @@ $config['upload'] = array(
 */
 
 $config['barcode_path'] = str_replace('\\','/',FCPATH).'barcode/';
-define('CACHE_PATH', str_replace('\\','/',FCPATH).'cache/');
+//define('CACHE_PATH', str_replace('\\','/',FCPATH).'cache/');
+$config['CACHE_PATH'] = str_replace('\\','/',FCPATH).'cache/';
 
 /*
 |--------------------------------------------------------------------------
@@ -60,9 +61,9 @@ $config['assets_url'] = 'http://'.$_SERVER['SERVER_NAME'].'/acamps/assets/';
 */
 
 $config['template_path'] = APPPATH.'templates/';
-$config['js_url'] = ASSETS_URL.'js/';
-$config['css_url'] = ASSETS_URL.'css/';
-$config['img_url'] = ASSETS_URL.'image/';
+$config['js_url'] = $config['assets_url'].'js/';
+$config['css_url'] = $config['assets_url'].'css/';
+$config['img_url'] = $config['assets_url'].'image/';
 
 /*
 |--------------------------------------------------------------------------
