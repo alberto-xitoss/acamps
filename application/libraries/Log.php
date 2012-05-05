@@ -2,11 +2,24 @@
 
 class Log {
 
+	$template = "";
+	
 	function __construct() {
 		
 	}
 	
-	function log(){
+	function message($title, $msg, $vars = array())
+	{
+		
+	}
+	
+	function error($title, $msg, $vars = array())
+	{
+		
+	}
+	
+	function debug($title, $vars = array())
+	{
 		
 	}
 	

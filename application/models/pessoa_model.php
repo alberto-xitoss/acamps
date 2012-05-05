@@ -1,50 +1,63 @@
 <?php
-class Pessoa_model extends CI_Model{
-
+class Pessoa_model extends CI_Model
+{
     var $table = 'pessoa';
 
-	function __construct(){
+	function __construct()
+	{
 		parent::__construct();
 	}
 	
-    function inscrever($dados){
+    function inscrever($dados)
+	{
 		
 		// Setando valores default para os campos booleanos
 		
-		if(!isset($dados['bl_alimentacao'])){
+		if(!isset($dados['bl_alimentacao']))
+		{
 			$dados['bl_alimentacao'] = '1'; // TRUE
 		}
 		
-		if($dados['cd_tipo']!='v' && !isset($dados['bl_barracao'])){
+		if($dados['cd_tipo']!='v' && !isset($dados['bl_barracao']))
+		{
 			$dados['bl_barracao'] = '1'; // TRUE
 		}
 		
-		if($dados['cd_tipo']!='v' && !isset($dados['bl_transporte'])){
+		if($dados['cd_tipo']!='v' && !isset($dados['bl_transporte']))
+		{
 			$dados['bl_transporte'] = '1'; // TRUE
 		}
 		
-		if($dados['cd_tipo']=='p' && !isset($dados['bl_fez_comunhao'])){
+		if($dados['cd_tipo']=='p' && !isset($dados['bl_fez_comunhao']))
+		{
 			$dados['bl_fez_comunhao'] = '1'; // TRUE
 		}
 		
-		if($dados['cd_tipo']=='p' && !isset($dados['bl_fazer_comunhao'])){
+		if($dados['cd_tipo']=='p' && !isset($dados['bl_fazer_comunhao']))
+		{
 			$dados['bl_fazer_comunhao'] = '0'; // FALSE
 		}
 		
 		// Normalizando Nome
-		if(isset($dados['nm_pessoa'])){
+		if(isset($dados['nm_pessoa']))
+		{
 			$dados['nm_pessoa'] = normaliza_nome($dados['nm_pessoa']);
 		}
-		if(isset($dados['nm_cracha'])){
+		if(isset($dados['nm_cracha']))
+		{
 			$dados['nm_cracha'] = normaliza_nome($dados['nm_cracha']);
 		}
 		
 		// Normalizando Data de Nascimento
-		if(isset($dados['dt_nascimento'])){
+		if(isset($dados['dt_nascimento']))
+		{
 			
-			if($dados['dt_nascimento'] == ''){
+			if($dados['dt_nascimento'] == '')
+			{
 				unset($dados['dt_nascimento']);
-			}else{
+			}
+			else
+			{
 				$dados['dt_nascimento'] = normaliza_data($dados['dt_nascimento']);
 			}
 		}
@@ -57,14 +70,15 @@ class Pessoa_model extends CI_Model{
         return $retorno;
     }
 
-    function adicionar_foto($id_pessoa, $caminho){
+    function adicionar_foto($id_pessoa, $caminho)
+	{
         $this->db->where('id_pessoa', $id_pessoa);
-        $this->db->where('id_missao', $this->config->item('missao'));
         $foto['ds_foto'] = $caminho;
         $this->db->update($this->table, $foto);
     }
 
-    function existe($id_pessoa){
+    function existe($id_pessoa)
+	{
         $query = $this->db->get_where($this->table, array('id_pessoa' => $id_pessoa));
         if($query->row())
             return true;
@@ -72,16 +86,18 @@ class Pessoa_model extends CI_Model{
             return false;
     }
 
-    function buscar_por_id($id_pessoa, $array = false){
+    function buscar_por_id($id_pessoa, $array = false)
+	{
         
         $resultado = array();
         
-        if(isset($id_pessoa)){
+        if(isset($id_pessoa))
+		{
             
             $this->db->select("pessoa.*, status.ds_status, cidade.nm_cidade, familia.*, servico.*, setor.*,
                                 (CASE
-                                    WHEN pessoa.cd_tipo = 'p' THEN missao.nr_a_pagar_participante
-                                    WHEN pessoa.cd_tipo = 's' THEN missao.nr_a_pagar_servico
+                                    WHEN pessoa.cd_tipo = 'p' THEN ".$this->config->item('valor_participante')."
+                                    WHEN pessoa.cd_tipo = 's' THEN ".$this->config->item('valor_servico')."
                                 END) as nr_a_pagar")
                      ->from($this->table)
                      ->join('status', 'pessoa.id_status = status.id_status', 'left')
@@ -89,9 +105,7 @@ class Pessoa_model extends CI_Model{
                      ->join('familia', 'pessoa.id_familia = familia.id_familia', 'left')
                      ->join('servico', 'pessoa.id_servico = servico.id_servico', 'left')
                      ->join('setor', 'pessoa.id_setor = setor.id_setor', 'left')
-                     ->join('missao', 'pessoa.id_missao = missao.id_missao')
-                     ->where('pessoa.id_pessoa',$id_pessoa)
-                     ->where('pessoa.id_missao', $this->config->item('missao'));
+                     ->where('pessoa.id_pessoa',$id_pessoa);
             $query = $this->db->get();
             
             if($array)
@@ -102,31 +116,45 @@ class Pessoa_model extends CI_Model{
             //log_message('ERROR', print_r($resultado,true)); // DEBUG
         }
         
-        if(empty($resultado)){
+        if(empty($resultado))
+		{
             return false;
-        }else{
+        }
+		else
+		{
 			
-			if($this->db->platform() == 'postgre'){
-				if($array){
-					foreach($resultado as $campo => $valor){
-						if(substr($campo,0,2)=='bl'){
+			if($this->db->platform() == 'postgre')
+			{
+				if($array)
+				{
+					foreach($resultado as $campo => $valor)
+					{
+						if(substr($campo,0,2)=='bl')
+						{
 							$resultado[$campo] = ($valor=='t'?true:false);
 						}
 					}
-				}else{
+				}
+				else
+				{
 					$vars = get_object_vars($resultado);
-					foreach($vars as $campo => $valor){
-						if(substr($campo,0,2)=='bl'){
+					foreach($vars as $campo => $valor)
+					{
+						if(substr($campo,0,2)=='bl')
+						{
 							$resultado->$campo = ($valor=='t'?true:false);
 						}
 					}
 				}
             }
 			
-			if($array && !empty($resultado['ds_foto'])){
+			if($array && !empty($resultado['ds_foto']))
+			{
 				$resultado['nm_foto'] = $resultado['ds_foto'];
 				$resultado['ds_foto'] = $this->config->item('base_url').$this->config->item('fotos_dir').$resultado['ds_foto'];
-			}elseif(!empty($resultado->ds_foto)){
+			}
+			elseif(!empty($resultado->ds_foto))
+			{
 				$resultado->nm_foto = $resultado->ds_foto;
 				$resultado->ds_foto = $this->config->item('base_url').$this->config->item('fotos_dir').$resultado->ds_foto;
 			}
@@ -135,15 +163,17 @@ class Pessoa_model extends CI_Model{
         }
     }
     
-    function buscar_por_nome($nm_pessoa, $array = false){
+    function buscar_por_nome($nm_pessoa, $array = false)
+	{
         
         $resultado = array();
         
-        if(isset($nm_pessoa)){
+        if(isset($nm_pessoa))
+		{
             $this->db->select("pessoa.*, status.ds_status, cidade.nm_cidade, familia.*, servico.*, setor.*,
                                 (CASE
-                                    WHEN pessoa.cd_tipo = 'p' THEN missao.nr_a_pagar_participante
-                                    WHEN pessoa.cd_tipo = 's' THEN missao.nr_a_pagar_servico
+                                    WHEN pessoa.cd_tipo = 'p' THEN ".$this->config->item('valor_participante')."
+                                    WHEN pessoa.cd_tipo = 's' THEN ".$this->config->item('valor_servico')."
                                 END) as nr_a_pagar")
                      ->from($this->table)
                      ->join('status', 'pessoa.id_status = status.id_status', 'left')
@@ -151,23 +181,23 @@ class Pessoa_model extends CI_Model{
                      ->join('familia', 'pessoa.id_familia = familia.id_familia', 'left')
                      ->join('servico', 'pessoa.id_servico = servico.id_servico', 'left')
                      ->join('setor', 'pessoa.id_setor = setor.id_setor', 'left')
-                     ->join('missao', 'pessoa.id_missao = missao.id_missao')
                      ->like('pessoa.nm_pessoa',normaliza_nome($nm_pessoa))
-                     ->where('pessoa.id_missao', $this->config->item('missao'))
                      ->order_by("nm_pessoa", "asc")
                      ->order_by("id_pessoa", "asc"); 
             $query = $this->db->get();
             
-            //log_message('ERROR', $this->db->last_query()); // DEBUG
-            
-            if($array){
-                foreach($query->result_array() as $linha){
-                    $resultado []= $linha; //log_message('ERROR', print_r($linha,true)); // DEBUG
+            if($array)
+			{
+                foreach($query->result_array() as $linha)
+				{
+                    $resultado []= $linha;
                 }
             }
-            else{
-                foreach($query->result() as $linha){
-                    $resultado []= $linha; //log_message('ERROR', print_r($linha,true)); // DEBUG
+            else
+			{
+                foreach($query->result() as $linha)
+				{
+                    $resultado []= $linha;
                 }
             }
             
@@ -184,8 +214,6 @@ class Pessoa_model extends CI_Model{
         
         if(!empty($rg)){
             $query = $this->db->get("pessoa_anterior");
-            
-            //log_message('ERROR', $this->db->last_query()); // DEBUG
             
             if($array){
                 foreach($query->result_array() as $linha){
@@ -210,7 +238,8 @@ class Pessoa_model extends CI_Model{
      * function consultar_pagamento
      * @param $id_pessoa
      */
-    function consultar_pagamento($id_pessoa) {
+    function consultar_pagamento($id_pessoa)
+	{
         
     }
     
@@ -225,9 +254,8 @@ class Pessoa_model extends CI_Model{
      * @param $dados
      * @param $id_usuario
      */
-    function efetuar_pagamento($id_pessoa, $dados, $id_usuario) {
-        
-        
+    function efetuar_pagamento($id_pessoa, $dados, $id_usuario)
+	{
         $pgto = array(
             'id_pessoa' => $id_pessoa,
             'cd_tipo_pgto'=> $dados['cd_tipo_pgto'],
@@ -235,13 +263,15 @@ class Pessoa_model extends CI_Model{
             'nr_pago' => $dados['nr_pago'],
             'nr_desconto' => $dados['nr_desconto'],
             'id_usuario' => $id_usuario,
-            'id_missao' => $this->config->item('missao')
         );
         
         // Data do pagamento
-        if($this->db->platform() == 'postgre'){
+        if($this->db->platform() == 'postgre')
+		{
             $pgto['dt_pgto'] = date('d m Y H:i:s');
-        }elseif($this->db->platform() == 'mysql'){
+        }
+		elseif($this->db->platform() == 'mysql')
+		{
             $pgto['dt_pgto'] = date('Y-m-d H:i:s');
         }
         
@@ -249,8 +279,10 @@ class Pessoa_model extends CI_Model{
         $this->db->insert('pagamento', $pgto);
         $id_pgto = $this->db->insert_id();
         
-		if(!$this->config->item('pagamento_simples')){
-			if($dados['cd_tipo_pgto'] == 'c'){
+		if(!$this->config->item('pagamento_simples'))
+		{
+			if($dados['cd_tipo_pgto'] == 'c')
+			{
 				
 				$cheque = array(
 					'id_pgto' => $id_pgto,
@@ -276,7 +308,9 @@ class Pessoa_model extends CI_Model{
 				);
 				$this->inserir_cheque($cheque);
 				
-			}elseif($dados['cd_tipo_pgto'] == 'cp'){
+			}
+			elseif($dados['cd_tipo_pgto'] == 'cp')
+			{
 				
 				$cheque = array(
 					'id_pgto' => $id_pgto,
@@ -296,7 +330,8 @@ class Pessoa_model extends CI_Model{
 					'dt_bompara' => $pgto['dt_pgto'],
 					'id_missao' => $this->config->item('missao')
 				);
-				for($i=1; $i<=$dados['qnt_cp']; $i++){
+				for($i=1; $i<=$dados['qnt_cp']; $i++)
+				{
 					$cheque['nr_parcela'] = $i;
 					$cheque['nr_valor'] = $dados['nr_valor'.$i];
 					$cheque['nr_cheque'] = $dados['nr_cheque'.$i];
@@ -308,19 +343,20 @@ class Pessoa_model extends CI_Model{
         
         $this->db->set('id_status', '3');
         $this->db->where('id_pessoa',$id_pessoa);
-        $this->db->where('id_missao', $this->config->item('missao'));
         $this->db->update($this->table);
         
         //log_message('ERROR', 'Realizando Pagamento | Pessoa-> '.$id_pessoa.' | Pagamento -> '.$id_pgto);
     }
+	
     /*
      * function estornar_pagamento
      * 
      * @param $id_pessoa
      */
-    function estornar_pagamento($id_pessoa){
+    function estornar_pagamento($id_pessoa)
+	{
         
-        $this->db->select('id_pgto, cd_tipo_pgto')->where('id_pessoa', $id_pessoa)->where('id_missao', $this->config->item('missao'));
+        $this->db->select('id_pgto, cd_tipo_pgto')->where('id_pessoa', $id_pessoa);
         $query = $this->db->get('pagamento');
         
         $pgto = $query->row();
@@ -341,7 +377,6 @@ class Pessoa_model extends CI_Model{
         
         $this->db->set('id_status', '1');
         $this->db->where('id_pessoa',$id_pessoa);
-        $this->db->where('id_missao', $this->config->item('missao'));
         $this->db->update($this->table);
         
         //log_message('ERROR', 'Estornando Pagamento | Pessoa -> '.$id_pessoa.' | Pagamento -> '.$pgto->id_pgto);
@@ -368,7 +403,7 @@ class Pessoa_model extends CI_Model{
         if($query->num_rows() == 1){
             $row = $query->row_array();
             if($row['cd_tipo']=='s'){
-                $this->db->select('nm_servico')->from('servico')->where('id_servico',$row['id_servico'])->where('id_missao', $this->config->item('missao'));
+                $this->db->select('nm_servico')->from('servico')->where('id_servico',$row['id_servico']);
                 $query_serv = $this->db->get();
                 $servico = $query_serv->row_array();
                 $row['nm_servico'] = $servico['nm_servico'];
@@ -391,7 +426,6 @@ class Pessoa_model extends CI_Model{
             $this->db->set($campo, $valor);
         }
         $this->db->where('id_pessoa',$id_pessoa);
-        $this->db->where('id_missao', $this->config->item('missao'));
         $this->db->update($this->table);
         
         //log_message('ERROR', 'Pessoa Atualizada -> '.$id_pessoa);
@@ -401,11 +435,16 @@ class Pessoa_model extends CI_Model{
         
         $pessoa = $this->buscar_por_id($id_pessoa);
         
-        $this->load->helper('file');
-        unlink($this->config->item('upload_path', 'upload').$pessoa->nm_foto);
+		if(!empty($pessoa->nm_foto))
+		{
+			if(file_exists($this->config->item('upload_path', 'upload').$pessoa->nm_foto))
+			{
+				$this->load->helper('file');
+				unlink($this->config->item('upload_path', 'upload').$pessoa->nm_foto);
+			}
+		}
         
         $this->db->where('id_pessoa', $id_pessoa);
-        $this->db->where('id_missao', $this->config->item('missao'));
         $this->db->delete($this->table);
         
         //log_message('ERROR', 'Excluindo Pessoa -> '.$id_pessoa);

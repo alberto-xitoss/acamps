@@ -146,10 +146,12 @@ class Pessoa extends MY_Controller {
      *
      * @param id_pessoa - número de inscrição
     */
-    function pagar($id_pessoa = 0){
+    function pagar($id_pessoa = 0)
+	{
         
         // Se não for passado um número de inscrição
-        if(empty($id_pessoa)){
+        if(empty($id_pessoa))
+		{
             redirect('admin/buscar');
             return;
         }
@@ -160,34 +162,38 @@ class Pessoa extends MY_Controller {
 		
         $pessoa = $this->pessoa_model->buscar_por_id($id_pessoa);
 		
-        if($pessoa->cd_tipo == 'v'){ // Se for da CV, voltamos para a página de detalhes
-            redirect('admin/pessoa'.$pessoa->id_pessoa);
+        if(($pessoa->cd_tipo != 'p' && $pessoa->cd_tipo != 's') || $pessoa->id_status == 3) // Se o pagamento já tiver sido registrado
+		{
+            redirect('admin/pessoa/'.$pessoa->id_pessoa);
             return;
         }
 		
-		if($this->input->post('pagar')){
+		if($this->input->post('pagar'))
+		{
 			
-			log_message('error', 'PAGAMENTO: '.$pessoa->id_pessoa.' - '.$pessoa->nm_pessoa);
-			if(PAGAMENTO_SIMPLES){
+			//log_message('error', 'PAGAMENTO: '.$pessoa->id_pessoa.' - '.$pessoa->nm_pessoa);
+			if($this->config->item('pagamento_simples')){
 				//$dados = $_POST;
 				//unset($dados['avista_pago']);
 				//unset($dados['pagar']);
 				
 				$dados['cd_tipo_pgto'] = $this->input->post('cd_tipo_pgto');
 				$dados['nr_a_pagar'] = $this->input->post('nr_a_pagar');
-				if( !( $dados['nr_desconto'] = $this->input->post('nr_desconto') ) ){
+				if( !( $dados['nr_desconto'] = $this->input->post('nr_desconto') ) )
+				{
 					$dados['nr_desconto'] = 0;
 				}
 				$dados['nr_pago'] = floatval($dados['nr_a_pagar']) - floatval($dados['nr_desconto']);
 				
-				log_message('error', 'cd_tipo_pgto: '.$dados['cd_tipo_pgto']);
-				log_message('error', 'nr_a_pagar: '.$dados['nr_a_pagar']);
-				log_message('error', 'nr_desconto: '.$dados['nr_desconto']);
-				log_message('error', 'nr_pago: '.$dados['nr_pago']);
+				//$this->log->message('cd_tipo_pgto: '.$dados['cd_tipo_pgto']);
+				//$this->log->message('nr_a_pagar: '.$dados['nr_a_pagar']);
+				//$this->log->message('nr_desconto: '.$dados['nr_desconto']);
+				//$this->log->message('nr_pago: '.$dados['nr_pago']);
 				
 				$this->pessoa_model->efetuar_pagamento($pessoa->id_pessoa, $dados, $this->session->userdata('id_usuario'));
 				
-				if($pessoa->cd_tipo == 'p'){
+				if($pessoa->cd_tipo == 'p')
+				{
 					// Escolhendo Família
 					// ---------------------------------------------------
 					$this->load->model('familia');
@@ -196,15 +202,18 @@ class Pessoa extends MY_Controller {
 					// ---------------------------------------------------
 				}
 				
-				if($pessoa->bl_transporte){
+				/* if($pessoa->bl_transporte)
+				{
 					// Resevando uma vaga no ônibus
 					$this->load->model('missao_model');
 					$this->missao_model->onibus($pessoa->id_pessoa);
-				}
+				} */
 			}
 			
 			redirect('admin/pessoa/'.$id_pessoa);
-		}else{
+		}
+		else
+		{
 			$this->load->view('admin/pagamento', array('pessoa'=>$pessoa));
 		}
     }
@@ -233,11 +242,11 @@ class Pessoa extends MY_Controller {
             
             $this->pessoa_model->atualizar($id_pessoa, array('id_status' => '3'));
 			
-			if($pessoa->bl_transporte){
+			/* if($pessoa->bl_transporte){
 				// Resevando uma vaga no ônibus
 				$this->load->model('missao_model');
 				$this->missao_model->onibus($pessoa->id_pessoa);
-			}
+			} */
             
         }else{ // Senão vai para 'Aguardando Pagamento'
             
@@ -245,6 +254,7 @@ class Pessoa extends MY_Controller {
             
         }
         
+		$this->session->set_flashdata('auto_pagar', true);
         redirect('admin/pessoa/'.$id_pessoa);
     }
     
@@ -267,18 +277,17 @@ class Pessoa extends MY_Controller {
         //----------------------------------------------------------------------
         
         $this->load->model('pessoa_model');
-		$this->load->model('missao_model');
         $pessoa = $this->pessoa_model->buscar_por_id($id_pessoa);
         
         if($pessoa->cd_tipo == 'p' && $pessoa->id_status == '3'){ // Revertendo pagamento de participante
             
             $this->pessoa_model->estornar_pagamento($id_pessoa);
-			$this->missao_model->remover_onibus($id_pessoa);
+			//$this->missao_model->remover_onibus($id_pessoa);
             
         }elseif($pessoa->cd_tipo == 's' && $pessoa->id_status == '3'){ // Revertendo pagamento de serviço
             
             $this->pessoa_model->estornar_pagamento($id_pessoa);
-			$this->missao_model->remover_onibus($id_pessoa);
+			//$this->missao_model->remover_onibus($id_pessoa);
             
         }elseif($pessoa->cd_tipo == 's' && $pessoa->id_status == '1'){ // Revertendo liberação de serviço
             
@@ -287,7 +296,7 @@ class Pessoa extends MY_Controller {
         }elseif($pessoa->cd_tipo == 'v' && $pessoa->id_status == '3'){ // Revertendo liberação de CV
             
             $this->pessoa_model->atualizar($id_pessoa, array('id_status' => '2'));
-			$this->missao_model->remover_onibus($id_pessoa);
+			//$this->missao_model->remover_onibus($id_pessoa);
             
         }
         
@@ -317,7 +326,6 @@ class Pessoa extends MY_Controller {
             
         if($pessoa->cd_tipo != 'p' && $pessoa->id_status != '2'){
             $this->load->model('servico');
-            //$this->servico->decrementar($pessoa->id_servico);
         }
         
         $this->pessoa_model->excluir($pessoa->id_pessoa);
@@ -325,9 +333,12 @@ class Pessoa extends MY_Controller {
         redirect('admin/buscar');
     }
 	
-	function participante(){
-        if($this->input->post('confirmar')){
-            if($this->_validar('p')){
+	function participante()
+	{
+        if($this->input->post('confirmar'))
+		{
+            if($this->_validar('p'))
+			{
                 
                 $this->load->model('pessoa_model');
                 //$this->load->model('familia');
@@ -336,7 +347,6 @@ class Pessoa extends MY_Controller {
                 unset($dados['confirmar']);
                 
 				$dados['cd_tipo'] = 'p';
-				$dados['id_missao'] = $this->config->item('missao');
                 
 				// Status -> Pendente Pagamento
                 $dados['id_status'] = 1;
@@ -361,9 +371,12 @@ class Pessoa extends MY_Controller {
 				
                 // ---------------------------------------------------
                 
+				$this->session->set_flashdata('auto_pagar', true);
                 redirect('admin/pessoa/'.$id_pessoa);
                 return;
-            }else{
+            }
+			else
+			{
                 $form_data['erro'] = true;
             }
         }
@@ -379,9 +392,12 @@ class Pessoa extends MY_Controller {
         $this->load->view('admin/inscricao_participante', $form_data);
     }
 
-    function servico(){
-		if($this->input->post('confirmar')){
-            if($this->_validar('s')){
+    function servico()
+	{
+		if($this->input->post('confirmar'))
+		{
+            if($this->_validar('s'))
+			{
                 
                 $this->load->model('pessoa_model');
                 
@@ -389,7 +405,6 @@ class Pessoa extends MY_Controller {
                 unset($dados['confirmar']);
                 
 				$dados['cd_tipo'] = 's';
-				$dados['id_missao'] = $this->config->item('missao');
                 
 				// Status -> Pendente Pagamento
                 $dados['id_status'] = 2;
@@ -404,15 +419,19 @@ class Pessoa extends MY_Controller {
                 // Salvando Imagem
                 // ---------------------------------------------------
                 $caminho_foto = $this->_preparar_imagem($id_pessoa);
-                if($caminho_foto){
+                if($caminho_foto)
+				{
                     $this->pessoa_model->adicionar_foto($id_pessoa, $caminho_foto);
                 }
 				
                 // ---------------------------------------------------
-                
+				
+                $this->session->set_flashdata('auto_liberar', true);
                 redirect('admin/pessoa/'.$id_pessoa);
                 return;
-            }else{
+            }
+			else
+			{
                 $form_data['erro'] = true;
             }
         }
@@ -431,9 +450,12 @@ class Pessoa extends MY_Controller {
         $this->load->view('admin/inscricao_servico', $form_data);
     }
 
-    function cv(){
-		if($this->input->post('confirmar')){
-            if($this->_validar('v')){
+    function cv()
+	{
+		if($this->input->post('confirmar'))
+		{
+            if($this->_validar('v'))
+			{
                 
                 $this->load->model('pessoa_model');
                 
@@ -441,7 +463,6 @@ class Pessoa extends MY_Controller {
                 unset($dados['confirmar']);
                 
 				$dados['cd_tipo'] = 'v';
-				$dados['id_missao'] = $this->config->item('missao');
                 
 				// Status -> Pendente Pagamento
                 $dados['id_status'] = 2;
@@ -456,15 +477,19 @@ class Pessoa extends MY_Controller {
                 // Salvando Imagem
                 // ---------------------------------------------------
                 $caminho_foto = $this->_preparar_imagem($id_pessoa);
-                if($caminho_foto){
+                if($caminho_foto)
+				{
                     $this->pessoa_model->adicionar_foto($id_pessoa, $caminho_foto);
                 }
 				
                 // ---------------------------------------------------
-                
+				
+                $this->session->set_flashdata('auto_liberar', true);
                 redirect('admin/pessoa/'.$id_pessoa);
                 return;
-            }else{
+            }
+			else
+			{
                 $form_data['erro'] = true;
             }
         }

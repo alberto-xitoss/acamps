@@ -1,6 +1,6 @@
 <?php
 
-class Inscricao extends MY_Controller{
+class Inscricao extends CI_Controller{
 
     public $template = 'inscricao_template';
     public $title = 'Acampamento de Jovens Shalom';
@@ -21,11 +21,25 @@ class Inscricao extends MY_Controller{
         $this->load->view('inscricao/home');
     }
 
-    function info($tipo){
+    function info($tipo)
+	{
         $this->title = "Acamp's > Regras de Participação";
-        //$this->load->model('missao');
-        //$valor = $this->missao->valor($tipo);
-        $this->load->view('inscricao/normas', array('tipo'=>$tipo)/*, array('valor'=>$valor)*/);
+		
+		$viewdata['tipo'] = $tipo;
+		$viewdata['valor'] = ( $tipo=='participante' ? $this->config->item('valor_participante') : $this->config->item('valor_servico') );
+		$viewdata['edicao'] = $this->config->item('acamps_edicao');
+		$viewdata['periodo'] = $this->config->item('acamps_periodo');
+		
+		$inicio = $this->config->item('acamps_inicio');
+		$fim = $this->config->item('acamps_fim');
+		$prazo = new DateTime($inicio->format('Y-m-d'));
+		$prazo->sub(new DateInterval('P2D'));
+		
+		$viewdata['prazo_inscricao'] = $prazo->format('d/m');
+		$viewdata['inicio'] = $inicio->format('d/m');
+		$viewdata['fim'] = $fim->format('d/m');
+		
+        $this->load->view('inscricao/normas', $viewdata);
     }
 
     function adote(){
@@ -63,7 +77,6 @@ class Inscricao extends MY_Controller{
 				$this->divulgacao->inserir($pesquisa);
                 
 				$dados['cd_tipo'] = 'p';
-				$dados['id_missao'] = $this->config->item('missao');
 				
 				// Status -> Pendente Pagamento
                 $dados['id_status'] = 1;
@@ -132,7 +145,6 @@ class Inscricao extends MY_Controller{
                 unset($dados['confirmar']);
                 
 				$dados['cd_tipo'] = 's';
-				$dados['id_missao'] = $this->config->item('missao');
                 
                 $dados['id_status'] = 2; // Status -> Pendente Liberação
 
@@ -200,7 +212,6 @@ class Inscricao extends MY_Controller{
                 unset($dados['confirmar']);
                 
 				$dados['cd_tipo'] = 'v';
-				$dados['id_missao'] = $this->config->item('missao');
                 
                 $dados['id_status'] = 2; // Status -> Pendente Liberação
 

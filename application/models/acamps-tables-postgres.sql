@@ -1,15 +1,19 @@
 ﻿
-CREATE TABLE missao (
-	id_missao serial PRIMARY KEY,
-	nm_missao varchar(50) NOT NULL,
-	nr_a_pagar_participante numeric(5,2) NOT NULL,
-	nr_a_pagar_servico numeric(5,2) NOT NULL,
-	nr_edicao int NOT NULL,
-	dt_periodo varchar(40) NOT NULL,
-	bl_form_online boolean DEFAULT TRUE,
-	bl_pagamento_simples boolean DEFAULT TRUE
+CREATE TABLE configuracao (
+	id_config serial PRIMARY KEY,
+	nm_config varchar(30) NOT NULL,
+	nm_valor text NOT NULL
 );
-INSERT INTO missao (nm_missao, nr_a_pagar_participante, nr_a_pagar_servico, nr_edicao, dt_periodo) VALUES ('{nm_missao}', {nr_a_pagar_participante}, {nr_a_pagar_servico}, {nr_edicao}, '{dt_periodo})';
+--#
+INSERT INTO configuracao (nm_config, nm_valor) VALUES
+('missao', '{nm_missao}'),
+('valor_participante', '{nr_a_pagar_participante}'),
+('valor_servico', '{nr_a_pagar_servico}'),
+('edicao', '{nr_edicao}'),
+('data_inicio', '{dt_inicio}'),
+('data_fim', '{dt_fim}'),
+('form_online', 'false'),
+('pagamento_simples', 'true');
 
 --#
 
@@ -29,7 +33,6 @@ CREATE TABLE cidade(
 	id_cidade serial,
 	nm_cidade varchar(50),
 	cd_estado char(2),
-	--id_missao int REFERENCES missao(id_missao),
 	PRIMARY KEY(id_cidade)
 );
 --#
@@ -80,7 +83,6 @@ INSERT INTO servico (nm_servico) VALUES
 	('Amigos do Acamp''s'),
 	('Animação'),
 	('Apoio'),
-	--('Arte Visual'),
 	('Caixas'),
 	('Comissão Central'),
 	('Comunicação'),
@@ -89,7 +91,7 @@ INSERT INTO servico (nm_servico) VALUES
 	('Financeiro'),
 	('Iluminação'),
 	('Informática'),
-	--('Inscrições'),
+	('Inscrições'),
 	('Intercessão'),
 	('Intérprete'),
 	('Lanchonete'),
@@ -102,9 +104,8 @@ INSERT INTO servico (nm_servico) VALUES
 	('Noites'),
 	('Ordem Feminina'),
 	('Ordem Masculina'),
-	--('Promoção Humana'),
+	('Promoção Humana'),
 	('Relação Pessoal'),
-	--('Sacerdotes'),
 	('Secretaria'),
 	('Servos de Seminário'),
 	('Som'),
@@ -206,10 +207,9 @@ CREATE TABLE pessoa (
 	dt_inscricao timestamp without time zone DEFAULT localtimestamp,
 	dt_alteracao timestamp without time zone,
 	nr_boleto int DEFAULT 0,
-	--id_missao int REFERENCES missao(id_missao),
-	PRIMARY KEY(id_pessoa/*, id_missao*/),
-	FOREIGN KEY (id_familia/* , id_missao */) REFERENCES familia(id_familia/* , id_missao */),
-	FOREIGN KEY (id_servico/* , id_missao */) REFERENCES servico(id_servico/* , id_missao */)
+	PRIMARY KEY(id_pessoa),
+	FOREIGN KEY (id_familia) REFERENCES familia(id_familia),
+	FOREIGN KEY (id_servico) REFERENCES servico(id_servico)
 );
 --#
 ALTER SEQUENCE pessoa_id_seq OWNED BY pessoa.id_pessoa;
@@ -228,7 +228,6 @@ CREATE TABLE usuario(
 	-- CAIXAS        000001 | 1   | 01
 	-- SECRETARIA    011100 | 28  | 1C
 	dt_ultimo_login timestamp without time zone,
-	--id_missao int REFERENCES missao(id_missao),
 	PRIMARY KEY(id_usuario)
 );
 --#
@@ -245,10 +244,9 @@ CREATE TABLE pagamento(
 	nr_desconto numeric(5,2),
 	dt_pgto timestamp without time zone DEFAULT localtimestamp,
 	id_usuario int,
-	--id_missao int REFERENCES missao(id_missao),
-	PRIMARY KEY(id_pgto/* , id_missao */),
-	FOREIGN KEY (id_pessoa/* , id_missao */) REFERENCES pessoa(id_pessoa/* , id_missao */),
-	FOREIGN KEY (id_usuario/* , id_missao */) REFERENCES usuario(id_usuario/* , id_missao */)
+	PRIMARY KEY(id_pgto),
+	FOREIGN KEY (id_pessoa) REFERENCES pessoa(id_pessoa),
+	FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
 );
 
 --#
@@ -273,32 +271,63 @@ CREATE TABLE cheque(
 	dt_bompara date,
 	nr_telefone varchar(20),
 	ds_obs varchar(400),
-	--id_missao int REFERENCES missao(id_missao),
-	PRIMARY KEY (id_pgto, nr_parcela/* , id_missao */),
-	FOREIGN KEY (id_pgto/* , id_missao */) REFERENCES pagamento(id_pgto/* , id_missao */) ON DELETE RESTRICT -- QUAL REGRA SERIA MELHOR?
+	PRIMARY KEY (id_pgto, nr_parcela),
+	FOREIGN KEY (id_pgto) REFERENCES pagamento(id_pgto) ON DELETE RESTRICT -- QUAL REGRA SERIA MELHOR?
 );
 
 --#
 
-CREATE TABLE alimentacao(
+CREATE TABLE alimentacao
+(
 	id_pessoa int,
 	dt_alimentacao date DEFAULT current_date,
 	bl_cafe boolean DEFAULT false,
 	bl_almoco boolean DEFAULT false,
 	bl_jantar boolean DEFAULT false,
-	--id_missao int REFERENCES missao(id_missao),
 	PRIMARY KEY (id_pessoa, dt_alimentacao),
-	FOREIGN KEY (id_pessoa/* , id_missao */) REFERENCES pessoa(id_pessoa/* , id_missao */)
+	FOREIGN KEY (id_pessoa) REFERENCES pessoa(id_pessoa)
 );
 
 --#
 
-CREATE TABLE portaria(
+CREATE TABLE portaria
+(
 	id_pessoa int,
 	dt_movimentacao timestamp without time zone DEFAULT localtimestamp,
 	cd_movimentacao char(2),
 	bl_entrou boolean,
-	--id_missao int REFERENCES missao(id_missao),
 	PRIMARY KEY (id_pessoa, dt_movimentacao, cd_movimentacao),
-	FOREIGN KEY (id_pessoa/* , id_missao */) REFERENCES pessoa(id_pessoa/* , id_missao */)
+	FOREIGN KEY (id_pessoa) REFERENCES pessoa(id_pessoa)
 );
+
+--#
+
+CREATE TABLE pesquisa_divulgacao
+(
+  id_registro serial,
+  id_meio int,
+  nm_obs varchar(200),
+  PRIMARY KEY (id_registro)
+);
+
+--#
+
+CREATE TABLE meio_divulgacao
+(
+  id_meio serial,
+  nm_meio varchar(50),
+  PRIMARY KEY (id_meio)
+);
+--#
+INSERT INTO meio_divulgacao (nm_meio) VALUES
+	('Pais'),
+	('Amigo'),
+	('Outro parente'),
+	('Panfleto'),
+	('Facebook'),
+	('Orkut'),
+	('Twitter'),
+	('Outra rede social'),
+	('Email'),
+	('Blog'),
+	('Outro');

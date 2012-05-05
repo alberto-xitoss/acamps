@@ -1,7 +1,7 @@
 <div id="info">
 <h2>Informações Gerais</h2>
 <p>O <strong>Acampamento de Jovens Shalom</strong> é um evento promovido pelo <strong>Projeto Juventude para Jesus</strong> da <strong>Comunidade Católica Shalom</strong> que tem como objetivo a evangelização e uma opção sadia de lazer para a juventude. Contamos com uma intensa programação de atividades de lazer, cursos formativos e noites de diversão descontraída.</p>
-<p>A <strong>39&ordf; edição do Acamp's</strong> acontecerá dos dias <strong>2 a 7 de julho de 2012</strong>, na <strong>fazenda Guarany em Pacajus</strong>, a 50km de Fortaleza.</p>
+<p>A <strong><?php echo $edicao ?>&ordf; edição do Acamp's</strong> acontecerá dos dias <strong><?php echo $periodo ?></strong>, na <strong>fazenda Guarany em Pacajus</strong>, a 50km de Fortaleza.</p>
 <?php if($tipo=='servico'): ?>
 <p class="alert-message">Esta é uma <strong>pré-inscrição</strong>. Antes de pagar e concluir sua inscrição será necessária a <strong>aprovação do coordenador</strong> da equipe na qual você se inscrever.</p>
 <?php endif; ?>
@@ -13,8 +13,8 @@
 	<li>Apresentar a carteira de identidade ou certidão de nascimento do participante.</li>
 	<li>Valor correspondente à taxa de inscrição.</li>
 </ul>
-<div class='alert-message success'><p>O valor da inscrição é <strong><?php if($tipo=='participante') echo 'R$ 190,00'; else if($tipo=='servico') echo 'R$ 110,00'; ?></strong> (À vista ou cheque).</p>
-<p>O prazo para se inscrever é até o dia <strong>14/01/2012</strong>.</p></div>
+<div class='alert-message success'><p>O valor da inscrição é <strong>R$<?php echo $valor ?></strong> (À vista ou cheque).</p>
+<p>O prazo para se inscrever é até o dia <strong><?php echo $prazo_inscricao ?></strong>.</p></div>
 <?php if($tipo=='participante'): ?>
 <p class="alert-message">Só pode participar do Acamp's quem tem entre 14 e 28 anos!</p>
 <?php endif; ?>
@@ -33,9 +33,9 @@
 
 <p><strong>Local:</strong> Praça do Cristo Rei, rua Nogueira Acioli, ao lado do Colégio Militar (Av. Santos Dumont)</p>
 
-<p><strong>Data de saída:</strong> 16/01 às 14:00h</p>
+<p><strong>Data de saída: </strong><?php echo $inicio ?> às 14:00h</p>
 
-<p><strong>Data de retorno:</strong> 21/01 às 18:30h</p>
+<p><strong>Data de retorno: </strong><?php echo $fim ?> às 18:30h</p>
 
 <h3>Normas</h3>
 <ol>

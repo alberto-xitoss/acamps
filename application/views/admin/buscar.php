@@ -18,7 +18,7 @@
 							$linha->nm_pessoa) ?></td>
                     <td width="180">
                     <?php if($linha->cd_tipo == 'p'): ?>
-	                    	<span class="tipo-p familia-<?php echo strtolower($linha->cd_familia) ?>"><?php echo $linha->nm_familia ?></span>
+	                    	<span class="tipo-p familia-<?php echo strtolower($linha->cd_familia) ?>"><?php echo empty($linha->nm_familia) ? 'Participante' : $linha->nm_familia ?></span>
 	                    <?php elseif($linha->cd_tipo == 's'):  ?>
 	                    	<span class="tipo-<?php echo $linha->cd_tipo ?>">Serviço</span>
 	                    <?php elseif($linha->cd_tipo == 'v'):  ?>

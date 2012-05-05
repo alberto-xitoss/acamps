@@ -1,5 +1,5 @@
 <div id="detalhes" class="wrap">
-<div id="cabecalho" class='clearfix'>
+<div id="cabecalho" class="clearfix id-<?php echo $pessoa['cd_tipo'] ?> status-<?php echo $pessoa['id_status'] ?>">
     
 	<a href="#" id="foto" >
     <?php if(empty($pessoa['ds_foto'])): ?>
@@ -22,7 +22,7 @@
             break;
     }
     ?></p>
-    <p>Situação: <?php echo $pessoa['ds_status']; ?></p>
+    <p>Situação: <span><?php echo $pessoa['ds_status']; ?></span></p>
 	
 	<div class="comandos">
 		<?php
@@ -395,5 +395,16 @@ $(function(){
 			'show': true
 		});
     });
+	
+	// Comandos automáticos
+	
+	<?php if($this->session->flashdata('auto_pagar')): ?>
+	$('#pagar').click();
+	<?php endif ?>
+	
+	<?php if($this->session->flashdata('auto_liberar')): ?>
+	$('.confirmacao.liberacao').click();
+	<?php endif ?>
+	
 });
 </script>
