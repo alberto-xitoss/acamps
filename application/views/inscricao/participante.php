@@ -202,7 +202,7 @@
 		<?php endforeach ?>
 		</ul>
 	</div>
-	<p class="center"><input type="submit" value="Confirmar" name="confirmar" class="btn success large" /></p>
+	<p align="center"><input type="submit" value="Confirmar" name="confirmar" class="btn btn-success btn-large" /></p>
 	<?php echo form_close();?>
 </div>
 <script>

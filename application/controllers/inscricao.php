@@ -4,7 +4,7 @@ class Inscricao extends CI_Controller{
 
     public $template = 'inscricao_template';
     public $title = 'Acampamento de Jovens Shalom';
-    public $css = array('bootstrap', 'inscricao');
+    public $css = array('inscricao');
     public $js = array('jquery.min');
 
 	function __construct() {
@@ -121,7 +121,7 @@ class Inscricao extends CI_Controller{
         $this->title = "Acamp's > Formulário de Inscrição";
 		$this->js  []= 'jquery-ui.min';
 		$this->js  []= 'jquery.ui.datepicker-pt-BR';
-        $this->js  []= 'valida';
+        $this->js  []= 'valida.min';
         $this->css []= 'jquery.ui.theme';
         $this->css []= 'jquery.ui.datepicker';
         
@@ -185,7 +185,7 @@ class Inscricao extends CI_Controller{
         $this->title = "Acamp's > Formulário de Incrição > Serviço";
 		$this->js  []= 'jquery-ui.min';
 		$this->js  []= 'jquery.ui.datepicker-pt-BR';
-        $this->js  []= 'valida';
+        $this->js  []= 'valida.min';
         $this->css []= 'jquery.ui.theme';
         $this->css []= 'jquery.ui.datepicker';
 		
@@ -247,7 +247,7 @@ class Inscricao extends CI_Controller{
         $this->title = "Acamp's > Formulário de Incrição > Comunidade de Vida";
 		$this->js  []= 'jquery-ui.min';
 		$this->js  []= 'jquery.ui.datepicker-pt-BR';
-        $this->js  []= 'valida';
+        $this->js  []= 'valida.min';
         $this->css []= 'jquery.ui.theme';
         $this->css []= 'jquery.ui.datepicker';
 

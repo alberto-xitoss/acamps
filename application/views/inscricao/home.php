@@ -1,6 +1,6 @@
 <div id="header" class="container">
-	<h1 id="logo" class="ir"><?php echo anchor('/', "Acamp's", array()); ?></h1>
-	<div id="periodo" class="ir">2 a 7 de Julho de 2012</div>
+	<h1 id="logo" class="hide-text"><?php echo anchor('/', "Acamp's", array()); ?></h1>
+	<div id="periodo" class="hide-text">2 a 7 de Julho de 2012</div>
 </div>
 <div class="container">
 	<div id="video-frame" class="pull-left">
@@ -29,8 +29,8 @@
 		</div>
 		<div class="column-3">
 			<h2>Realização</h2>
-			<div id="pjj" class="ir pull-left">Projeto Juventude para Jesus</div>
-			<div id="comshalom" class="ir"><?php echo anchor('http://www.comshalom.org/po/', 'Comunidade Católica Shalom', 'target="_blank"'); ?></div>
+			<div id="pjj" class="hide-text pull-left">Projeto Juventude para Jesus</div>
+			<div id="comshalom" class="hide-text"><?php echo anchor('http://www.comshalom.org/po/', 'Comunidade Católica Shalom', 'target="_blank"'); ?></div>
 		</div>
 	</div>
 </div>

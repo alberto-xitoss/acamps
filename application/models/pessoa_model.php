@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 class Pessoa_model extends CI_Model
 {
     var $table = 'pessoa';
@@ -360,13 +360,16 @@ class Pessoa_model extends CI_Model
         $query = $this->db->get('pagamento');
         
         $pgto = $query->row();
-        if(!$pgto){
+        if(!$pgto)
+		{
             return;
         }
         
         // Apagando cheques
-		if(!$this->config->item('pagamento_simples')){
-			if($pgto->cd_tipo_pgto != 'd'){
+		if(!$this->config->item('pagamento_simples'))
+		{
+			if($pgto->cd_tipo_pgto != 'd')
+			{
 				$this->excluir_cheque($pgto->id_pgto);
 			}
 		}
@@ -382,45 +385,59 @@ class Pessoa_model extends CI_Model
         //log_message('ERROR', 'Estornando Pagamento | Pessoa -> '.$id_pessoa.' | Pagamento -> '.$pgto->id_pgto);
     }
     
-    function inserir_cheque($dados){
+    function inserir_cheque($dados)
+	{
         $this->db->insert('cheque', $dados);
     }
-    function excluir_cheque($id_pgto){
+    function excluir_cheque($id_pgto)
+	{
         $this->db->where('id_pgto', $id_pgto)->where('id_missao', $this->config->item('missao'));
         $this->db->delete('cheque');
         
         //log_message('ERROR', 'Excluindo Cheque -> '.$id_pgto);
     }
 
-    function dados_boleto($code){
+    function dados_boleto($code)
+	{
         
-        if($this->db->platform() == 'postgre'){
+        if($this->db->platform() == 'postgre')
+		{
             $query = $this->db->get_where($this->table, array('md5(id_pessoa||ds_email)'=>$code), 1);
-        }elseif($this->db->platform() == 'mysql'){
+        }
+		elseif($this->db->platform() == 'mysql')
+		{
             $query = $this->db->get_where($this->table, array('md5(concat(id_pessoa,ds_email))'=>$code), 1, 0);
         }
         
-        if($query->num_rows() == 1){
+        if($query->num_rows() == 1)
+		{
             $row = $query->row_array();
-            if($row['cd_tipo']=='s'){
+            if($row['cd_tipo']=='s')
+			{
                 $this->db->select('nm_servico')->from('servico')->where('id_servico',$row['id_servico']);
                 $query_serv = $this->db->get();
                 $servico = $query_serv->row_array();
                 $row['nm_servico'] = $servico['nm_servico'];
             }
             return $row;
-        }else{
+        }
+		else
+		{
             return false;
         }
     }
 
-    function atualizar($id_pessoa, $campos){
+    function atualizar($id_pessoa, $campos)
+	{
         
-        foreach($campos as $campo => $valor){
-			if($campo == 'nm_pessoa'){
+        foreach($campos as $campo => $valor)
+		{
+			if($campo == 'nm_pessoa')
+			{
 				$valor = normaliza_nome($valor);
 			}
-			if($campo == 'nm_cracha'){
+			if($campo == 'nm_cracha')
+			{
 				$valor = normaliza_nome($valor);
 			}
             $this->db->set($campo, $valor);
@@ -431,7 +448,8 @@ class Pessoa_model extends CI_Model
         //log_message('ERROR', 'Pessoa Atualizada -> '.$id_pessoa);
     }
 
-    function excluir($id_pessoa){
+    function excluir($id_pessoa)
+	{
         
         $pessoa = $this->buscar_por_id($id_pessoa);
         
@@ -451,7 +469,8 @@ class Pessoa_model extends CI_Model
         
     }
 	
-    function etiqueta_participante($ids){
+    function etiqueta_participante($ids)
+	{
         $this->db->select(" pessoa.id_pessoa,
                             pessoa.nm_pessoa,
                             pessoa.nm_cracha,
@@ -476,14 +495,18 @@ class Pessoa_model extends CI_Model
         $query = $this->db->get();
         
         $tabela = array();
-        foreach($query->result_array() as $pessoa){
+        foreach($query->result_array() as $pessoa)
+		{
             $tabela []= $pessoa;
         }
         
         // Incrementando contador de crachás
-        if($this->db->platform() == 'postgre'){
+        if($this->db->platform() == 'postgre')
+		{
             $this->db->set('bl_cracha','TRUE');
-        }elseif($this->db->platform() == 'mysql'){
+        }
+		elseif($this->db->platform() == 'mysql')
+		{
             $this->db->set('bl_cracha',true);
         }
         //$this->db->set('nr_cracha', 'nr_cracha + 1')
@@ -498,7 +521,8 @@ class Pessoa_model extends CI_Model
         return $tabela;
     }
     
-    function verifica_etiqueta_participante($id_ini=0, $id_fim=9999){
+    function verifica_etiqueta_participante($id_ini=0, $id_fim=9999)
+	{
         $this->db->select(" pessoa.id_pessoa,
                             pessoa.nm_pessoa,
                             pessoa.bl_cracha,
@@ -518,11 +542,15 @@ class Pessoa_model extends CI_Model
         $query = $this->db->get();
         
         $tabela = array();
-        foreach($query->result_array() as $pessoa){
+        foreach($query->result_array() as $pessoa)
+		{
             
-            if($this->db->platform() == 'postgre'){
-                foreach($pessoa as $campo => $valor){
-                    if(substr($campo,0,2)=='bl'){
+            if($this->db->platform() == 'postgre')
+			{
+                foreach($pessoa as $campo => $valor)
+				{
+                    if(substr($campo,0,2)=='bl')
+					{
                         $pessoa[$campo] = ($valor=='t'?true:false);
                     }
                 }
@@ -534,7 +562,8 @@ class Pessoa_model extends CI_Model
         return $tabela;
     }
     
-    function verifica_etiqueta_servico($id_servico=0){
+    function verifica_etiqueta_servico($id_servico=0)
+	{
 		echo $id_servico;
         $this->db->select(" pessoa.id_pessoa,
                             pessoa.nm_pessoa,
@@ -552,11 +581,15 @@ class Pessoa_model extends CI_Model
         $query = $this->db->get();
         
         $tabela = array();
-        foreach($query->result_array() as $pessoa){
+        foreach($query->result_array() as $pessoa)
+		{
             
-            if($this->db->platform() == 'postgre'){
-                foreach($pessoa as $campo => $valor){
-                    if(substr($campo,0,2)=='bl'){
+            if($this->db->platform() == 'postgre')
+			{
+                foreach($pessoa as $campo => $valor)
+				{
+                    if(substr($campo,0,2)=='bl')
+					{
                         $pessoa[$campo] = ($valor=='t'?true:false);
                     }
                 }
