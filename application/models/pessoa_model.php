@@ -1,4 +1,5 @@
-﻿<?php
+<?php
+
 class Pessoa_model extends CI_Model
 {
     var $table = 'pessoa';
@@ -440,6 +441,9 @@ class Pessoa_model extends CI_Model
 			{
 				$valor = normaliza_nome($valor);
 			}
+			if($campo == 'id_familia' && $valor == 0){
+				$valor = NULL;
+			}
             $this->db->set($campo, $valor);
         }
         $this->db->where('id_pessoa',$id_pessoa);
@@ -564,7 +568,6 @@ class Pessoa_model extends CI_Model
     
     function verifica_etiqueta_servico($id_servico=0)
 	{
-		echo $id_servico;
         $this->db->select(" pessoa.id_pessoa,
                             pessoa.nm_pessoa,
                             pessoa.bl_cracha,
@@ -790,5 +793,3 @@ class Pessoa_model extends CI_Model
         $this->db->query('TRUNCATE pessoa CASCADE');
     }
 }
-	
-?>

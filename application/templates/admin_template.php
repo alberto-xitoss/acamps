@@ -10,7 +10,7 @@
 {js}
 </head>
 <body>
-        <div id="menu" class="clearfix topbar">
+        <div id="menu">
             <ul>
                 <li><?php echo anchor('admin/buscar', 'Busca') ?></li>
                 <li class="drop">Inscrições

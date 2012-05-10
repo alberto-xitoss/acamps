@@ -1,14 +1,14 @@
-﻿<?php
+<?php
 
 /*
  * Description of pessoa
  *
  */
-class Pessoa extends MY_Controller {
+class Pessoa extends CI_Controller {
     
     public $template = 'admin_template';
     public $title = "Sistema Acamp's";
-    public $css = array('bootstrap', 'admin');
+    public $css = array('admin');
     public $js = array('jquery.min', 'bootstrap-modal');
     
     /*
@@ -119,18 +119,11 @@ class Pessoa extends MY_Controller {
             unset($dados['ativar_correcao']);
             unset($dados['corrigir']);
 			
-			// Se o checkbox de alergia estiver desmarcado
-			if( !isset($dados['bl_alergia_alimento']) ){
-				$dados['bl_alergia_alimento'] = '0';
-			}
-			if( !isset($dados['bl_alergia_remedio']) ){
-				$dados['bl_alergia_remedio'] = '0';
-			}
-			
             foreach($dados as $campo => $valor){
                 if($pessoa[$campo] == $dados[$campo]){
                     unset($dados[$campo]);
                 }
+				
             }
             
             $this->pessoa_model->atualizar($id_pessoa, $dados);
@@ -525,10 +518,7 @@ class Pessoa extends MY_Controller {
 		$this->form_validation->set_rules('bl_transporte','Precisará de transporte do acampamento?', 'required');
 		/*** FIM DOS CAMPOS OBRIGATÓRIOS ***/
         
-		// Alergia a Alimentos
-        if($this->input->post('bl_alergia_alimento')){
-            $this->form_validation->set_rules('nm_alergia_alimento', 'Alergia a quais alimentos?', 'trim');
-        }
+		$this->form_validation->set_rules('nm_alergia_alimento', 'Alergia a quais alimentos?', 'trim');
         
         // Campos apenas do formulário de participante
         if($cd_tipo == 'p'){
@@ -555,10 +545,7 @@ class Pessoa extends MY_Controller {
             // Bairro
 			$this->form_validation->set_rules('ds_bairro', 'Bairro', 'trim');
             
-			// Alergia a remédios
-            if($this->input->post('bl_alergia_remedio')){
-                $this->form_validation->set_rules('nm_alergia_remedio','Alergia a quais remédios?', 'trim|required');
-            }
+			$this->form_validation->set_rules('nm_alergia_remedio','Alergia a quais remédios?', 'trim');
 			
 			// Email
             $this->form_validation->set_rules('ds_email','E-mail', 'trim|valid_email');

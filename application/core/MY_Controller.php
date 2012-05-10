@@ -12,7 +12,7 @@ class MY_Controller extends CI_Controller
 		{
 			//$this->load->helper('Firelogger');
 			//flog("FireLogger Loaded!");
-			//$this->output->enable_profiler(TRUE);
+			$this->output->enable_profiler(TRUE);
 		}
 		
 	}

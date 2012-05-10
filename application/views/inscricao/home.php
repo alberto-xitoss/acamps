@@ -4,7 +4,7 @@
 </div>
 <div class="container">
 	<div id="video-frame" class="pull-left">
-		<div id="video"><iframe width="400" height="301" src="http://www.youtube.com/embed/QuKDXCxyFe8?rel=0" frameborder="0" allowfullscreen></iframe></div>
+		<div id="video"><iframe width="400" height="301" src="http://www.youtube.com/embed/FVuQn1qgVKQ" frameborder="0" allowfullscreen></iframe></div>
 	</div>
 	<div id="insc-links" class="pull-right">
 		<h2>Inscreva-se</h2>
@@ -34,18 +34,3 @@
 		</div>
 	</div>
 </div>
-<script>
-	
-	$(function(){
-		$('#insc-links div').hide();
-		$('#insc-links').hover(
-			function(){
-				$('#insc-links div').slideDown(150);
-			},
-			function(){
-				$('#insc-links div').slideUp(150);
-			}
-		);
-	});
-	
-</script>

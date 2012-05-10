@@ -5,7 +5,7 @@
 * Contém as funções usadas apenas pela secretaria.
 */
 
-class Secretaria extends MYI_Controller {
+class Secretaria extends CI_Controller {
 
 	public $template = 'admin_template';
 	public $title = "Sistema Acamp's > Secretaria";

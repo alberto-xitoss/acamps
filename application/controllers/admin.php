@@ -14,11 +14,11 @@
  *   login
  *   buscar
 */
-class Admin extends MY_Controller {
+class Admin extends CI_Controller {
 
     public $template = 'admin_template';
     public $title = "Sistema Acamp's";
-    public $css = array('bootstrap', 'admin');
+    public $css = array('admin');
     public $js =  array('jquery.min');
 
     /* Admin - construtor

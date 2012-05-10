@@ -196,7 +196,7 @@ function mostraErro(input, msg){
 	input = $(input);
 	if(!input.hasClass('error')){
 		input.addClass('error');
-		input.parents('.clearfix').addClass('error');
+		input.parents('.control-group').addClass('error');
 		
 		span = $('<span>',{
 			'class': "help-inline",
@@ -217,6 +217,6 @@ function escondeErro(input){
 	if(input.hasClass('error')){
 		input.removeClass('error');
 		input.siblings('span.help-inline').remove();
-		input.parents('.clearfix').removeClass('error');
+		input.parents('.control-group').removeClass('error');
 	}
 }

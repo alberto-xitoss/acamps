@@ -1,0 +1,36 @@
+// LABELS
+// ------
+
+// Base
+.highlight {
+  padding: 1px 4px 2px;
+  font-weight: bold;
+  color: @white;
+  vertical-align: middle;
+  white-space: nowrap;
+  text-shadow: 0 -1px 0 rgba(0,0,0,.25);
+  background-color: @grayLight;
+  .border-radius(3px);
+}
+
+// Hover state
+.highlight:hover {
+  color: @white;
+  text-decoration: none;
+}
+
+// Colors
+.highlight-important        { background-color: @errorText; }
+.highlight-important:hover  { background-color: darken(@errorText, 10%); }
+
+.highlight-warning          { background-color: @orange; }
+.highlight-warning:hover    { background-color: darken(@orange, 10%); }
+
+.highlight-success          { background-color: @successText; }
+.highlight-success:hover    { background-color: darken(@successText, 10%); }
+
+.highlight-info             { background-color: @infoText; }
+.highlight-info:hover       { background-color: darken(@infoText, 10%); }
+
+.highlight-inverse          { background-color: @grayDark; }
+.highlight-inverse:hover    { background-color: darken(@grayDark, 10%); }

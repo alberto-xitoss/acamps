@@ -163,23 +163,24 @@
 @heroUnitLeadColor:               inherit;
 
 
-// Form states and alerts
+// Form states and alerts 
 // -------------------------
-@warningText:             #c09853;
-@warningBackground:       #fcf8e3;
-@warningBorder:           darken(spin(@warningBackground, -10), 3%);
+/* ALTERADO POR MAURO EM 9/5/2012*/
+@warningText:             darken(spin(#c09853, -10), 15%);
+@warningBackground:       darken(#fcf8e3, 5%);
+@warningBorder:           darken(spin(@warningBackground, -10), 15%);
 
 @errorText:               #b94a48;
 @errorBackground:         #f2dede;
 @errorBorder:             darken(spin(@errorBackground, -10), 3%);
 
-@successText:             #468847;
-@successBackground:       #dff0d8;
-@successBorder:           darken(spin(@successBackground, -10), 5%);
+@successText:             darken(#468847, 15%);
+@successBackground:       darken(saturate(#dff0d8, 10%), 5%);
+@successBorder:           darken(spin(@successBackground, -10), 20%);
 
-@infoText:                #3a87ad;
+@infoText:                darken(#3a87ad, 10%);
 @infoBackground:          #d9edf7;
-@infoBorder:              darken(spin(@infoBackground, -10), 7%);
+@infoBorder:              darken(spin(@infoBackground, -5), 17%);
 
 
 

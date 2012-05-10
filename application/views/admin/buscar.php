@@ -1,12 +1,12 @@
-<div id="busca">
+<div id="busca" class="form-inline">
     <?php echo form_open('admin/buscar') ?>
-	<input type="text" maxlength="20" id="consulta" value="<?php if(isset($consulta))echo $consulta ?>" name="consulta"><input type="submit" class="btn primary" value="Buscar" name="buscar" id="buscar">
+	<input type="text" id="consulta" value="<?php if(isset($consulta))echo $consulta ?>" name="consulta"><input type="submit" class="btn btn-primary" value="Buscar" name="buscar" id="buscar">
     <?php echo form_close() ?>
 </div>
 
 <div id="resultado">
 <?php if(is_array($resultado) && count($resultado) > 0): ?>
-    <table align="center" width="100%">
+    <table class="table table-striped">
         <tbody>
         	<?php foreach($resultado as $linha): ?>
                 <tr>

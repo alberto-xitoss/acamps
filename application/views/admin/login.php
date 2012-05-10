@@ -1,4 +1,4 @@
-<div id="login" class="form-stacked">
+<div id="login">
     <?php echo form_open('admin/login'); ?>
     <?php echo form_label('Login','nm_usuario'); ?>
     <p>
@@ -16,13 +16,13 @@
         'maxlength'   => '20'
     )); ?>
     </p>
-    <p class="center">
-    <?php echo form_submit('login', 'Login', 'class="btn primary"'); ?>
+    <p align="center">
+    <?php echo form_submit('login', 'Login', 'class="btn"'); ?>
     </p>
     <?php echo form_close(); ?>
 </div>
 <?php if(isset($erro) && $erro==true): ?>
-<div id="erro">
-    <p>Usuário ou senha inválidos.</p>
-</div>
+	<div id="erro">
+		<p>Usuário ou senha inválidos.</p>
+	</div>
 <?php endif; ?>

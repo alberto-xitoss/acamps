@@ -299,10 +299,7 @@ class Inscricao extends CI_Controller{
 		$this->form_validation->set_rules('bl_transporte','Precisará de transporte do acampamento?', 'required');
 		
 		// Alergia a Alimentos
-		$this->form_validation->set_rules('bl_alergia_alimento', 'Alergia a alimentos?', 'integer'); // Gambiarra para que o campo seja repopulado após erro no formulário
-        if($this->input->post('bl_alergia_alimento')){
-            $this->form_validation->set_rules('nm_alergia_alimento', 'Alergia a quais alimentos?', 'trim|required');
-        }
+		$this->form_validation->set_rules('nm_alergia_alimento', 'Alergia a quais alimentos?', 'trim');
         
         // Campos apenas do formulário de participante
         if($cd_tipo == 'p'){
@@ -335,10 +332,7 @@ class Inscricao extends CI_Controller{
 			$this->form_validation->set_rules('bl_barracao','Utilizará o barracão?', 'required');
             
 			// Alergia a remédios
-			$this->form_validation->set_rules('bl_alergia_remedio','Alergia a remédios?',  'integer'); // Gambiarra para que o campo seja repopulado após erro no formulário
-            if($this->input->post('bl_alergia_remedio')){
-                $this->form_validation->set_rules('nm_alergia_remedio','Alergia a quais remédios?', 'trim|required');
-            }
+			$this->form_validation->set_rules('nm_alergia_remedio','Alergia a quais remédios?', 'trim');
             
 			// Email
 			$this->form_validation->set_rules('ds_email','E-mail', 'trim|required|valid_email');

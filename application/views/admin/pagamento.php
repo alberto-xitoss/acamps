@@ -1,43 +1,46 @@
 <?php echo form_open('admin/pagar/'.$pessoa->id_pessoa) ?>
-<div class="modal-header"><a class="close" href="#">×</a><h3>Pagamento</h3></div>
+
+<div class="modal-header"><a class="close" href="#" data-dismiss="modal">×</a><h3>Pagamento</h3></div>
+
 <div class="modal-body">
-<p><strong>Tipo do Pagamento</strong></p>
-<ul class="inputs-list">
-<li><label for="tipo_d"><input type="radio" id="tipo_d" value="d" name="cd_tipo_pgto" checked />Dinheiro</label></li>
-<li><label for="tipo_c"><input type="radio" id="tipo_c" value="c" name="cd_tipo_pgto"/>Cheque</label></li>
-<li><label for="tipo_cp"><input type="radio" id="tipo_cp" value="cp" name="cd_tipo_pgto"/>Cheque Pré-datado</label></li>
-</ul>
-<table border="0" cellspacing="0" cellpadding="0">
-	<tr>
-		<th width="100px">Valor a Pagar:</th>
-		<td><span id='avista_apagar'class="textfield"><?php printf('%.2f' ,$pessoa->nr_a_pagar) ?></span>
-		<?php echo form_hidden('nr_a_pagar', sprintf('%.2f' ,$pessoa->nr_a_pagar)) ?></td>
-	</tr>
-	<?php if($this->session->userdata('permissao') & DESCONTO): // Verificando Permissão do usuário ?>
+	<p><strong>Tipo do Pagamento</strong></p>
+	<label for="tipo_d" class="radio"><input type="radio" id="tipo_d" value="d" name="cd_tipo_pgto" checked />Dinheiro</label>
+	<label for="tipo_c" class="radio"><input type="radio" id="tipo_c" value="c" name="cd_tipo_pgto"/>Cheque</label>
+	<label for="tipo_cp" class="radio"><input type="radio" id="tipo_cp" value="cp" name="cd_tipo_pgto"/>Cheque Pré-datado</label>
+	<table class="table form-inline">
 		<tr>
-			<th>Desconto:</th>
-			<td><input id="avista_desconto" name="nr_desconto" type="text" /></td>
+			<th width="100px">Valor a Pagar:</th>
+			<td><span id='avista_apagar'class="textfield"><?php printf('%.2f' ,$pessoa->nr_a_pagar) ?></span>
+			<?php echo form_hidden('nr_a_pagar', sprintf('%.2f' ,$pessoa->nr_a_pagar)) ?></td>
+		</tr>
+		<?php if($this->session->userdata('permissao') & DESCONTO): // Verificando Permissão do usuário ?>
+			<tr>
+				<th>Desconto:</th>
+				<td><input id="avista_desconto" name="nr_desconto" type="text" /></td>
+			</tr>
+			<tr>
+				<th>Total:</th>
+				<td><span id='avista_total' class="textfield"><?php printf('%.2f' ,$pessoa->nr_a_pagar) ?></span>
+				<?php echo form_hidden('nr_pago', sprintf('%.2f' ,$pessoa->nr_a_pagar)) ?></td>
+			</tr>
+		<?php endif ?>
+		<tr>
+			<th>Valor Pago:</th>
+			<td><input id="avista_pago" name="avista_pago" type="text" /></td>
 		</tr>
 		<tr>
-			<th>Total:</th>
-			<td><span id='avista_total' class="textfield"><?php printf('%.2f' ,$pessoa->nr_a_pagar) ?></span>
-			<?php echo form_hidden('nr_pago', sprintf('%.2f' ,$pessoa->nr_a_pagar)) ?></td>
+			<th>Troco:</th>
+			<td><span id="avista_troco" class="textfield">0.00</span></td>
 		</tr>
-	<?php endif ?>
-	<tr>
-		<th>Valor Pago:</th>
-		<td><input id="avista_pago" name="avista_pago" type="text" /></td>
-	</tr>
-	<tr>
-		<th>Troco:</th>
-		<td><span id="avista_troco" class="textfield">0.00</span></td>
-	</tr>
-</table>
+	</table>
 </div>
+
 <div class="modal-footer">
-<p align="center"><input type="submit" id="pagar" class="btn success" value="Efetuar Pagamento" name="pagar" /></p>
+	<p align="center"><input type="submit" id="pagar" class="btn btn-success" value="Efetuar Pagamento" name="pagar" /></p>
 </div>
+
 <?php echo form_close() ?>
+
 <script>
 
     var Pagamento = {
