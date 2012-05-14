@@ -375,8 +375,7 @@ class Pessoa extends CI_Controller {
         }
         
         $this->title = "Sistema Acamp's > Formulário de Incrição";
-        $this->css []= 'jquery.ui.theme';
-        $this->css []= 'jquery.ui.datepicker';
+        $this->css []= 'jquery-ui';
 		$this->js  []= 'jquery-ui.min';
 		$this->js  []= 'jquery.ui.datepicker-pt-BR';
         
@@ -430,8 +429,7 @@ class Pessoa extends CI_Controller {
         }
         
         $this->title = "Sistema Acamp's > Formulário de Incrição";
-        $this->css []= 'jquery.ui.theme';
-        $this->css []= 'jquery.ui.datepicker';
+        $this->css []= 'jquery-ui';
 		$this->js  []= 'jquery-ui.min';
 		$this->js  []= 'jquery.ui.datepicker-pt-BR';
         
@@ -488,8 +486,7 @@ class Pessoa extends CI_Controller {
         }
         
         $this->title = "Sistema Acamp's > Formulário de Incrição";
-        $this->css []= 'jquery.ui.theme';
-        $this->css []= 'jquery.ui.datepicker';
+        $this->css []= 'jquery-ui';
 		$this->js  []= 'jquery-ui.min';
 		$this->js  []= 'jquery.ui.datepicker-pt-BR';
         

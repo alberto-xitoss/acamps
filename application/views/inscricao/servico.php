@@ -174,7 +174,7 @@
 	</div>
 </div>
 <p class="alert alert-block">Esta é uma <strong>pré-inscrição</strong>. Antes de pagar e concluir sua inscrição será necessária a <strong>aprovação do coordenador</strong> da equipe na qual você se inscrever.</p>
-<p align="center"><input type="submit" value="Confirmar" name="confirmar" class="btn btn-success btn-large" /></p>
+<p align="center"><input type="submit" value="Confirmar" name="confirmar" class="btn btn-primary btn-large" /></p>
 
 <?php echo form_close();?>
 

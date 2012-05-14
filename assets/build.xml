@@ -1,11 +1,11 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <project name="assets" default="build">
 	
 	<target name="compile.less">
-		<exec command="lessc less/bootstrap.less > css/bootstrap.css --yui-compress"/>
 		<exec command="lessc less/inscricao.less > css/inscricao.css --yui-compress"/>
 		<exec command="lessc less/admin.less > css/admin.css --yui-compress"/>
+		<exec command="lessc less/boleto.less > css/boleto.css --yui-compress"/>
 	</target>
 	
 	<target name="minify.js">

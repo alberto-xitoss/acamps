@@ -88,7 +88,7 @@
 		<input type="file" size="32" class="obrigatorio" value="<?php echo set_value('ds_foto') ?>" name="ds_foto" id="ds_foto"><span class="help-block">O tamanho máximo aceito para a foto é 2MB.<br>Formatos aceitos: bmp | jpg | png | gif</span>
 	</div>
 </div>
-<p align="center"><input type="submit" value="Confirmar" name="confirmar" class="btn btn-success btn-large" /></p>
+<p align="center"><input type="submit" value="Confirmar" name="confirmar" class="btn btn-primary btn-large" /></p>
 <?php echo form_close();?>
 
 <script>

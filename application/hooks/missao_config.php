@@ -22,10 +22,11 @@ class Missao_config
 		
 		$CI->config->set_item('acamps_edicao', $missao_config['edicao']);
 		
-		$inicio = DateTime::createFromFormat('j/m/Y', $missao_config['data_inicio']);
-		$fim = DateTime::createFromFormat('j/m/Y', $missao_config['data_fim']);
-		$CI->config->set_item('acamps_inicio', $inicio);
-		$CI->config->set_item('acamps_fim', $fim);
+		$inicio = DateTime::createFromFormat('j/n/Y', $missao_config['data_inicio']);
+		$fim = DateTime::createFromFormat('j/n/Y', $missao_config['data_fim']);
+		
+		$CI->config->set_item('acamps_inicio', $inicio->format('j/n/Y'));
+		$CI->config->set_item('acamps_fim', $fim->format('j/n/Y'));
 		
 		$periodo = $inicio->format('j').' a '.$fim->format('j').' de '.traduz_mes($fim->format('F')).' de '.$fim->format('Y');
 		

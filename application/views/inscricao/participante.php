@@ -204,7 +204,7 @@
 		)) ?><?php echo $meio['nm_meio'] ?></label>
 	<?php endforeach ?>
 </div>
-<p align="center"><input type="submit" value="Confirmar" name="confirmar" class="btn btn-success btn-large" /></p>
+<p align="center"><input type="submit" value="Confirmar" name="confirmar" class="btn btn-primary btn-large" /></p>
 <?php echo form_close();?>
 <script>
 

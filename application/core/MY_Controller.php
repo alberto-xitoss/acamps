@@ -1,4 +1,4 @@
-﻿<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class MY_Controller extends CI_Controller
 {
@@ -12,7 +12,6 @@ class MY_Controller extends CI_Controller
 		{
 			//$this->load->helper('Firelogger');
 			//flog("FireLogger Loaded!");
-			$this->output->enable_profiler(TRUE);
 		}
 		
 	}

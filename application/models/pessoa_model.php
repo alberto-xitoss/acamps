@@ -106,13 +106,18 @@ class Pessoa_model extends CI_Model
                      ->join('familia', 'pessoa.id_familia = familia.id_familia', 'left')
                      ->join('servico', 'pessoa.id_servico = servico.id_servico', 'left')
                      ->join('setor', 'pessoa.id_setor = setor.id_setor', 'left')
+                     ->join('pagamento', 'pessoa.id_pessoa = pagamento.id_pessoa', 'left')
                      ->where('pessoa.id_pessoa',$id_pessoa);
             $query = $this->db->get();
             
             if($array)
+			{
                 $resultado = $query->row_array();
+			}
             else
+			{
                 $resultado = $query->row();
+			}
             
             //log_message('ERROR', print_r($resultado,true)); // DEBUG
         }
@@ -400,19 +405,40 @@ class Pessoa_model extends CI_Model
 
     function dados_boleto($code)
 	{
-        
-        if($this->db->platform() == 'postgre')
+		$this->db->select("pessoa.*, tipo_inscricao.nm_tipo, cidade.nm_cidade, servico.*,
+							(CASE
+								WHEN pessoa.cd_tipo = 'p' THEN ".$this->config->item('valor_participante')."
+								WHEN pessoa.cd_tipo = 's' THEN ".$this->config->item('valor_servico')."
+							END) as nr_a_pagar")
+							->from($this->table)
+							->join('tipo_inscricao', 'pessoa.cd_tipo = tipo_inscricao.cd_tipo', 'left')
+							->join('cidade', 'pessoa.id_cidade = cidade.id_cidade', 'left')
+							->join('servico', 'pessoa.id_servico = servico.id_servico', 'left')
+							->join('pagamento', 'pessoa.id_pessoa = pagamento.id_pessoa', 'left');
+							
+		if($this->db->platform() == 'postgre')
 		{
-            $query = $this->db->get_where($this->table, array('md5(id_pessoa||ds_email)'=>$code), 1);
+			$this->db->where('md5(pessoa.id_pessoa||ds_email)', $code);
         }
 		elseif($this->db->platform() == 'mysql')
 		{
-            $query = $this->db->get_where($this->table, array('md5(concat(id_pessoa,ds_email))'=>$code), 1, 0);
+            $this->db->where('md5(concat(pessoa.id_pessoa,ds_email))', $code);
         }
+		$query = $this->db->limit(1);
+		$query = $this->db->get();
         
         if($query->num_rows() == 1)
 		{
             $row = $query->row_array();
+			
+			$query_pgto = $this->db->get_where('pagamento', array('id_pessoa'=>$row['id_pessoa']));
+			$pgto = $query_pgto->row_array();
+			$row = array_merge($row, $pgto);
+			
+			$query_pgto = $this->db->get_where('cidade', array('id_cidade'=>$row['id_cidade']));
+			$pgto = $query_pgto->row_array();
+			$row = array_merge($row, $pgto);
+			
             if($row['cd_tipo']=='s')
 			{
                 $this->db->select('nm_servico')->from('servico')->where('id_servico',$row['id_servico']);

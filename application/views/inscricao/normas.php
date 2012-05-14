@@ -13,7 +13,7 @@
 	<li>Apresentar a carteira de identidade ou certidão de nascimento do participante.</li>
 	<li>Valor correspondente à taxa de inscrição.</li>
 </ul>
-<div class='alert alert-block alert-success'><p>O valor da inscrição é <strong>R$<?php echo $valor ?></strong> (À vista ou cheque).</p>
+<div class='alert alert-block alert-success'><p>O valor da inscrição é <strong>R$ <?php echo $valor ?></strong> (À vista ou cheque).</p>
 <p>O prazo para se inscrever é até o dia <strong><?php echo $prazo_inscricao ?></strong>.</p></div>
 <?php if($tipo=='participante'): ?>
 <p class="alert">Só pode participar do Acamp's quem tem entre 14 e 28 anos!</p>
@@ -31,11 +31,11 @@
 
 <h3>Saída</h3>
 
-<p><strong>Local:</strong> Praça do Cristo Rei, rua Nogueira Acioli, ao lado do Colégio Militar (Av. Santos Dumont)</p>
+<p><strong>Local:</strong> Praça do Cristo Rei, Rua Nogueira Acioli, ao lado do Colégio Militar (Av. Santos Dumont)</p>
 
-<p><strong>Data de saída: </strong><?php echo $inicio ?> às 14:00h</p>
+<p><strong>Data de saída: </strong><?php echo $inicio ?> às 14:00</p>
 
-<p><strong>Data de retorno: </strong><?php echo $fim ?> às 18:30h</p>
+<p><strong>Data de retorno: </strong><?php echo $fim ?> às 18:30</p>
 
 <h3>Normas</h3>
 <ol>
@@ -52,5 +52,5 @@
 	<li>PLANTÃO DE INFORMAÇÃO durante o evento: (085) 8690 1014, 8661 1319, 8846 6951, 8821 3015.</li>
 	<li>A Rádio Shalom AM 690 trará irformações diariamente.</li>
 </ol>
-<p align="center"><?php echo anchor('/inscricao/'.$tipo, 'Continuar Inscrição &raquo;', array('class'=>'btn btn-success btn-large', 'id'=>'continuar'))//echo anchor('/inscricao/buscarinscricao/'.$tipo, 'Continuar Inscrição &raquo;') ?></p>
+<p align="center"><?php echo anchor('/inscricao/'.$tipo, 'Continuar Inscrição &raquo;', array('class'=>'btn btn-primary btn-large', 'id'=>'continuar'))//echo anchor('/inscricao/buscarinscricao/'.$tipo, 'Continuar Inscrição &raquo;') ?></p>
 </div>

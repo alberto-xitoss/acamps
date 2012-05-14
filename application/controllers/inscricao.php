@@ -1,6 +1,6 @@
 <?php
 
-class Inscricao extends CI_Controller{
+class Inscricao extends MY_Controller{
 
     public $template = 'inscricao_template';
     public $title = 'Acampamento de Jovens Shalom';
@@ -30,14 +30,14 @@ class Inscricao extends CI_Controller{
 		$viewdata['edicao'] = $this->config->item('acamps_edicao');
 		$viewdata['periodo'] = $this->config->item('acamps_periodo');
 		
-		$inicio = $this->config->item('acamps_inicio');
-		$fim = $this->config->item('acamps_fim');
-		$prazo = new DateTime($inicio->format('Y-m-d'));
+		$inicio = DateTime::createFromFormat('j/n/Y', $this->config->item('acamps_inicio'));
+		$fim = DateTime::createFromFormat('j/n/Y', $this->config->item('acamps_fim'));
+		$prazo = $inicio;
 		$prazo->sub(new DateInterval('P2D'));
 		
-		$viewdata['prazo_inscricao'] = $prazo->format('d/m');
-		$viewdata['inicio'] = $inicio->format('d/m');
-		$viewdata['fim'] = $fim->format('d/m');
+		$viewdata['prazo_inscricao'] = $prazo->format('j/n');
+		$viewdata['inicio'] = $inicio->format('j/n');
+		$viewdata['fim'] = $fim->format('j/n');
 		
         $this->load->view('inscricao/normas', $viewdata);
     }
@@ -122,8 +122,7 @@ class Inscricao extends CI_Controller{
 		$this->js  []= 'jquery-ui.min';
 		$this->js  []= 'jquery.ui.datepicker-pt-BR';
         $this->js  []= 'valida.min';
-        $this->css []= 'jquery.ui.theme';
-        $this->css []= 'jquery.ui.datepicker';
+        $this->css []= 'jquery-ui';
         
         $form_data['cidades'] = $this->cidade->listar();
 		$form_data['cidades'] = array_reverse($form_data['cidades'], true);
@@ -186,8 +185,7 @@ class Inscricao extends CI_Controller{
 		$this->js  []= 'jquery-ui.min';
 		$this->js  []= 'jquery.ui.datepicker-pt-BR';
         $this->js  []= 'valida.min';
-        $this->css []= 'jquery.ui.theme';
-        $this->css []= 'jquery.ui.datepicker';
+        $this->css []= 'jquery-ui';
 		
 		$form_data['cidades'] = $this->cidade->listar();
 		$form_data['cidades'] = array_reverse($form_data['cidades'], true);
@@ -248,8 +246,7 @@ class Inscricao extends CI_Controller{
 		$this->js  []= 'jquery-ui.min';
 		$this->js  []= 'jquery.ui.datepicker-pt-BR';
         $this->js  []= 'valida.min';
-        $this->css []= 'jquery.ui.theme';
-        $this->css []= 'jquery.ui.datepicker';
+        $this->css []= 'jquery-ui';
 
 		$form_data['servicos'] = $this->servico->listar();
 		$form_data['servicos'] = array_reverse($form_data['servicos'], true);
@@ -264,11 +261,29 @@ class Inscricao extends CI_Controller{
     }
     
     function boleto($code){
+		
+		$viewdata['periodo'] = $this->config->item('acamps_periodo');
+		
+		$inicio = DateTime::createFromFormat('j/n/Y', $this->config->item('acamps_inicio'));
+		$fim = DateTime::createFromFormat('j/n/Y', $this->config->item('acamps_fim'));
+		
+		$viewdata['inicio'] = $inicio->format('j/n');
+		$viewdata['fim'] = $fim->format('j/n');
+		
 		$this->load->model('pessoa_model');
         $dados = $this->pessoa_model->dados_boleto($code);
-        if($dados){
-            $this->template = '';
-            $this->load->view('inscricao/boleto',$dados);
+		
+        if($dados)
+		{
+			$viewdata['dados'] = $dados;
+			$viewdata['valor'] = ( $dados['cd_tipo']=='p' ? $this->config->item('valor_participante') : $this->config->item('valor_servico') );
+			
+			$this->title = "Acamp's - Boleto de Pagamento: ".$dados['id_pessoa'];
+            $this->template = 'default';
+            $this->css = array('boleto');
+            $this->js = array();
+			
+            $this->load->view('inscricao/boleto',$viewdata);
         }else{
             show_404('Boleto de Pagamento');
         }

@@ -154,10 +154,10 @@ INSERT INTO familia (nm_familia, cd_familia) VALUES
 
 CREATE TABLE tipo_inscricao(
 	cd_tipo char(1) PRIMARY KEY,
-	ds_tipo varchar(25)
+	nm_tipo varchar(25)
 );
 --#
-INSERT INTO tipo_inscricao (cd_tipo, ds_tipo) VALUES
+INSERT INTO tipo_inscricao (cd_tipo, nm_tipo) VALUES
 	('p', 'Participante'),
 	('s', 'Serviço'),
 	('v', 'Comunidade de Vida'),
