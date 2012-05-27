@@ -479,7 +479,6 @@ class Pessoa_model extends CI_Model
 		{
 			if(file_exists($this->config->item('upload_path', 'upload').$pessoa->nm_foto))
 			{
-				$this->load->helper('file');
 				unlink($this->config->item('upload_path', 'upload').$pessoa->nm_foto);
 			}
 		}
@@ -489,53 +488,6 @@ class Pessoa_model extends CI_Model
 		
 		//log_message('ERROR', 'Excluindo Pessoa -> '.$id_pessoa);
 		
-	}
-	
-	function etiqueta_participante($ids)
-	{
-		$this->db->select(" pessoa.id_pessoa,
-							pessoa.nm_pessoa,
-							pessoa.nm_cracha,
-							pessoa.cd_tipo,
-							pessoa.ds_foto,
-							cidade.nm_cidade,
-							cidade.cd_estado,
-							familia.cd_familia,
-							(CASE
-							WHEN pessoa.bl_seminario = TRUE THEN 'Seminário'
-							WHEN pessoa.bl_seminario = FALSE THEN 'Aprofundamento'
-							END) as ds_seminario")
-							->from("pessoa")
-							->join("familia", "pessoa.id_familia = familia.id_familia")
-							->join("cidade", "pessoa.id_cidade = cidade.id_cidade")
-							->where("pessoa.id_status = 3")
-							->where("pessoa.cd_tipo = 'p'")
-							->where_in("pessoa.id_pessoa", $ids)
-							->order_by("pessoa.id_pessoa");
-		$query = $this->db->get();
-		
-		$tabela = $query->result_array();
-		
-		// Incrementando contador de crachás
-		if($this->db->platform() == 'postgre')
-		{
-			$this->db->set('bl_cracha','TRUE');
-		}
-		elseif($this->db->platform() == 'mysql')
-		{
-			$this->db->set('bl_cracha',true);
-		}
-		
-		//$this->db->set('nr_cracha', 'nr_cracha + 1')
-		$this->db->set('nr_cracha', 1)
-				->where("pessoa.id_status = 3")
-				->where("pessoa.cd_tipo = 'p'")
-				->where("pessoa.bl_cracha = FALSE")
-				->where_in("pessoa.id_pessoa", $ids);
-		
-		$this->db->update($this->table);
-		
-		return $tabela;
 	}
 	
 	function verifica_etiqueta_participante($id_ini=0, $id_fim=9999)
@@ -740,6 +692,52 @@ class Pessoa_model extends CI_Model
 		return $tabela;
 	}
 	
+	function etiqueta_participante($ids)
+	{
+		$this->db->select(" pessoa.id_pessoa,
+							pessoa.nm_pessoa,
+							pessoa.nm_cracha,
+							pessoa.cd_tipo,
+							pessoa.ds_foto,
+							cidade.nm_cidade,
+							cidade.cd_estado,
+							familia.cd_familia,
+							(CASE
+							WHEN pessoa.bl_seminario = TRUE THEN 'Seminário'
+							WHEN pessoa.bl_seminario = FALSE THEN 'Aprofundamento'
+							END) as ds_seminario")
+							->from("pessoa")
+							->join("familia", "pessoa.id_familia = familia.id_familia")
+							->join("cidade", "pessoa.id_cidade = cidade.id_cidade")
+							->where("pessoa.id_status = 3")
+							->where("pessoa.cd_tipo = 'p'")
+							->where_in("pessoa.id_pessoa", $ids)
+							->order_by("pessoa.id_pessoa");
+		$query = $this->db->get();
+		
+		$tabela = $query->result_array();
+		
+		// Incrementando contador de crachás
+		if($this->db->platform() == 'postgre')
+		{
+			$this->db->set('bl_cracha','TRUE');
+		}
+		elseif($this->db->platform() == 'mysql')
+		{
+			$this->db->set('bl_cracha',true);
+		}
+		
+		$this->db->set('nr_cracha', 'nr_cracha + 1', FALSE)
+		//$this->db->set('nr_cracha', 1)
+				->where("pessoa.id_status = 3")
+				->where("pessoa.cd_tipo = 'p'")
+				->where_in("pessoa.id_pessoa", $ids);
+		
+		$this->db->update($this->table);
+		
+		return $tabela;
+	}
+	
 	function etiqueta_servico($ids){
 		$this->db->select(" pessoa.id_pessoa,
 							pessoa.nm_pessoa,
@@ -767,11 +765,10 @@ class Pessoa_model extends CI_Model
 			$this->db->set('bl_cracha',true);
 		}
 		
-		//$this->db->set('nr_cracha', 'nr_cracha + 1')
-		$this->db->set('nr_cracha', 1)
+		$this->db->set('nr_cracha', 'nr_cracha + 1', FALSE)
+		//$this->db->set('nr_cracha', 1)
 				->where("pessoa.id_status = 3")
 				->where("pessoa.cd_tipo = 's'")
-				->where("pessoa.bl_cracha = FALSE")
 				->where_in("pessoa.id_pessoa", $ids);
 		
 		$this->db->update($this->table);
@@ -779,7 +776,8 @@ class Pessoa_model extends CI_Model
 		return $tabela;
 	}
 	
-	function etiqueta_cv($ids){
+	function etiqueta_cv($ids)
+	{
 		$this->db->select(" pessoa.id_pessoa,
 							pessoa.nm_pessoa,
 							pessoa.nm_cracha,
@@ -799,17 +797,19 @@ class Pessoa_model extends CI_Model
 		$tabela = $query->result_array();
 		
 		// Incrementando contador de crachás
-		if($this->db->platform() == 'postgre'){
+		if($this->db->platform() == 'postgre')
+		{
 			$this->db->set('bl_cracha','TRUE');
-		}elseif($this->db->platform() == 'mysql'){
+		}
+		elseif($this->db->platform() == 'mysql')
+		{
 			$this->db->set('bl_cracha',true);
 		}
 		
-		//$this->db->set('nr_cracha', 'nr_cracha + 1')
-		$this->db->set('nr_cracha', 1)
+		$this->db->set('nr_cracha', 'nr_cracha + 1', FALSE)
+		//$this->db->set('nr_cracha', 1)
 				->where("pessoa.id_status = 3")
 				->where("pessoa.cd_tipo = 'v'")
-				->where("pessoa.bl_cracha = FALSE")
 				->where_in("pessoa.id_pessoa", $ids);
 		
 		$this->db->update($this->table);
@@ -817,7 +817,8 @@ class Pessoa_model extends CI_Model
 		return $tabela;
 	}
 	
-	function etiqueta_especial($ids){
+	function etiqueta_especial($ids)
+	{
 		$this->db->select(" pessoa.id_pessoa,
 							pessoa.nm_pessoa,
 							pessoa.nm_cracha,
@@ -834,17 +835,19 @@ class Pessoa_model extends CI_Model
 		$tabela = $query->result_array();
 		
 		// Incrementando contador de crachás
-		if($this->db->platform() == 'postgre'){
+		if($this->db->platform() == 'postgre')
+		{
 			$this->db->set('bl_cracha','TRUE');
-		}elseif($this->db->platform() == 'mysql'){
+		}
+		elseif($this->db->platform() == 'mysql')
+		{
 			$this->db->set('bl_cracha',true);
 		}
 		
-		//$this->db->set('nr_cracha', 'nr_cracha + 1')
-		$this->db->set('nr_cracha', 1)
+		$this->db->set('nr_cracha', 'nr_cracha + 1', FALSE)
+		//$this->db->set('nr_cracha', 1)
 				->where("pessoa.id_status = 3")
 				->where("pessoa.cd_tipo = 'e'")
-				->where("pessoa.bl_cracha = FALSE")
 				->where_in("pessoa.id_pessoa", $ids);
 		
 		$this->db->update($this->table);
@@ -852,7 +855,8 @@ class Pessoa_model extends CI_Model
 		return $tabela;
 	}
 	
-	function pegar_fotos($ids){
+	function pegar_fotos($ids)
+	{
 		$this->db->select("id_pessoa, ds_foto")
 				->from("pessoa")
 				->where_in("id_pessoa", $ids)
@@ -860,11 +864,25 @@ class Pessoa_model extends CI_Model
 		$query = $this->db->get();
 		
 		$fotos = array();
-		foreach ($query->result_array() as $row) {
+		foreach ($query->result_array() as $row)
+		{
 			if(!empty($row['ds_foto'])){ $fotos[$row['id_pessoa']] = $row['ds_foto']; }
 		}
 		
 		return $fotos;
+	}
+	
+	function zerar_etiquetas()
+	{
+		if($this->db->platform() == 'postgre')
+		{
+			$this->db->set('bl_cracha','FALSE');
+		}
+		elseif($this->db->platform() == 'mysql')
+		{
+			$this->db->set('bl_cracha', FALSE);
+		}
+		$this->db->set('nr_cracha', 0)->update('pessoa');
 	}
 	
 	function esvaziar(){

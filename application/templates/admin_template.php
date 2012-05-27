@@ -56,6 +56,7 @@
 						<ul class="sub">
 						  <?php /*<li class="disabled">Criar novo usuário</li>*/ ?>
 						  <li><?php echo anchor('admin/dev/log', 'Log') ?></li>
+						  <li><?php echo anchor('admin/dev/limpar/secretaria', 'Limpar Cache da Secretaria') ?></li>
 						  <?php /*<li><?php echo anchor('admin/dev/limpar', 'Limpar inscrições') ?></li>*/ ?>
 						</ul>
 					</li>

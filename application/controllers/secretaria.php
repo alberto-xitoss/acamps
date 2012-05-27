@@ -36,8 +36,15 @@ class Secretaria extends CI_Controller {
 	}
 
 	function historico() {
-
-		$log = simplexml_load_file($this->config->item('cache_path').'secretaria/log.xml');
+		
+		if(!file_exists($this->config->item('cache_path').'secretaria/log.xml'))
+		{
+			$log = simplexml_load_string('<?xml version="1.0" encoding="utf-8"?><log></log>');
+		}
+		else
+		{
+			$log = simplexml_load_file($this->config->item('cache_path').'secretaria/log.xml');
+		}
 
 		$view['log'] = array();
 		
@@ -143,7 +150,14 @@ class Secretaria extends CI_Controller {
 				$nome_pdf_fotos = $this->_pdf_fotos($ids);
 			}
 
-			$log = simplexml_load_file($this->config->item('cache_path').'secretaria/log.xml');
+			if(!file_exists($this->config->item('cache_path').'secretaria/log.xml'))
+			{
+				$log = simplexml_load_string('<?xml version="1.0" encoding="utf-8"?><log></log>');
+			}
+			else
+			{
+				$log = simplexml_load_file($this->config->item('cache_path').'secretaria/log.xml');
+			}
 			$registro = $log->addChild('registro');
 			$registro->addChild('data', date('d/m/Y H:i'));
 			$registro->addChild('tipo', $cd_tipo);

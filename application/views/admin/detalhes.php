@@ -57,11 +57,15 @@
 				}
 			}
 			
-		?><?php
-		if($pessoa['cd_tipo'] != 'v' && $pessoa['cd_tipo'] != 'e'): // Se não for da Comunidade de Vida
-			?><a class="btn boleto" target="_blank" href="<?php echo site_url('/inscricao/boleto/').'/'.md5($pessoa['id_pessoa'].$pessoa['ds_email']) ?>">Imprimir Boleto</a><?php
-		endif;
-			echo anchor('admin/excluir/'.$pessoa['id_pessoa'], 'Excluir Inscrição', 'class="btn btn-danger excluir confirmacao"');
+		?>
+		<?php if($pessoa['cd_tipo'] != 'v' && $pessoa['cd_tipo'] != 'e'): // Se não for da Comunidade de Vida ?>
+			<a class="btn boleto" target="_blank" href="<?php echo site_url('/inscricao/boleto/').'/'.md5($pessoa['id_pessoa'].$pessoa['ds_email']) ?>">Imprimir Boleto</a>
+		<?php endif ?>
+		<?php
+			if($this->session->userdata('permissao') & CORRECAO)
+			{
+				echo anchor('admin/excluir/'.$pessoa['id_pessoa'], 'Excluir Inscrição', 'class="btn btn-danger excluir confirmacao"');
+			}
 		?>
     </div>
 </div>
