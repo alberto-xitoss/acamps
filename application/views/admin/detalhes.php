@@ -1,4 +1,4 @@
-<div id="detalhes" class="wrap">
+<div id="detalhes">
 <div id="cabecalho" class="id-<?php echo $pessoa['cd_tipo'] ?> status-<?php echo $pessoa['id_status'] ?>">
     
 	<a href="#" id="foto" >
@@ -10,18 +10,7 @@
     </a>
 	
     <h1><?php echo $pessoa['id_pessoa']; ?> - <?php echo $pessoa['nm_pessoa']; ?></h1>
-    <p>Tipo de inscrição: <?php switch($pessoa['cd_tipo']){
-        case 'p':
-            echo 'Participante';
-            break;
-        case 's':
-            echo 'Serviço';
-            break;
-        case 'v':
-            echo 'Comunidade de Vida';
-            break;
-    }
-    ?></p>
+    <p>Tipo de inscrição: <?php echo $pessoa['nm_tipo'] ?></p>
     <p>Situação: <span><?php echo $pessoa['ds_status']; ?></span></p>
 	
 	<div class="comandos">
@@ -49,7 +38,7 @@
 				}
 			}
 			
-			if($pessoa['cd_tipo'] != 'v'){ // Botão Pagamento/Estornar Pagamento
+			if($pessoa['cd_tipo'] != 'v' && $pessoa['cd_tipo'] != 'e'){ // Botão Pagamento/Estornar Pagamento
 			
 				if($pessoa['id_status'] == '1'){ // Aguardando Pagamento
 					if($this->session->userdata('permissao') & PAGAMENTO){
@@ -69,7 +58,7 @@
 			}
 			
 		?><?php
-		if($pessoa['cd_tipo'] != 'v'): // Se não for da Comunidade de Vida
+		if($pessoa['cd_tipo'] != 'v' && $pessoa['cd_tipo'] != 'e'): // Se não for da Comunidade de Vida
 			?><a class="btn boleto" target="_blank" href="<?php echo site_url('/inscricao/boleto/').'/'.md5($pessoa['id_pessoa'].$pessoa['ds_email']) ?>">Imprimir Boleto</a><?php
 		endif;
 			echo anchor('admin/excluir/'.$pessoa['id_pessoa'], 'Excluir Inscrição', 'class="btn btn-danger excluir confirmacao"');
@@ -146,7 +135,7 @@
 <!----------------------------------------------------------------------------->
         <tr>
             <th scope="col">Data de Nascimento</th>
-            <td><input type="text" class="data span2" id="dt_nascimento" value="<?php echo $pessoa['dt_nascimento'] ?>" name="dt_nascimento"></td>
+            <td><input type="text" class="data span2" id="dt_nascimento" value="<?php echo date_create($pessoa['dt_nascimento'])->format('d/m/Y') ?>" name="dt_nascimento"></td>
         </tr>
         <tr>
             <th scope="col">Sexo</th>

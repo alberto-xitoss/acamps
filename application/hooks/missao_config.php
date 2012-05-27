@@ -8,6 +8,7 @@ class Missao_config
 		$CI =& get_instance();
 		
 		$CI->load->model('config_model');
+		
 		$missao_config = $CI->config_model->get_all();
 		
 		//------------------------

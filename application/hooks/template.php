@@ -81,7 +81,7 @@ class Template {
 		
 		// Do we need to generate profile data?
 		// If so, load the Profile class and run it.
-		if (ENVIRONMENT == 'development' OR TRUE)
+		if (ENVIRONMENT == 'development' AND false)
 		{
 			$CI->load->library('profiler');
 

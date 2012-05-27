@@ -27,18 +27,18 @@ class Familia extends CI_Model{
 
     function familia_menor(){
         // Procura uma família que ainda não tenha ninguém
-        $query = $this->db->query('SELECT id_familia FROM familia
-                                   WHERE id_familia NOT IN (SELECT pessoa.id_familia FROM pessoa WHERE id_familia IS NOT NULL)');
-        $row = $query->result();
+        $row = $this->db->query('SELECT id_familia FROM familia
+								WHERE id_familia NOT IN (SELECT DISTINCT pessoa.id_familia FROM pessoa WHERE id_familia IS NOT NULL)
+								LIMIT 1')->result();
         if($row){ // Se houver uma família sem ninguém...
             return $row[0]->id_familia;
         }else{
             // Procura a família com menos pessoas
-            $query = $this->db->query('SELECT id_familia, count(*) FROM pessoa
+            $row = $this->db->query('SELECT id_familia, count(*) FROM pessoa
                                        WHERE id_familia IS NOT NULL
                                        GROUP BY id_familia
-                                       ORDER by count(*)');
-            $row = $query->result();
+                                       ORDER by count(*)
+									   LIMIT 1')->result();
             return $row[0]->id_familia;
         }
     }

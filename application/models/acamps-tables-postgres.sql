@@ -1,5 +1,4 @@
-﻿
-CREATE TABLE configuracao (
+﻿CREATE TABLE configuracao (
 	id_config serial PRIMARY KEY,
 	nm_config varchar(30) NOT NULL,
 	nm_valor text NOT NULL
@@ -30,10 +29,9 @@ INSERT INTO status (ds_status) VALUES
 --#
 
 CREATE TABLE cidade(
-	id_cidade serial,
+	id_cidade serial PRIMARY KEY,
 	nm_cidade varchar(50),
-	cd_estado char(2),
-	PRIMARY KEY(id_cidade)
+	cd_estado char(2)
 );
 --#
 INSERT INTO cidade (nm_cidade, cd_estado) VALUES
@@ -64,11 +62,10 @@ INSERT INTO cidade (nm_cidade, cd_estado) VALUES
 --#
 
 CREATE TABLE servico(
-	id_servico serial,
+	id_servico serial PRIMARY KEY,
 	nm_servico varchar(30),
 	nm_coordenador varchar (100),
-	nr_limite_pessoas int DEFAULT 0,
-	PRIMARY KEY(id_servico)
+	nr_limite_pessoas int DEFAULT 0
 );
 --#
 INSERT INTO servico (nm_servico) VALUES
@@ -115,9 +112,8 @@ INSERT INTO servico (nm_servico) VALUES
 --#
 
 CREATE TABLE setor(
-	id_setor serial,
-	nm_setor varchar(30),
-	PRIMARY KEY(id_setor)
+	id_setor serial PRIMARY KEY,
+	nm_setor varchar(30)
 );
 --#
 INSERT INTO setor (nm_setor) VALUES
@@ -133,11 +129,10 @@ INSERT INTO setor (nm_setor) VALUES
 --#
 
 CREATE TABLE familia(
-	id_familia serial,
+	id_familia serial PRIMARY KEY,
 	nm_familia varchar(50),
 	cd_familia char(1),
-	nm_responsavel varchar(100),
-	PRIMARY KEY(id_familia)
+	nm_responsavel varchar(100)
 );
 --#
 INSERT INTO familia (nm_familia, cd_familia) VALUES
@@ -161,15 +156,14 @@ INSERT INTO tipo_inscricao (cd_tipo, nm_tipo) VALUES
 	('p', 'Participante'),
 	('s', 'Serviço'),
 	('v', 'Comunidade de Vida'),
-	('t', 'Terceirizado'),
-	('i', 'Visitante');
+	('e', 'Especial');
 
 --#
 
 CREATE SEQUENCE pessoa_id_seq START WITH {id_pessoa_inicial};
 --#
 CREATE TABLE pessoa (
-	id_pessoa int DEFAULT nextval('pessoa_id_seq'),
+	id_pessoa int DEFAULT nextval('pessoa_id_seq') PRIMARY KEY,
 	cd_tipo char(1) NOT NULL,
 	id_status int REFERENCES status(id_status),
 	nm_pessoa varchar(200) NOT NULL CHECK (nm_pessoa <> ''),
@@ -183,8 +177,8 @@ CREATE TABLE pessoa (
 	nr_rg varchar(20),
 	nr_telefone varchar(20),
 	ds_email varchar(100),
-	id_familia int,
-	id_servico int,
+	id_familia int REFERENCES familia(id_familia),
+	id_servico int REFERENCES servico(id_servico),
 	id_setor int REFERENCES setor(id_setor),
 	bl_seminario boolean,
 	bl_alimentacao boolean,
@@ -204,10 +198,7 @@ CREATE TABLE pessoa (
 	nr_cracha int DEFAULT 0,
 	dt_inscricao timestamp without time zone DEFAULT localtimestamp,
 	dt_alteracao timestamp without time zone,
-	nr_boleto int DEFAULT 0,
-	PRIMARY KEY(id_pessoa),
-	FOREIGN KEY (id_familia) REFERENCES familia(id_familia),
-	FOREIGN KEY (id_servico) REFERENCES servico(id_servico)
+	nr_boleto int DEFAULT 0
 );
 --#
 ALTER SEQUENCE pessoa_id_seq OWNED BY pessoa.id_pessoa;
@@ -215,7 +206,7 @@ ALTER SEQUENCE pessoa_id_seq OWNED BY pessoa.id_pessoa;
 --#
 
 CREATE TABLE usuario(
-	id_usuario serial,
+	id_usuario serial PRIMARY KEY,
 	nm_usuario varchar(20),
 	pw_usuario varchar(64),
 	cd_permissao int,
@@ -225,8 +216,7 @@ CREATE TABLE usuario(
 	-- COORD. INSCR. 011011 | 27  | 1B
 	-- CAIXAS        000001 | 1   | 01
 	-- SECRETARIA    011100 | 28  | 1C
-	dt_ultimo_login timestamp without time zone,
-	PRIMARY KEY(id_usuario)
+	dt_ultimo_login timestamp without time zone
 );
 --#
 INSERT INTO usuario (nm_usuario, pw_usuario, cd_permissao) VALUES ('{nm_usuario}', md5('{pw_usuario}'), 63);
@@ -234,17 +224,14 @@ INSERT INTO usuario (nm_usuario, pw_usuario, cd_permissao) VALUES ('{nm_usuario}
 --#
 
 CREATE TABLE pagamento(
-	id_pgto serial,
-	id_pessoa int,
+	id_pgto serial PRIMARY KEY,
+	id_pessoa int REFERENCES pessoa(id_pessoa),
 	cd_tipo_pgto varchar(2),
 	nr_a_pagar numeric(5,2),
 	nr_pago numeric(5,2),
 	nr_desconto numeric(5,2),
 	dt_pgto timestamp without time zone DEFAULT localtimestamp,
-	id_usuario int,
-	PRIMARY KEY(id_pgto),
-	FOREIGN KEY (id_pessoa) REFERENCES pessoa(id_pessoa),
-	FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+	id_usuario int REFERENCES usuario(id_usuario)
 );
 
 --#
@@ -302,19 +289,17 @@ CREATE TABLE portaria
 
 CREATE TABLE pesquisa_divulgacao
 (
-  id_registro serial,
-  id_meio int,
-  nm_obs varchar(200),
-  PRIMARY KEY (id_registro)
+	id_registro serial PRIMARY KEY,
+	id_meio int,
+	nm_obs varchar(200)
 );
 
 --#
 
 CREATE TABLE meio_divulgacao
 (
-  id_meio serial,
-  nm_meio varchar(50),
-  PRIMARY KEY (id_meio)
+	id_meio serial PRIMARY KEY,
+	nm_meio varchar(50)
 );
 --#
 INSERT INTO meio_divulgacao (nm_meio) VALUES

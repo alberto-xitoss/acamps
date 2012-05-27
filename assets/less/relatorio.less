@@ -1,0 +1,25 @@
+@import "bootstrap/reset.less";
+@import "bootstrap/variables.less";
+@import "bootstrap/mixins.less";
+@import "bootstrap/scaffolding.less";
+@import "bootstrap/type.less";
+@tableBorder: #BBB;
+@import "bootstrap/tables.less";
+
+body{
+	width: 800px;
+}
+@media print {
+	body { margin: 0; }
+}
+@media screen {
+	body { margin: 20px; }
+}
+h1{	font-size: 22px; }
+h2{ font-size: 18px; }
+h3{ font-size: 14px; }
+table{
+	.table();
+	.table-bordered();
+	.table-condensed();
+}

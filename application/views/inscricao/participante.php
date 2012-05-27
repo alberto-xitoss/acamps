@@ -1,4 +1,4 @@
-﻿<h2>Formulário de Inscrição</h2>
+<h2>Formulário de Inscrição</h2>
 
 <?php if(isset($erro) && $erro): ?>
 	<div class="alert alert-error">
@@ -137,7 +137,7 @@
 	<label for="nm_alergia_alimento"  class="control-label">Você tem alergia a alimentos?</label>
 	<div class="controls">
 		<input type="text" class="somenteAlfanumerico span5" id="nm_alergia_alimento" value="" name="nm_alergia_alimento"/>
-		<p class="help-box">Se não tiver, deixe este campo em branco</p>
+		<p class="help-block">Se não tiver, deixe este campo em branco</p>
 	</div>
 </div>
 <hr/>

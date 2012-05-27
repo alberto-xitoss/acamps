@@ -18,8 +18,7 @@
                         <li><?php echo anchor('admin/inscrever/participante', 'Inscrever Participante'); ?></li>
                         <li><?php echo anchor('admin/inscrever/servico', 'Inscrever Serviço'); ?></li>
                         <li><?php echo anchor('admin/inscrever/cv', 'Inscrever Comunidade de Vida'); ?></li>
-                        <?php /*<li class="disabled">Serviço/Liberação</li>
-                        <li class="disabled">Caravanas</li>*/ ?>
+                        <li><?php echo anchor('admin/inscrever/especial', 'Inscrição Especial'); ?></li>
                     </ul>
                 </li>
                 <?php if($this->session->userdata('permissao') & SECRETARIA): ?>
@@ -29,8 +28,9 @@
 							<li><?php echo anchor('admin/etiqueta/s','Etiquetas - Serviço') ?></li>
 							<li><?php echo anchor('admin/etiqueta/cv','Etiquetas - Comunidade de Vida') ?></li>
 							<li><?php echo anchor('admin/etiqueta/amigos',"Etiquetas - Amigos do Acamp's") ?></li>
+							<li><?php echo anchor('admin/etiqueta/e',"Etiquetas - Especial") ?></li>
+							<li><?php echo anchor('admin/etiqueta/visitante',"Etiquetas - Visitantes") ?></li>
 							<li><?php echo anchor('admin/secretaria/historico', 'Histórico de Impressão'); ?></li>
-							<?php /*<li><?php echo anchor('admin/secretaria/fotos', 'Baixar Fotos', 'target="_blank"') ?></li>*/ ?>
 						</ul>
 					</li>
                 <?php endif ?>

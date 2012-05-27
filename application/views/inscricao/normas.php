@@ -1,6 +1,6 @@
 <div id="info">
 <h2>Informações Gerais</h2>
-<p>O <strong>Acampamento de Jovens Shalom</strong> é um evento promovido pelo <strong>Projeto Juventude para Jesus</strong> da <strong>Comunidade Católica Shalom</strong> que tem como objetivo a evangelização e uma opção sadia de lazer para a juventude. Contamos com uma intensa programação de atividades de lazer, cursos formativos e noites de diversão descontraída.</p>
+<p>O <strong>Acampamento de Jovens Shalom</strong> é um evento promovido pelo <strong>Projeto Juventude para Jesus</strong> da <strong>Comunidade Católica Shalom</strong> que tem como objetivo a evangelização e uma opção sadia de lazer para a juventude. Contamos com uma intensa programação de atividades de lazer, cursos formativos e noites descontraídas de diversão.</p>
 <p>A <strong><?php echo $edicao ?>&ordf; edição do Acamp's</strong> acontecerá dos dias <strong><?php echo $periodo ?></strong>, na <strong>fazenda Guarany em Pacajus</strong>, a 50km de Fortaleza.</p>
 <?php if($tipo=='servico'): ?>
 <p class="alert alert-block">Esta é uma <strong>pré-inscrição</strong>. Antes de pagar e concluir sua inscrição será necessária a <strong>aprovação do coordenador</strong> da equipe na qual você se inscrever.</p>
@@ -8,7 +8,7 @@
 <p class="alert">Não deixe de ler atentamente<strong> TODAS </strong>as informações abaixo</p>
 <h3>O que preciso para me inscrever?</h3>
 <ul>
-	<li>Você poderá preencher seus dados no formulário da página a seguir, imprimir o boleto e pagar no estande do Acamp's, na rua Maria Tomásia, n&ordm; 72, Aldeota, Fortaleza, Ceará.</li>
+	<li>Você irá preencher seus dados no formulário da página a seguir, imprimir o boleto e pagar no estande do Acamp's, na rua Maria Tomásia, n&ordm; 72, Aldeota, Fortaleza, Ceará.</li>
 	<li>Quem não se inscrever pela internet deve levar uma fotografia 3x4 recente (para o crachá).</li>
 	<li>Apresentar a carteira de identidade ou certidão de nascimento do participante.</li>
 	<li>Valor correspondente à taxa de inscrição.</li>

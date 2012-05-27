@@ -13,7 +13,7 @@ class Config_model extends CI_Model
 	/*
 	 * Recupera todas as variáveis de configuração salvas no banco de dados
 	*/
-	function get_all()
+	public function get_all()
 	{
 		$query = $this->db->get($this->table);
 		
@@ -27,7 +27,7 @@ class Config_model extends CI_Model
 	/*
 	 * Recupera uma das variáveis de configuração salvas no banco de dados
 	*/
-	function get($nm_config)
+	public function get($nm_config)
 	{
 		$query = $this->db->get_where($this->table, array('nm_config', $nm_config));
 		
@@ -41,7 +41,7 @@ class Config_model extends CI_Model
 		}
 	}
 	
-	function onibus($id_pessoa = 0)
+	public function onibus($id_pessoa = 0)
 	{
 		if($id_pessoa)
 		{
@@ -79,7 +79,7 @@ class Config_model extends CI_Model
 		}
 	}
 	
-	function remover_onibus($id_pessoa = 0)
+	public function remover_onibus($id_pessoa = 0)
 	{
 		if($id_pessoa)
 		{

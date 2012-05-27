@@ -2,22 +2,6 @@
 
 /*
 |--------------------------------------------------------------------------
-| Parâmetros para salvar fotos
-|--------------------------------------------------------------------------
-|
-| 
-|
-*/
-$config['upload'] = array(
-    'upload_path'   => str_replace('\\','/',FCPATH).'fotos/', // FCPATH é a pasta onde está o arquivo index.php
-    'allowed_types' => 'bmp|gif|jpg|png',
-    'max_size'      => '4096', // 4MiB
-    'max_width'     => '4096',
-    'max_height'    => '4096'
-);
-
-/*
-|--------------------------------------------------------------------------
 | Caminho para a pasta das imagens dos códigos de barras
 |--------------------------------------------------------------------------
 |
@@ -26,8 +10,7 @@ $config['upload'] = array(
 */
 
 $config['barcode_path'] = str_replace('\\','/',FCPATH).'barcode/';
-//define('CACHE_PATH', str_replace('\\','/',FCPATH).'cache/');
-$config['CACHE_PATH'] = str_replace('\\','/',FCPATH).'cache/';
+$config['cache_path'] = str_replace('\\','/',FCPATH).'cache/';
 
 /*
 |--------------------------------------------------------------------------
@@ -67,6 +50,23 @@ $config['img_url'] = $config['assets_url'].'image/';
 
 /*
 |--------------------------------------------------------------------------
+| Parâmetros para salvar fotos
+|--------------------------------------------------------------------------
+|
+| 
+|
+*/
+
+$config['upload'] = array(
+    'upload_path'   => str_replace('\\','/',FCPATH).$config['fotos_dir'], // FCPATH é a pasta onde está o arquivo index.php
+    'allowed_types' => 'bmp|gif|jpg|png',
+    'max_size'      => '8192', // 8MiB
+    'max_width'     => '4096',
+    'max_height'    => '4096'
+);
+
+/*
+|--------------------------------------------------------------------------
 | Configuração do FPDF
 |--------------------------------------------------------------------------
 |
@@ -75,8 +75,7 @@ $config['img_url'] = $config['assets_url'].'image/';
 */
 
 if(ENVIRONMENT == 'production'){
-	$config['fpdf_fontpath'] = $_SERVER['DOCUMENT_ROOT'].'/fpdf/font/';
+	define('FPDF_FONTPATH', $_SERVER['DOCUMENT_ROOT'].'/fpdf/font/');
 }else{
-	$config['fpdf_fontpath'] = $_SERVER['DOCUMENT_ROOT'].'/acamps/assets/font/';
+	define('FPDF_FONTPATH', $_SERVER['DOCUMENT_ROOT'].'/acamps/assets/font/');
 }
-

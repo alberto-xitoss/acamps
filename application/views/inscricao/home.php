@@ -30,7 +30,7 @@
 		<div class="column-3">
 			<h2>Realização</h2>
 			<div id="pjj" class="hide-text pull-left">Projeto Juventude para Jesus</div>
-			<div id="comshalom" class="hide-text"><?php echo anchor('http://www.comshalom.org/po/', 'Comunidade Católica Shalom', 'target="_blank"'); ?></div>
+			<div id="comshalom" class="hide-text pull-left"><?php echo anchor('http://www.comshalom.org/po/', 'Comunidade Católica Shalom', 'target="_blank"'); ?></div>
 		</div>
 	</div>
 </div>

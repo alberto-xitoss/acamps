@@ -6,6 +6,7 @@
 		<exec command="lessc less/inscricao.less > css/inscricao.css --yui-compress"/>
 		<exec command="lessc less/admin.less > css/admin.css --yui-compress"/>
 		<exec command="lessc less/boleto.less > css/boleto.css --yui-compress"/>
+		<exec command="lessc less/relatorio.less > css/relatorio.css --yui-compress"/>
 	</target>
 	
 	<target name="minify.js">

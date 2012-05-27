@@ -35,17 +35,17 @@
 	
 	td:last-child{text-align: right;} /* Coluna com o tipo de inscrição e a cor da família */
 	
-	.id-p, .id-s, .id-v{
+	.id-p, .id-s, .id-v, .id-e{
 		margin: 0 5px 0 -5px;
 		padding: 5px;
 		.border-radius(2px);
 	}
 }
 	.id-s.status-2 {background-color: spin(lighten(@red, 35%), 5);} /* Vermelho */
-	.status-1, .id-v.status-2 {background-color: spin(lighten(@yellow, 24%), 8);} /* Amarelo */
+	.status-1, .id-v.status-2, .id-e.status-2 {background-color: spin(lighten(@yellow, 24%), 8);} /* Amarelo */
 	.status-3 {background-color: saturate(spin(lighten(@green, 32%), -17), 40%);} /* Verde */
 	
-	.tipo-p, .tipo-s, .tipo-v{
+	.tipo-p, .tipo-s, .tipo-v, .tipo-e{
 		background: #fff;
 		border: 1px solid lighten(@black, 70%);
 		.box-shadow(0 1px 2px rgba(0,0,0, 0.2));

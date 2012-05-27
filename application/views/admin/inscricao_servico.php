@@ -1,4 +1,4 @@
-<div id="form" class="wrap">
+<div class="form">
 <h2>Formulário de Inscrição > Serviço</h2>
     <?php if(isset($erro) && $erro): ?>
         <div class="alert alert-error alert-block">
@@ -47,7 +47,7 @@
 	</div>
 	<!-- Transporte -->
 	<div class="control-group">
-		<label class="control-label">Você precisará de transporte para o acampamento?</label>
+		<label class="control-label">Precisará de transporte para o Acampamento?</label>
 		<div class="controls">
 			<label for="bl_transporte_s"  class="radio"><input type="radio" id="bl_transporte_s" value="1" name="bl_transporte" <?php if(set_radio('bl_transporte', '1')) echo 'checked' ?>>Sim</label>
 			<label for="bl_transporte_n"  class="radio"><input type="radio" id="bl_transporte_n" value="0" name="bl_transporte" <?php if(set_radio('bl_transporte', '0')) echo 'checked' ?>>Não</label>
@@ -77,7 +77,7 @@
 <hr/>
 <!-- Alimentação -->
 <div class="control-group">
-	<label class="control-label">Você utilizará a alimentação fornecida por nós?</label>
+	<label class="control-label">Utilizará a alimentação fornecida por nós?</label>
 	<div class="controls">
 		<label for="bl_alimentacao_s"  class="radio">
 			<input type="radio" id="bl_alimentacao_s" value="1" name="bl_alimentacao" <?php if(set_radio('bl_alimentacao', '1')) echo 'checked' ?>>Sim
@@ -89,7 +89,7 @@
 </div>
 <!-- Barracão -->
 <div class="control-group">
-	<label class="control-label">Você utilizará uma das barracas coletivas ou uma barraca particular?</label>
+	<label class="control-label">Utilizará uma das barracas coletivas ou uma barraca particular?</label>
 	<div class="controls">
 		<label for="bl_barracao_s"  class="radio">
 			<input type="radio" id="bl_barracao_s" value="1" name="bl_barracao" <?php if(set_radio('bl_barracao', '1')) echo 'checked' ?>>Barraca Coletiva
@@ -102,14 +102,14 @@
 <hr/>
 <!-- ALergia a Remédios -->
 <div class="control-group">
-	<label for="nm_alergia_remedio"  class="control-label">Você tem alergia a remédios?</label>
+	<label for="nm_alergia_remedio"  class="control-label">Tem alergia a remédios?</label>
 	<div class="controls">
 		<input type="text" class="span5" id="nm_alergia_remedio" value="" name="nm_alergia_remedio"/>
 	</div>
 </div>
 <!-- Alergia a Alimentos -->
 <div class="control-group">
-	<label for="nm_alergia_alimento"  class="control-label">Você tem alergia a alimentos?</label>
+	<label for="nm_alergia_alimento"  class="control-label">Tem alergia a alimentos?</label>
 	<div class="controls">
 		<input type="text" class="span5" id="nm_alergia_alimento" value="" name="nm_alergia_alimento"/>
 	</div>
@@ -162,7 +162,7 @@
 <hr>
 <!-- Foto -->
 <div class="control-group">
-	<label for="ds_foto" class="control-label">Envie sua foto para o seu crachá</label>
+	<label for="ds_foto" class="control-label">Envie a foto para o crachá</label>
 	<div class="controls">
 		<input type="file" size="32" class="obrigatorio" value="<?php echo set_value('ds_foto') ?>" name="ds_foto" id="ds_foto">
 	</div>

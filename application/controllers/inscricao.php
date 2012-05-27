@@ -1,6 +1,6 @@
-<?php
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Inscricao extends MY_Controller{
+class Inscricao extends CI_Controller{
 
     public $template = 'inscricao_template';
     public $title = 'Acampamento de Jovens Shalom';
@@ -32,12 +32,12 @@ class Inscricao extends MY_Controller{
 		
 		$inicio = DateTime::createFromFormat('j/n/Y', $this->config->item('acamps_inicio'));
 		$fim = DateTime::createFromFormat('j/n/Y', $this->config->item('acamps_fim'));
-		$prazo = $inicio;
+		$prazo = clone $inicio;
 		$prazo->sub(new DateInterval('P2D'));
 		
-		$viewdata['prazo_inscricao'] = $prazo->format('j/n');
-		$viewdata['inicio'] = $inicio->format('j/n');
-		$viewdata['fim'] = $fim->format('j/n');
+		$viewdata['prazo_inscricao'] = $prazo->format('j/n/Y');
+		$viewdata['inicio'] = $inicio->format('j/n/Y');
+		$viewdata['fim'] = $fim->format('j/n/Y');
 		
         $this->load->view('inscricao/normas', $viewdata);
     }
@@ -342,7 +342,7 @@ class Inscricao extends MY_Controller{
 			// Bairro
             $this->form_validation->set_rules('ds_bairro', 'Bairro', 'trim|required');
 			// Cidade
-            $this->form_validation->set_rules('id_cidade','Cidade', 'required');
+            $this->form_validation->set_rules('id_cidade','Cidade', 'required|is_natural_no_zero');
             // Barracão
 			$this->form_validation->set_rules('bl_barracao','Utilizará o barracão?', 'required');
             

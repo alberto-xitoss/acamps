@@ -1,10 +1,10 @@
-﻿<?php
+<?php
 
 /*
  * Description of Dev
  *
  */
-class Dev extends MY_Controller {
+class Dev extends CI_Controller {
     
     public $template = 'admin_template';
     public $title = "Sistema Acamp's";

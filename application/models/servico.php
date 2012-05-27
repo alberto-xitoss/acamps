@@ -12,8 +12,7 @@ class Servico extends CI_Model{
 		if($id_servico == 0)
 			return false;
 		
-        $this->db->select('id_servico,nm_servico,nm_coordenador,nr_pessoas,nr_limite_pessoas');
-        //$this->db->where('id_missao', $this->config->item('missao'));
+        $this->db->select('id_servico,nm_servico,nm_coordenador,nr_limite_pessoas');
         $this->db->where('id_servico', $id_servico);
         $query = $this->db->get($this->table);
         
@@ -27,8 +26,7 @@ class Servico extends CI_Model{
     }
 
     public function listar(){
-        $this->db->select('id_servico, nm_servico, nm_coordenador, nr_limite_pessoas');
-        //$this->db->where('id_missao', $this->config->item('missao'));
+        $this->db->select('id_servico, nm_servico');
         $this->db->order_by("nm_servico", "asc");
         $query = $this->db->get($this->table);
 
@@ -47,7 +45,7 @@ class Servico extends CI_Model{
         
         if($query->num_rows() == 1){
             $row = $query->row();
-			return $row->id_amigos;
+			return $row->id_servico;
         }else{
             return false;
         }

@@ -1,6 +1,6 @@
 <?php
 
-class Setup extends MY_Controller
+class Setup extends CI_Controller
 {
 
 	function __construct()
@@ -11,7 +11,7 @@ class Setup extends MY_Controller
 	function index()
 	{
 		
-		// Por enquanto só é disponível para desenvolvimento
+		// Por enquanto sÃ³ Ã© disponÃ­vel para desenvolvimento
 		if(ENVIRONMENT != 'development')
 		{
 			show_404('');
@@ -33,7 +33,7 @@ class Setup extends MY_Controller
 			$this->setup_model->cria_tabelas($params);
 			
 		}catch(Exception $ex){
-			show_error('<p><strong>Erro na criação do banco</strong></p><p>'.$ex->getMessage().'</p>');
+			show_error('<p><strong>Erro na criaÃ§Ã£o do banco</strong></p><p>'.$ex->getMessage().'</p>');
 		}
 		
 		// Para o futuro:
