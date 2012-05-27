@@ -24,8 +24,8 @@ class Dev extends CI_Controller {
      */
     
     function log() {
-        // Autenticação
-        if(!$this->session->userdata('logado')){ // se NÃO está logado
+        // AutenticaÃ§Ã£o
+        if(!$this->session->userdata('logado')){ // se NÃƒO estÃ¡ logado
             redirect('admin/login');
             return;
         }
@@ -50,8 +50,8 @@ class Dev extends CI_Controller {
     }
     
     /**
-     * função limpar
-     * Muito cuidado com essa função. Zera a tabela de pessoas e as relacionadas.
+     * funÃ§Ã£o limpar
+     * Muito cuidado com essa funÃ§Ã£o. Zera a tabela de pessoas e as relacionadas.
     */
     function limpar(){
         //$this->load->model('pessoa_model');

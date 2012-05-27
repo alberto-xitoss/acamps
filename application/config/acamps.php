@@ -1,34 +1,81 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /*
- * Configuração do Sistema Acamp's
- */
+|--------------------------------------------------------------------------
+| Caminho para a pasta das imagens dos códigos de barras
+|--------------------------------------------------------------------------
+|
+| 
+|
+*/
 
-$config['missao'] = MISSAO_ID;
-$config['missao_nome'] = MISSAO_NOME;
-$config['missao_dir'] = MISSAO_DIR;
+$config['barcode_path'] = str_replace('\\','/',FCPATH).'barcode/';
+$config['cache_path'] = str_replace('\\','/',FCPATH).'cache/';
 
-$config['modules_locations'] = array(
-	APPPATH.'modules/' => '../modules/',
-);
+/*
+|--------------------------------------------------------------------------
+| Diretório que contém as fotos dos inscritos
+|--------------------------------------------------------------------------
+|
+| 
+|
+*/
 
-// Parâmetros para salvar fotos
+$config['fotos_dir'] = 'fotos/';
+
+/*
+|--------------------------------------------------------------------------
+| Configurando assets
+|--------------------------------------------------------------------------
+|
+| 
+|
+*/
+
+$config['assets_url'] = 'http://'.$_SERVER['SERVER_NAME'].'/acamps/assets/';
+
+/*
+|--------------------------------------------------------------------------
+| Caminhos e URL do sistema de template
+|--------------------------------------------------------------------------
+|
+| 
+|
+*/
+
+$config['template_path'] = APPPATH.'templates/';
+$config['js_url'] = $config['assets_url'].'js/';
+$config['css_url'] = $config['assets_url'].'css/';
+$config['img_url'] = $config['assets_url'].'image/';
+
+/*
+|--------------------------------------------------------------------------
+| Parâmetros para salvar fotos
+|--------------------------------------------------------------------------
+|
+| 
+|
+*/
+
 $config['upload'] = array(
-    'upload_path'   => str_replace('\\','/',FCPATH).'fotos/', // FCPATH é a pasta onde está o arquivo index.php
+    'upload_path'   => str_replace('\\','/',FCPATH).$config['fotos_dir'], // FCPATH é a pasta onde está o arquivo index.php
     'allowed_types' => 'bmp|gif|jpg|png',
-    'max_size'      => '4096', // 4MiB
+    'max_size'      => '8192', // 8MiB
     'max_width'     => '4096',
     'max_height'    => '4096'
 );
 
-// Caminho para a pasta das imagens dos códigos de barras
-$config['barcode_path'] = str_replace('\\','/',FCPATH).'barcode/';
+/*
+|--------------------------------------------------------------------------
+| Configuração do FPDF
+|--------------------------------------------------------------------------
+|
+| 
+|
+*/
 
-// Diretório que contém as fotos dos inscritos
-$config['fotos_dir'] = 'fotos/';
-
-// Caminhos e URL do sistema de template
-$config['template_path'] = APPPATH.'templates/';
-$config['js_url'] = ASSETS_URL.'js/';
-$config['css_url'] = ASSETS_URL.'css/';
-$config['img_url'] = ASSETS_URL.'image/';
+if(ENVIRONMENT == 'production'){
+	define('FPDF_FONTPATH', $_SERVER['DOCUMENT_ROOT'].'/fpdf/font/');
+}else{
+	define('FPDF_FONTPATH', $_SERVER['DOCUMENT_ROOT'].'/acamps/assets/font/');
+}

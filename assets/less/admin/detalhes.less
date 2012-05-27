@@ -1,0 +1,118 @@
+/*
+
+	Página de Detalhes
+
+*/
+#detalhes{
+	position: relative;
+}
+#cabecalho
+{
+	border-bottom: 1px solid #C8C9CA;
+	height: 160px;
+	padding: 20px 16px;
+	position: relative;
+	
+	h1
+	{
+		font-size: 18px;
+		line-height: 24px;
+		margin-bottom: 9px;
+	}
+	
+	.btn
+	{
+		text-align: left;
+	}
+}
+#foto
+{
+	float: left;
+	margin-right: 18px;
+}
+.comandos
+{
+	position: absolute;
+	top: 14px;
+	right: 14px;
+	bottom: 14px;
+}
+.liberacao, .pagamento, .boleto, .excluir
+{
+	display: block;
+	margin-bottom: 10px;
+	padding: 5px 0 5px 25px;
+	//text-shadow: 0px 1px 0px #fff;
+	width: 140px;
+}
+.excluir
+{
+	font-size: 11px;
+	padding: 1px 0 1px 20px; margin: 0;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 88px;
+}
+.liberacao:before, .pagamento:before, .boleto:before, .excluir:before
+{
+	content: ' ';
+	display: block;
+	height:16px;
+	width:16px;
+	position: absolute;
+	left: 5px;
+}
+.liberacao:before
+{
+	background: url('../image/icon-lib-16.png') no-repeat;
+}
+.pagamento:before
+{
+	background: url('../image/icon-money-16.png') no-repeat;
+}
+.boleto:before
+{
+	background: url('../image/icon-printer-16.png') no-repeat;
+}
+.excluir:before
+{
+	background: url('../image/icon-x-10.png') 1px 4px no-repeat;
+}
+span.pagamento, span.liberacao /* Se for <span>, ao invés de <a>, quer dizer que está desabilitado */
+{
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
+	filter: alpha(opacity=40);
+	-moz-opacity: 0.4;
+	-khtml-opacity: 0.4;
+	opacity: 0.4;
+}
+#dados
+{
+	th{ text-align: right; }
+
+	th, td
+	{
+		padding-top: 4px;
+		padding-bottom: 4px;
+		vertical-align: middle;
+	}
+	
+	input[type=text][disabled], select[disabled]
+	{
+		background: transparent;
+		border: none;
+		margin: 1px;
+		box-shadow: none;
+		cursor: default;
+	}
+}
+#ativar-correcao, #reset
+{
+	margin: 0 16px;
+}
+#popup
+{
+	width: 300px;
+	margin: -150px 0 0 -150px;
+}

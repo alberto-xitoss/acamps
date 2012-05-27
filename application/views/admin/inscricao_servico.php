@@ -1,318 +1,180 @@
-<div id="form" class="wrap">
+<div class="form">
 <h2>Formulário de Inscrição > Serviço</h2>
     <?php if(isset($erro) && $erro): ?>
-        <div class="erro_onsubmit">
+        <div class="alert alert-error alert-block">
         <?php echo validation_errors(); ?>
         </div>
-        <br/>
     <?php endif; ?>
-<?php echo form_open_multipart('admin/inscrever/servico'); ?>
+<?php echo form_open_multipart('admin/inscrever/servico', array('class'=>'form-horizontal')); ?>
 
 <div class="importante">
-    <p>
-    <?php echo form_label('Nome Completo','nm_pessoa',array('class'=>'campo'));
-        echo form_input(array(
-            'name'=>'nm_pessoa',
-            'id'=>'nm_pessoa',
-            'value'=> set_value('nm_pessoa'),
-            'class'=>'obrigatorio somenteLetras'
-        ));
-    ?>
-    </p>
-	<p>
-    <?php echo form_label('Nome no Crachá','nm_cracha',array('class'=>'campo'));
-		echo form_input(array(
-            'name'=>'nm_cracha',
-            'id'=>'nm_cracha',
-            'value'=> set_value('nm_cracha'),
-        ));
-    ?>
-    </p>
-	<p>
-    <?php echo form_label('Sexo','',array('class'=>'campo'));
-	echo form_radio(array(
-        'name'=>'ds_sexo',
-        'id'=>'ds_sexo_h',
-        'value'=>'h',
-        'checked'=> set_radio('ds_sexo', 'h'),
-    ));
-    echo form_label('Homem','ds_sexo_h');
-    echo nbs(7);
-    echo form_radio(array(
-        'name'=>'ds_sexo',
-        'id'=>'ds_sexo_m',
-        'value'=>'m',
-        'checked'=> set_radio('ds_sexo', 'm'),
-    ));
-    echo form_label('Mulher','ds_sexo_m');
-    ?>
-    </p>
-	<p>
-    <?php echo form_label('RG','nr_rg',array('class'=>'campo'));
-		echo form_input(array(
-            'name'=>'nr_rg',
-            'id'=>'nr_rg',
-            'value'=> set_value('nr_rg'),
-        ));
-    ?>
-    </p>
-	<p>
-    <?php echo form_label('Cidade','id_cidade',array('class'=>'campo'));
-	echo form_dropdown('id_cidade', $cidades, $this->input->post('id_cidade'));
-    ?>
-    </p>
-	<p>
-    <?php echo form_label('Serviço','',array('class'=>'campo'));
-    echo form_dropdown('id_servico', $servicos, $this->input->post('id_servico'));
-    ?>
-    </p>
+	<!-- Nome Completo -->
+	<div class="control-group">
+		<label for="nm_pessoa" class="control-label">Nome Completo</label>
+		<div class="controls"><input type="text" class="span5" id="nm_pessoa" value="<?php echo set_value('nm_pessoa') ?>" name="nm_pessoa"></div>
+	</div>
+	<!-- Nome no Crachá -->
+	<div class="control-group">
+		<label for="nm_cracha" class="control-label">Nome no Crachá</label>
+		<div class="controls"><input type="text" class="span5" id="nm_cracha" value="<?php echo set_value('nm_cracha') ?>" name="nm_cracha"></div>
+	</div>
+	<!-- Sexo -->
+	<div class="control-group">
+		<label class="control-label">Sexo</label>
+		<div class="controls">
+			<label for="ds_sexo_h" class="radio">
+				<input type="radio" id="ds_sexo_h" value="h" name="ds_sexo" <?php if(set_radio('ds_sexo', 'h')) echo 'checked' ?>>Homem
+			</label>
+			<label for="ds_sexo_m" class="radio">
+				<input type="radio" id="ds_sexo_m" value="m" name="ds_sexo" <?php if(set_radio('ds_sexo', 'm')) echo 'checked' ?>>Mulher
+			</label>
+		</div>
+	</div>
+	<!-- RG -->
+	<div class="control-group">
+		<label for="nr_rg" class="control-label">RG</label>
+		<div class="controls"><input type="text" class="span2" id="nr_rg" value="<?php echo set_value('nr_rg') ?>" name="nr_rg"></div>
+	</div>
+	<!-- Cidade -->
+	<div class="control-group">
+		<label for="id_cidade" class="control-label">Cidade</label>
+		<div class="controls"><?php echo form_dropdown('id_cidade', $cidades, $this->input->post('id_cidade')); ?></div>
+	</div>
+	<!-- Serviço -->
+	<div class="control-group">
+		<label for="id_servico" class="control-label">Serviço</label>
+		<div class="controls"><?php echo form_dropdown('id_servico', $servicos, $this->input->post('id_servico')); ?></div>
+	</div>
+	<!-- Transporte -->
+	<div class="control-group">
+		<label class="control-label">Precisará de transporte para o Acampamento?</label>
+		<div class="controls">
+			<label for="bl_transporte_s"  class="radio"><input type="radio" id="bl_transporte_s" value="1" name="bl_transporte" <?php if(set_radio('bl_transporte', '1')) echo 'checked' ?>>Sim</label>
+			<label for="bl_transporte_n"  class="radio"><input type="radio" id="bl_transporte_n" value="0" name="bl_transporte" <?php if(set_radio('bl_transporte', '0')) echo 'checked' ?>>Não</label>
+		</div>
+	</div>
 </div>
-	<p>
-    <?php echo form_label('Data de Nascimento','dt_nascimento',array('class'=>'campo'));
-	echo form_input(array(
-        'name'=>'dt_nascimento',
-        'id'=>'dt_nascimento',
-        'value'=> set_value('dt_nascimento'),
-    ));
-    ?>
-    </p>
-    <p>
-    <?php echo form_label('E-mail','ds_email',array('class'=>'campo'));
-	echo form_input(array(
-        'name'=>'ds_email',
-        'id'=>'ds_email',
-        'value'=> set_value('ds_email'),
-    ));
-    ?>
-    </p>
-    <p>
-    <?php echo form_label('Telefone','nr_telefone',array('class'=>'campo'));
-	echo form_input(array(
-        'name'=>'nr_telefone',
-        'id'=>'nr_telefone',
-        'value'=> set_value('nr_telefone'),
-    ));
-    ?>
-    </p>
-	
-    <hr/>
-	
-	<p>
-    <?php echo form_label('Alimentação?','',array('class'=>'campo'));
-    echo form_radio(array(
-        'name'=>'bl_alimentacao',
-        'id'=>'bl_alimentacao_s',
-        'value'=>'1',
-        'checked'=> set_radio('bl_alimentacao', '1'),
-    ));
-    echo form_label('Sim','bl_alimentacao_s');
-    echo nbs(5);
-    echo form_radio(array(
-        'name'=>'bl_alimentacao',
-        'id'=>'bl_alimentacao_n',
-        'value'=>'0',
-        'checked'=> set_radio('bl_alimentacao', '0'),
-    ));
-    echo form_label('Não','bl_alimentacao_n');
-    ?>
-    </p>
-    <p>
-    <?php echo form_label('Utilizará o barracão?','',array('class'=>'campo'));
-	echo form_radio(array(
-        'name'=>'bl_barracao',
-        'id'=>'bl_barracao_s',
-        'value'=>'1',
-        'checked'=> set_radio('bl_barracao', '1'),
-    ));
-    echo form_label('Sim','bl_barracao_s');
-    echo nbs(8);
-    echo form_radio(array(
-        'name'=>'bl_barracao',
-        'id'=>'bl_barracao_n',
-        'value'=>'0',
-        'checked'=> set_radio('bl_barracao', '0'),
-    ));
-    echo form_label('Não','bl_barracao_n');
-    ?>
-    </p>
-    <p>
-    <?php echo form_label('Precisará de transporte do acampamento?','',array('class'=>'campo'));
-	echo form_radio(array(
-        'name'=>'bl_transporte',
-        'id'=>'bl_transporte_s',
-        'value'=>'1',
-        'checked'=> set_radio('bl_transporte', '1'),
-    ));
-    echo form_label('Sim','bl_transporte_s');
-    echo nbs(5);
-    echo form_radio(array(
-        'name'=>'bl_transporte',
-        'id'=>'bl_transporte_n',
-        'value'=>'0',
-        'checked'=> set_radio('bl_transporte', '0'),
-    ));
-    echo form_label('Não','bl_transporte_n');
-    ?>
-    </p>
-    
-	<hr/>
-	
-    <p>
-    <?php echo form_label('Você tem alergia a remédios?','',array('class'=>'campo'));
-	echo form_radio(array(
-        'name'=>'bl_alergia_remedio',
-        'id'=>'bl_alergia_remedio_s',
-        'value'=>'1',
-        'checked'=> set_radio('bl_alergia_remedio', '1'),
-    ));
-    echo form_label('Sim','bl_alergia_remedio_s');
-    echo nbs(5);
-    echo form_radio(array(
-        'name'=>'bl_alergia_remedio',
-        'id'=>'bl_alergia_remedio_n',
-        'value'=>'0',
-        'checked'=> set_radio('bl_alergia_remedio', '0'),
-    ));
-    echo form_label('Não','bl_alergia_remedio_n');
-    ?>
-    </p>
-    <p>
-    <?php echo form_label('Qual?','nm_alergia_remedio',array('class'=>'campo'));
-	echo form_input(array(
-        'name'=>'nm_alergia_remedio',
-        'id'=>'nm_alergia_remedio',
-        'value'=> set_value('nm_alergia_remedio'),
-    ));
-    ?>
-    </p>
-    <p>
-    <?php echo form_label('Você tem alergia a alimentos?','',array('class'=>'campo'));
-	echo form_radio(array(
-        'name'=>'bl_alergia_alimento',
-        'id'=>'bl_alergia_alimento_s',
-        'value'=>'1',
-        'checked'=> set_radio('bl_alergia_alimento', '1'),
-    ));
-    echo form_label('Sim','bl_alergia_alimento_s');
-    echo nbs(5);
-    echo form_radio(array(
-        'name'=>'bl_alergia_alimento',
-        'id'=>'bl_alergia_alimento_n',
-        'value'=>'0',
-        'checked'=> set_radio('bl_alergia_alimento', '0'),
-    ));
-    echo form_label('Não','bl_alergia_alimento_n');
-    ?>
-    </p>
-    <p>
-    <?php echo form_label('Qual?','nm_alergia_alimento',array('class'=>'campo'));
-	echo form_input(array(
-        'name'=>'nm_alergia_alimento',
-        'id'=>'nm_alergia_alimento',
-        'value'=> set_value('nm_alergia_alimento'),
-    ));
-    ?>
-    </p>
-	
-	<hr/>
-	
-    <p>
-    <?php echo form_label('Endereço','ds_endereco',array('class'=>'campo'));
-	echo form_input(array(
-        'name'=>'ds_endereco',
-        'id'=>'ds_endereco',
-        'value'=> set_value('ds_endereco'),
-    ));
-    ?>
-    </p>
-    <p>
-    <?php echo form_label('CEP','nr_cep',array('class'=>'campo'));
-	echo form_input(array(
-        'name'=>'nr_cep',
-        'id'=>'nr_cep',
-        'value'=> set_value('nr_cep'),
-    ));
-    ?>
-    </p>
-    <p>
-    <?php echo form_label('Bairro','ds_bairro',array('class'=>'campo'));
-	echo form_input(array(
-        'name'=>'ds_bairro',
-        'id'=>'ds_bairro',
-        'value'=> set_value('ds_bairro'),
-    ));
-    ?>
-    </p>
-	
-    <hr/>
-	
-    <p>
-    <?php echo form_label('Telefone para Emergência (1)','nr_emergencia1',array('class'=>'campo'));
-    echo form_input(array(
-        'name'=>'nr_emergencia1',
-        'id'=>'nr_emergencia1',
-        'value'=> set_value('nr_emergencia1'),
-    ));
-    ?>
-    </p>
-    <p>
-    <?php echo form_label('Nome do Responsável (1)','nm_emergencia1',array('class'=>'campo'));
-    echo form_input(array(
-        'name'=>'nm_emergencia1',
-        'id'=>'nm_emergencia1',
-        'value'=> set_value('nm_emergencia1'),
-    ));
-    ?>
-    </p>
-    <p>
-    <?php echo form_label('Telefone para Emergência (2)</span>','nr_emergencia2',array('class'=>'campo'));
-    echo form_input(array(
-        'name'=>'nr_emergencia2',
-        'id'=>'nr_emergencia2',
-        'value'=> set_value('nr_emergencia2'),
-    ));
-    ?>
-    </p>
-    <p>
-    <?php echo form_label('Nome do Responsável (2)','nm_emergencia2',array('class'=>'campo'));
-    echo form_input(array(
-        'name'=>'nm_emergencia2',
-        'id'=>'nm_emergencia2',
-        'value'=> set_value('nm_emergencia2'),
-    ));
-    ?>
-    </p>
-    
-	<p>
-    <?php echo form_label('Enviar foto','ds_foto',array('class'=>'campo'));
-    echo form_upload(array(
-        'name'=>'ds_foto',
-        'value'=> set_value('ds_foto'),
-        'size'=>50
-    ));
-    ?>
-	</p>
-	<p class="center"><?php echo form_submit('confirmar','Confirmar'); ?></p>
-    <?php echo form_close();?>
+
+<!-- Data de Nascimento -->
+<div class="control-group">
+	<label for="dt_nascimento" class="control-label">Data de Nascimento</label>
+	<div class="controls"><input type="text" class="span2" id="dt_nascimento" value="<?php echo set_value('dt_nascimento') ?>" name="dt_nascimento"></div>
 </div>
+<!-- E-mail -->
+<div class="control-group">
+	<label for="ds_email"  class="control-label">E-mail</label>
+	<div class="controls">
+		<input type="text" id="ds_email" value="<?php echo set_value('ds_email') ?>" name="ds_email"/>
+	</div>
+</div>
+<!-- Telefone -->
+<div class="control-group">
+	<label for="nr_telefone"  class="control-label">Telefone</label>
+	<div class="controls">
+		<input type="text" class="span2" id="nr_telefone" value="<?php echo set_value('nr_telefone') ?>" name="nr_telefone">
+	</div>
+</div>
+<hr/>
+<!-- Alimentação -->
+<div class="control-group">
+	<label class="control-label">Utilizará a alimentação fornecida por nós?</label>
+	<div class="controls">
+		<label for="bl_alimentacao_s"  class="radio">
+			<input type="radio" id="bl_alimentacao_s" value="1" name="bl_alimentacao" <?php if(set_radio('bl_alimentacao', '1')) echo 'checked' ?>>Sim
+		</label>
+		<label for="bl_alimentacao_n"  class="radio">
+			<input type="radio" id="bl_alimentacao_n" value="0" name="bl_alimentacao" <?php if(set_radio('bl_alimentacao', '0')) echo 'checked' ?>>Não
+		</label>
+	</div>
+</div>
+<!-- Barracão -->
+<div class="control-group">
+	<label class="control-label">Utilizará uma das barracas coletivas ou uma barraca particular?</label>
+	<div class="controls">
+		<label for="bl_barracao_s"  class="radio">
+			<input type="radio" id="bl_barracao_s" value="1" name="bl_barracao" <?php if(set_radio('bl_barracao', '1')) echo 'checked' ?>>Barraca Coletiva
+		</label>
+		<label for="bl_barracao_n"  class="radio">
+			<input type="radio" id="bl_barracao_n" value="0" name="bl_barracao" <?php if(set_radio('bl_barracao', '0')) echo 'checked' ?>>Barraca Particular
+		</label>
+	</div>
+</div>
+<hr/>
+<!-- ALergia a Remédios -->
+<div class="control-group">
+	<label for="nm_alergia_remedio"  class="control-label">Tem alergia a remédios?</label>
+	<div class="controls">
+		<input type="text" class="span5" id="nm_alergia_remedio" value="" name="nm_alergia_remedio"/>
+	</div>
+</div>
+<!-- Alergia a Alimentos -->
+<div class="control-group">
+	<label for="nm_alergia_alimento"  class="control-label">Tem alergia a alimentos?</label>
+	<div class="controls">
+		<input type="text" class="span5" id="nm_alergia_alimento" value="" name="nm_alergia_alimento"/>
+	</div>
+</div>
+<hr/>
+<!-- Endereço -->
+<div class="control-group">
+	<label for="ds_endereco" class="control-label">Endereço</label>
+	<div class="controls"><input type="text" class="span5" id="ds_endereco" value="<?php echo set_value('ds_endereco') ?>" name="ds_endereco"></div>
+</div>
+<!-- CEP -->
+<div class="control-group">
+	<label for="nr_cep" class="control-label">CEP</label>
+	<div class="controls"><input type="text" class="span2" id="nr_cep" value="<?php echo set_value('nr_cep') ?>" name="nr_cep"></div>
+</div>
+<!-- Bairro -->
+<div class="control-group">
+	<label for="ds_bairro"  class="control-label">Bairro</label>
+	<div class="controls"><input type="text" id="ds_bairro" value="<?php echo set_value('ds_bairro') ?>" name="ds_bairro"></div>
+</div>
+<hr/>
+<!-- Telefone para Emergência (1) -->
+<div class="control-group">
+	<label for="nr_emergencia1"  class="control-label">Telefone para Emergência (1)</label>
+	<div class="controls">
+		<input type="text" class="span2" id="nr_emergencia1" value="<?php echo set_value('nr_emergencia1') ?>" name="nr_emergencia1">
+	</div>
+</div>
+<!-- Nome do Responsável (1) -->
+<div class="control-group">
+	<label for="nm_emergencia1"  class="control-label">Nome do Responsável (1)</label>
+	<div class="controls">
+		<input type="text" class="span5" id="nm_emergencia1" value="<?php echo set_value('nm_emergencia1') ?>" name="nm_emergencia1">
+	</div>
+</div>
+<!-- Telefone para Emergência (2) -->
+<div class="control-group">
+	<label for="nr_emergencia2" class="control-label">Telefone para Emergência (2)</label>
+	<div class="controls">
+		<input type="text" class="telefone span2" id="nr_emergencia2" value="<?php echo set_value('nr_emergencia2') ?>" name="nr_emergencia2">
+	</div>
+</div>
+<!-- Nome do Responsável (2) -->
+<div class="control-group">
+	<label class="control-label" for="nm_emergencia2">Nome do Responsável (2)</label>
+	<div class="controls">
+		<input type="text" class="somenteLetras span5" id="nm_emergencia2" value="<?php echo set_value('nm_emergencia2') ?>" name="nm_emergencia2">
+	</div>
+</div>
+<hr>
+<!-- Foto -->
+<div class="control-group">
+	<label for="ds_foto" class="control-label">Envie a foto para o crachá</label>
+	<div class="controls">
+		<input type="file" size="32" class="obrigatorio" value="<?php echo set_value('ds_foto') ?>" name="ds_foto" id="ds_foto">
+	</div>
+</div>
+<p align="center"><input type="submit" value="Confirmar" name="confirmar" class="btn btn-primary btn-large" /></p>
+<?php echo form_close();?>
+</div>
+
 <script>
 
-    $(function(){
-        
-        // Alterando obrigatoriedade dos campos de alergia
-        $('#bl_alergia_remedio_s').click(function(){
-            $('#nm_alergia_remedio').attr('disabled',false);
-        });
-        $('#bl_alergia_remedio_n').click(function(){
-            $('#nm_alergia_remedio').attr('disabled',true);
-        });
-        $('#bl_alergia_alimento_s').click(function(){
-            $('#nm_alergia_alimento').attr('disabled',false);
-        });
-        $('#bl_alergia_alimento_n').click(function(){
-            $('#nm_alergia_alimento').attr('disabled',true);
-        });
-		
+    $(function()
+	{
 		$('#dt_nascimento').datepicker({
 			yearRange: '1980:2000',
 			changeMonth: true,
@@ -321,7 +183,7 @@
 				$(this).change();
 			},
 			showOn: "button",
-			buttonImage: "<?php echo assets_url('image') ?>calendar.png",
+			buttonImage: "<?php echo $this->config->item('img_url'); ?>calendar.png",
 			buttonImageOnly: true
 		});
     })

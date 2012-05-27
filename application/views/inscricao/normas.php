@@ -1,22 +1,22 @@
 <div id="info">
 <h2>Informações Gerais</h2>
-<p>O <strong>Acampamento de Jovens Shalom</strong> é um evento promovido pelo <strong>Projeto Juventude para Jesus</strong> da <strong>Comunidade Católica Shalom</strong> que tem como objetivo a evangelização e uma opção sadia de lazer para a juventude. Contamos com uma intensa programação de atividades de lazer, cursos formativos e noites de diversão descontraída.</p>
-<p>A <strong>38&ordf; edição do Acamp's</strong> acontecerá dos dias <strong>16 a 21 de janeiro de 2012</strong>, na <strong>fazenda Guarany em Pacajus</strong>, a 50km de Fortaleza.</p>
+<p>O <strong>Acampamento de Jovens Shalom</strong> é um evento promovido pelo <strong>Projeto Juventude para Jesus</strong> da <strong>Comunidade Católica Shalom</strong> que tem como objetivo a evangelização e uma opção sadia de lazer para a juventude. Contamos com uma intensa programação de atividades de lazer, cursos formativos e noites descontraídas de diversão.</p>
+<p>A <strong><?php echo $edicao ?>&ordf; edição do Acamp's</strong> acontecerá dos dias <strong><?php echo $periodo ?></strong>, na <strong>fazenda Guarany em Pacajus</strong>, a 50km de Fortaleza.</p>
 <?php if($tipo=='servico'): ?>
-<p class="alert-message">Esta é uma <strong>pré-inscrição</strong>. Antes de pagar e concluir sua inscrição será necessária a <strong>aprovação do coordenador</strong> da equipe na qual você se inscrever.</p>
+<p class="alert alert-block">Esta é uma <strong>pré-inscrição</strong>. Antes de pagar e concluir sua inscrição será necessária a <strong>aprovação do coordenador</strong> da equipe na qual você se inscrever.</p>
 <?php endif; ?>
-<p class="alert-message">Não deixe de ler atentamente<strong> TODAS </strong>as informações abaixo</p>
+<p class="alert">Não deixe de ler atentamente<strong> TODAS </strong>as informações abaixo</p>
 <h3>O que preciso para me inscrever?</h3>
 <ul>
-	<li>Você poderá preencher seus dados no formulário da página a seguir, imprimir o boleto e pagar no estande do Acamp's, na rua Maria Tomásia, n&ordm; 72, Aldeota, Fortaleza, Ceará.</li>
+	<li>Você irá preencher seus dados no formulário da página a seguir, imprimir o boleto e pagar no estande do Acamp's, na rua Maria Tomásia, n&ordm; 72, Aldeota, Fortaleza, Ceará.</li>
 	<li>Quem não se inscrever pela internet deve levar uma fotografia 3x4 recente (para o crachá).</li>
 	<li>Apresentar a carteira de identidade ou certidão de nascimento do participante.</li>
 	<li>Valor correspondente à taxa de inscrição.</li>
 </ul>
-<div class='alert-message success'><p>O valor da inscrição é <strong><?php if($tipo=='participante') echo 'R$ 190,00'; else if($tipo=='servico') echo 'R$ 110,00'; ?></strong> (À vista ou cheque).</p>
-<p>O prazo para se inscrever é até o dia <strong>14/01/2012</strong>.</p></div>
+<div class='alert alert-block alert-success'><p>O valor da inscrição é <strong>R$ <?php echo $valor ?></strong> (À vista ou cheque).</p>
+<p>O prazo para se inscrever é até o dia <strong><?php echo $prazo_inscricao ?></strong>.</p></div>
 <?php if($tipo=='participante'): ?>
-<p class="alert-message">Só pode participar do Acamp's quem tem entre 14 e 28 anos!</p>
+<p class="alert">Só pode participar do Acamp's quem tem entre 14 e 28 anos!</p>
 <?php endif; ?>
 <h3>O que levar?</h3>
 <ul>
@@ -26,16 +26,16 @@
 	<li>Roupa para a missa (calça comprida);</li>
 	<li>Toalha, sabonete, xampu, creme dental, escova de dente, protetor solar, repelente, etc.</li>
 </ul>
-<p class="alert-message info">Marque seus objetos com seu nome.<p/>
-<p class="alert-message">Não  leve objetos de valor (celular, câmera, jóias, etc.), pois não nos responsabilizamos por eventuais extravios.</p>
+<p class="alert alert-info">Marque seus objetos com seu nome.<p/>
+<p class="alert">Não  leve objetos de valor (celular, câmera, jóias, etc.), pois não nos responsabilizamos por eventuais extravios.</p>
 
 <h3>Saída</h3>
 
-<p><strong>Local:</strong> Praça do Cristo Rei, rua Nogueira Acioli, ao lado do Colégio Militar (Av. Santos Dumont)</p>
+<p><strong>Local:</strong> Praça do Cristo Rei, Rua Nogueira Acioli, ao lado do Colégio Militar (Av. Santos Dumont)</p>
 
-<p><strong>Data de saída:</strong> 16/01 às 14:00h</p>
+<p><strong>Data de saída: </strong><?php echo $inicio ?> às 14:00</p>
 
-<p><strong>Data de retorno:</strong> 21/01 às 18:30h</p>
+<p><strong>Data de retorno: </strong><?php echo $fim ?> às 18:30</p>
 
 <h3>Normas</h3>
 <ol>
@@ -52,5 +52,5 @@
 	<li>PLANTÃO DE INFORMAÇÃO durante o evento: (085) 8690 1014, 8661 1319, 8846 6951, 8821 3015.</li>
 	<li>A Rádio Shalom AM 690 trará irformações diariamente.</li>
 </ol>
-<p class="center"><?php echo anchor('/inscricao/'.$tipo, 'Continuar Inscrição &raquo;', array('class'=>'btn success large', 'id'=>'continuar'))//echo anchor('/inscricao/buscarinscricao/'.$tipo, 'Continuar Inscrição &raquo;') ?></p>
+<p align="center"><?php echo anchor('/inscricao/'.$tipo, 'Continuar Inscrição &raquo;', array('class'=>'btn btn-primary btn-large', 'id'=>'continuar'))//echo anchor('/inscricao/buscarinscricao/'.$tipo, 'Continuar Inscrição &raquo;') ?></p>
 </div>

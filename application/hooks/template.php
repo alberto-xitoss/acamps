@@ -71,13 +71,33 @@ class Template {
 			
 			// Substitui libs js locais pelas do Google CDN
 			if(ENVIRONMENT == 'production'){
-				$view = preg_replace('/http.*jquery\.min\.js/', "http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js", $view);
-				$view = preg_replace('/http.*jquery-ui\.min\.js/', "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js", $view);
+				$view = preg_replace('/http.*jquery\.min\.js/', "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js", $view);
+				$view = preg_replace('/http.*jquery-ui\.min\.js/', "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js", $view);
 				$view = preg_replace('/http.*jquery\.ui\.datepicker.*js/', "http://jquery-ui.googlecode.com/svn/trunk/ui/i18n/jquery.ui.datepicker-pt-BR.js", $view);
 			}
         }else{
             $view = $output;
         }
+		
+		// Do we need to generate profile data?
+		// If so, load the Profile class and run it.
+		if (ENVIRONMENT == 'development' AND false)
+		{
+			$CI->load->library('profiler');
+
+			// If the output data contains closing </body> and </html> tags
+			// we will remove them and add them back after we insert the profile data
+			if (preg_match("|</body>.*?</html>|is", $view))
+			{
+				$view  = preg_replace("|</body>.*?</html>|is", '', $view);
+				$view .= $CI->profiler->run();
+				$view .= '</body></html>';
+			}
+			else
+			{
+				$view .= $CI->profiler->run();
+			}
+		}
 
         echo $view;
     }
@@ -90,7 +110,7 @@ class Template {
     private function createCSSLinks($links){
         $html = "";
         for ($i = 0; $i < count($links); $i++){
-            $html .= "<link rel='stylesheet' type='text/css' href='" . $this->css_url . $links[$i] . ".css' media='screen' />\n";
+            $html .= "<link rel='stylesheet' type='text/css' href='" . $this->css_url . $links[$i] . ".css' media='screen, print' />\n";
         }
         return $html;
     }

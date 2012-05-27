@@ -1,4 +1,5 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 /*
 | -------------------------------------------------------------------
 | AUTO-LOADER
@@ -51,10 +52,9 @@ $autoload['packages'] = array(APPPATH.'third_party');
 |
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
+$autoload['libraries'] = array('database', 'session', 'log');
 if(ENVIRONMENT == 'development'){
-	$autoload['libraries'] = array('database', 'session', 'firephp');
-}else{
-	$autoload['libraries'] = array('database', 'session');
+	$autoload['libraries'] []= 'firephp';
 }
 
 /*

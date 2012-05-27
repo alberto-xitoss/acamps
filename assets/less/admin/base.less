@@ -1,0 +1,69 @@
+@menu-height: 30px;
+@menu-padding: 10px;
+
+.wrap{
+	position: relative;
+	width: 370px;
+	margin: 0 auto;
+}
+a { color: #000; text-decoration:none; }
+a:hover { color: @link; text-decoration:none; }
+form { margin: 0; }
+input, textarea, select, .uneditable-input { border-color: darken(#CCCCCC, 8%) }
+#menu{
+	height: @menu-height;
+	padding: @menu-padding 10px 0;
+	#gradient > .vertical(darken(@white, 2%), darken(@white, 8%));
+	border-bottom: 1px solid darken(@white, 20%);
+	.box-shadow(0 0px 3px rgba(0,0,0,0.3));
+	
+	a{
+		color: @black;
+		&:hover{
+			color: @link;
+		}
+	}
+
+	ul { list-style:none; margin:0; padding:0; white-space: nowrap;
+		li {
+			cursor:default;
+			float:left;
+			padding: 8px 16px;
+			position:relative;
+			text-shadow: 0 1px 0 @white;
+			
+			&:hover {
+				ul{
+					display: block;
+				}
+			}
+			
+			ul {
+				min-width: 150px;
+				background-color: darken(@white, 2%);
+				.border-radius(0 0 4px 4px);
+				border: 1px solid darken(@white, 18%);
+				display:none;
+				left: -1px;
+				position:absolute;
+				top: @menu-height + @menu-padding - 10;
+				padding-top: 12px;
+				
+				li {
+					float: none;
+					padding: 0 14px 12px;
+					border: none;
+					&:hover { border: none; }
+				}
+				z-index: 999;
+			}
+		}
+	}
+	
+	.disabled{ color: lighten(@black, 75%); }
+}
+#usuario{
+	position: absolute;
+	right: 12px;
+	top: (@menu-padding + @menu-height - 20);
+}

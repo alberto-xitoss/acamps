@@ -6,11 +6,10 @@ class Familia extends CI_Model{
 
     function listar($cd=false){
         if($cd){
-            $this->db->select('id_familia, cd_familia,nm_familia');
+            $this->db->select('id_familia, cd_familia, nm_familia');
         }else{
             $this->db->select('id_familia,nm_familia');
         }
-        $this->db->where('id_missao', $this->config->item('missao'));
         $this->db->order_by("id_familia", "asc");
         $query = $this->db->get($this->table);
 
@@ -28,19 +27,18 @@ class Familia extends CI_Model{
 
     function familia_menor(){
         // Procura uma família que ainda não tenha ninguém
-        $query = $this->db->query('SELECT id_familia FROM familia
-                                   WHERE id_missao = '.$this->config->item('missao').' AND id_familia NOT IN
-                                       (SELECT pessoa.id_familia FROM pessoa WHERE id_familia IS NOT NULL)');
-        $row = $query->result();
+        $row = $this->db->query('SELECT id_familia FROM familia
+								WHERE id_familia NOT IN (SELECT DISTINCT pessoa.id_familia FROM pessoa WHERE id_familia IS NOT NULL)
+								LIMIT 1')->result();
         if($row){ // Se houver uma família sem ninguém...
             return $row[0]->id_familia;
         }else{
             // Procura a família com menos pessoas
-            $query = $this->db->query('SELECT id_familia, count(*) FROM pessoa
-                                       WHERE id_missao = '.$this->config->item('missao').' AND id_familia is not null
+            $row = $this->db->query('SELECT id_familia, count(*) FROM pessoa
+                                       WHERE id_familia IS NOT NULL
                                        GROUP BY id_familia
-                                       ORDER by count(*)');
-            $row = $query->result();
+                                       ORDER by count(*)
+									   LIMIT 1')->result();
             return $row[0]->id_familia;
         }
     }

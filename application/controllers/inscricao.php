@@ -1,10 +1,10 @@
-<?php
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class Inscricao extends CI_Controller{
 
     public $template = 'inscricao_template';
     public $title = 'Acampamento de Jovens Shalom';
-    public $css = array('bootstrap', 'inscricao');
+    public $css = array('inscricao');
     public $js = array('jquery.min');
 
 	function __construct() {
@@ -21,11 +21,25 @@ class Inscricao extends CI_Controller{
         $this->load->view('inscricao/home');
     }
 
-    function info($tipo){
+    function info($tipo)
+	{
         $this->title = "Acamp's > Regras de Participação";
-        //$this->load->model('missao');
-        //$valor = $this->missao->valor($tipo);
-        $this->load->view('inscricao/normas', array('tipo'=>$tipo)/*, array('valor'=>$valor)*/);
+		
+		$viewdata['tipo'] = $tipo;
+		$viewdata['valor'] = ( $tipo=='participante' ? $this->config->item('valor_participante') : $this->config->item('valor_servico') );
+		$viewdata['edicao'] = $this->config->item('acamps_edicao');
+		$viewdata['periodo'] = $this->config->item('acamps_periodo');
+		
+		$inicio = DateTime::createFromFormat('j/n/Y', $this->config->item('acamps_inicio'));
+		$fim = DateTime::createFromFormat('j/n/Y', $this->config->item('acamps_fim'));
+		$prazo = clone $inicio;
+		$prazo->sub(new DateInterval('P2D'));
+		
+		$viewdata['prazo_inscricao'] = $prazo->format('j/n/Y');
+		$viewdata['inicio'] = $inicio->format('j/n/Y');
+		$viewdata['fim'] = $fim->format('j/n/Y');
+		
+        $this->load->view('inscricao/normas', $viewdata);
     }
 
     function adote(){
@@ -43,7 +57,7 @@ class Inscricao extends CI_Controller{
             if($this->_validar('p')){
                 
                 $this->load->model('pessoa_model');
-                $this->load->model('familia');
+                //$this->load->model('familia');
                 
                 $dados = $_POST;
                 unset($dados['confirmar']);
@@ -63,22 +77,9 @@ class Inscricao extends CI_Controller{
 				$this->divulgacao->inserir($pesquisa);
                 
 				$dados['cd_tipo'] = 'p';
-				$dados['id_missao'] = $this->config->item('missao');
-				
-                // Normalizando Nome
-                //$dados['nm_pessoa'] = normaliza_nome($dados['nm_pessoa']);
-				//$dados['nm_cracha'] = normaliza_nome($dados['nm_cracha']);
-                
-				// Normalizando Data de Nascimento
-				//$dados['dt_nascimento'] = normaliza_data($dados['dt_nascimento']);
 				
 				// Status -> Pendente Pagamento
                 $dados['id_status'] = 1;
-				
-                // Escolhendo Família
-                // ---------------------------------------------------
-                $dados['id_familia'] = $this->familia->familia_menor();
-                // ---------------------------------------------------
 				
                 // Gravando registro de inscrição e retornando o número de inscrição gerado
                 $view_data['id_pessoa'] = $this->pessoa_model->inscrever($dados);
@@ -87,7 +88,7 @@ class Inscricao extends CI_Controller{
                 $view_data['cd_tipo']   = $dados['cd_tipo'];
                 $view_data['ds_email']  = $dados['ds_email'];
                 
-				//log_message('ERROR', 'INSCRIÇÃO PARTICIPANTE - '.$view_data['id_pessoa'].' '.$dados['nm_pessoa']);
+				// TODO - Logar inscrição realizada
 				
                 // Salvando Imagem
                 // ---------------------------------------------------
@@ -120,9 +121,8 @@ class Inscricao extends CI_Controller{
         $this->title = "Acamp's > Formulário de Inscrição";
 		$this->js  []= 'jquery-ui.min';
 		$this->js  []= 'jquery.ui.datepicker-pt-BR';
-        $this->js  []= 'valida';
-        $this->css []= 'jquery.ui.theme';
-        $this->css []= 'jquery.ui.datepicker';
+        $this->js  []= 'valida.min';
+        $this->css []= 'jquery-ui';
         
         $form_data['cidades'] = $this->cidade->listar();
 		$form_data['cidades'] = array_reverse($form_data['cidades'], true);
@@ -144,14 +144,6 @@ class Inscricao extends CI_Controller{
                 unset($dados['confirmar']);
                 
 				$dados['cd_tipo'] = 's';
-				$dados['id_missao'] = $this->config->item('missao');
-				
-                // Normalizando Nome
-                // $dados['nm_pessoa'] = normaliza_nome($dados['nm_pessoa']);
-				// $dados['nm_cracha'] = normaliza_nome($dados['nm_cracha']);
-                
-				// Normalizando Data de Nascimento
-				// $dados['dt_nascimento'] = normaliza_data($dados['dt_nascimento']);
                 
                 $dados['id_status'] = 2; // Status -> Pendente Liberação
 
@@ -162,7 +154,7 @@ class Inscricao extends CI_Controller{
 				$view_data['cd_tipo']   = $dados['cd_tipo'];
                 $view_data['ds_email']  = $dados['ds_email'];
                 
-				//log_message('ERROR', 'INSCRIÇÃO SERVIÇO - '.$view_data['id_pessoa'].' '.$dados['nm_pessoa']);
+				// TODO - Logar inscrição realizada
                 
                 // Salvando Imagem
                 // ---------------------------------------------------
@@ -192,9 +184,8 @@ class Inscricao extends CI_Controller{
         $this->title = "Acamp's > Formulário de Incrição > Serviço";
 		$this->js  []= 'jquery-ui.min';
 		$this->js  []= 'jquery.ui.datepicker-pt-BR';
-        $this->js  []= 'valida';
-        $this->css []= 'jquery.ui.theme';
-        $this->css []= 'jquery.ui.datepicker';
+        $this->js  []= 'valida.min';
+        $this->css []= 'jquery-ui';
 		
 		$form_data['cidades'] = $this->cidade->listar();
 		$form_data['cidades'] = array_reverse($form_data['cidades'], true);
@@ -219,14 +210,6 @@ class Inscricao extends CI_Controller{
                 unset($dados['confirmar']);
                 
 				$dados['cd_tipo'] = 'v';
-				$dados['id_missao'] = $this->config->item('missao');
-				
-                // Normalizando Nome
-                // $dados['nm_pessoa'] = $this->_normaliza_nome($dados['nm_pessoa']);
-				// $dados['nm_cracha'] = $this->_normaliza_nome($dados['nm_cracha']);
-				
-				// Normalizando Data de Nascimento
-				// $dados['dt_nascimento'] = $this->_normaliza_data($dados['dt_nascimento']);
                 
                 $dados['id_status'] = 2; // Status -> Pendente Liberação
 
@@ -237,7 +220,7 @@ class Inscricao extends CI_Controller{
                 $view_data['cd_tipo']   = $dados['cd_tipo'];
                 //$view_data['ds_email']  = $dados['ds_email'];
                 
-				//log_message('ERROR', 'INSCRIÇÃO CV - '.$view_data['id_pessoa'].' '.$dados['nm_pessoa']);
+				// TODO - Logar inscrição realizada
                 
                 // Salvando Imagem
                 // ---------------------------------------------------
@@ -262,9 +245,8 @@ class Inscricao extends CI_Controller{
         $this->title = "Acamp's > Formulário de Incrição > Comunidade de Vida";
 		$this->js  []= 'jquery-ui.min';
 		$this->js  []= 'jquery.ui.datepicker-pt-BR';
-        $this->js  []= 'valida';
-        $this->css []= 'jquery.ui.theme';
-        $this->css []= 'jquery.ui.datepicker';
+        $this->js  []= 'valida.min';
+        $this->css []= 'jquery-ui';
 
 		$form_data['servicos'] = $this->servico->listar();
 		$form_data['servicos'] = array_reverse($form_data['servicos'], true);
@@ -279,11 +261,29 @@ class Inscricao extends CI_Controller{
     }
     
     function boleto($code){
+		
+		$viewdata['periodo'] = $this->config->item('acamps_periodo');
+		
+		$inicio = DateTime::createFromFormat('j/n/Y', $this->config->item('acamps_inicio'));
+		$fim = DateTime::createFromFormat('j/n/Y', $this->config->item('acamps_fim'));
+		
+		$viewdata['inicio'] = $inicio->format('j/n');
+		$viewdata['fim'] = $fim->format('j/n');
+		
 		$this->load->model('pessoa_model');
         $dados = $this->pessoa_model->dados_boleto($code);
-        if($dados){
-            $this->template = '';
-            $this->load->view('inscricao/boleto',$dados);
+		
+        if($dados)
+		{
+			$viewdata['dados'] = $dados;
+			$viewdata['valor'] = ( $dados['cd_tipo']=='p' ? $this->config->item('valor_participante') : $this->config->item('valor_servico') );
+			
+			$this->title = "Acamp's - Boleto de Pagamento: ".$dados['id_pessoa'];
+            $this->template = 'default';
+            $this->css = array('boleto');
+            $this->js = array();
+			
+            $this->load->view('inscricao/boleto',$viewdata);
         }else{
             show_404('Boleto de Pagamento');
         }
@@ -300,24 +300,32 @@ class Inscricao extends CI_Controller{
         $this->load->library('form_validation');
         
         // Campos comuns a todos os tipos de inscrição
-        $this->form_validation->set_rules('nm_pessoa', 'Nome', 'trim|required');
-        $this->form_validation->set_rules('nm_cracha', 'Nome no crachá', 'trim|required');
-        $this->form_validation->set_rules('dt_nascimento', 'Data de nascimento', 'required|callback_data');
-        $this->form_validation->set_rules('ds_sexo', 'Sexo', 'required');
-        $this->form_validation->set_rules('bl_alimentacao', 'Alimentação', 'required');
-        
-		$this->form_validation->set_rules('bl_alergia_alimento', 'Alergia a alimentos?', 'integer'); // Gambiarra para que o campo seja repopulado após erro no formulário
-        if($this->input->post('bl_alergia_alimento')){
-            $this->form_validation->set_rules('nm_alergia_alimento', 'Alergia a quais alimentos?', 'trim|required');
-        }
+        // Nome Completo
+		$this->form_validation->set_rules('nm_pessoa', 'Nome', 'trim|required');
+        // Nome no crachá
+		$this->form_validation->set_rules('nm_cracha', 'Nome no crachá', 'trim|required');
+        // Data de Nascimento
+		$this->form_validation->set_rules('dt_nascimento', 'Data de nascimento', 'required|callback_data');
+        // Sexo
+		$this->form_validation->set_rules('ds_sexo', 'Sexo', 'required');
+        // Alimentação
+		$this->form_validation->set_rules('bl_alimentacao', 'Alimentação', 'required');
+        // Transporte
+		$this->form_validation->set_rules('bl_transporte','Precisará de transporte do acampamento?', 'required');
+		
+		// Alergia a Alimentos
+		$this->form_validation->set_rules('nm_alergia_alimento', 'Alergia a quais alimentos?', 'trim');
         
         // Campos apenas do formulário de participante
         if($cd_tipo == 'p'){
+			// Seminário ou Aprofundamento
             $this->form_validation->set_rules('bl_seminario','Já fez seminário?', 'required');
+			// 1ª Comunhão
             $this->form_validation->set_rules('bl_fez_comunhao','Já fez primeira eucaristia?', 'required');
             if($this->input->post('bl_fez_comunhao') == '0'){
                 $this->form_validation->set_rules('bl_fazer_comunhao','Deseja fazer?', 'required');
             }
+			// Contato de Emergência
 			$this->form_validation->set_rules('nr_emergencia1','Telefone para Emergência (1)', 'required');
             $this->form_validation->set_rules('nm_emergencia1','Nome do Responsável (1)', 'required');
         }
@@ -325,31 +333,38 @@ class Inscricao extends CI_Controller{
         // Campos comuns aos formulários de participante e serviço
         if($cd_tipo == 'p' || $cd_tipo == 's'){
             //$this->form_validation->set_rules('ds_foto', 'Foto', 'required');
-            $this->form_validation->set_rules('nr_rg', 'RG', 'trim|required|numeric');
-            $this->form_validation->set_rules('ds_endereco','Endereço', 'trim|required');
+            // RG
+			$this->form_validation->set_rules('nr_rg', 'RG', 'trim|required|numeric');
+            // Endereço
+			$this->form_validation->set_rules('ds_endereco','Endereço', 'trim|required');
+			// CEP
             $this->form_validation->set_rules('nr_cep','CEP', 'trim|required|callback_cep');
+			// Bairro
             $this->form_validation->set_rules('ds_bairro', 'Bairro', 'trim|required');
-            $this->form_validation->set_rules('id_cidade','Cidade', 'required');
-            $this->form_validation->set_rules('bl_barracao','Utilizará o barracão?', 'required');
-            $this->form_validation->set_rules('bl_transporte','Precisará de transporte do acampamento?', 'required');
+			// Cidade
+            $this->form_validation->set_rules('id_cidade','Cidade', 'required|is_natural_no_zero');
+            // Barracão
+			$this->form_validation->set_rules('bl_barracao','Utilizará o barracão?', 'required');
             
-			$this->form_validation->set_rules('bl_alergia_remedio','Alergia a remédios?',  'integer'); // Gambiarra para que o campo seja repopulado após erro no formulário
-            if($this->input->post('bl_alergia_remedio')){
-                $this->form_validation->set_rules('nm_alergia_remedio','Alergia a quais remédios?', 'trim|required');
-            }
+			// Alergia a remédios
+			$this->form_validation->set_rules('nm_alergia_remedio','Alergia a quais remédios?', 'trim');
             
+			// Email
 			$this->form_validation->set_rules('ds_email','E-mail', 'trim|required|valid_email');
-            $this->form_validation->set_rules('nr_telefone','Telefone ', 'trim|required|telefone');
+            // Telefone
+			$this->form_validation->set_rules('nr_telefone','Telefone ', 'trim|required|telefone');
         }
         
         // Campo comum aos formulários de serviço e CV
         if($cd_tipo == 's' || $cd_tipo == 'v'){
-            $this->form_validation->set_rules('id_servico','Serviço', 'required');
+            // Equipe de Serviço
+			$this->form_validation->set_rules('id_servico','Serviço', 'required');
         }
         
         // Campo apena do formulário de CV
         if($cd_tipo == 'v'){
-            $this->form_validation->set_rules('id_setor','Setor', 'required');
+            // Setor da CV
+			$this->form_validation->set_rules('id_setor','Setor', 'required');
         }
 
         return $this->form_validation->run();

@@ -10,8 +10,15 @@
 |
 */
 
+$hook['post_controller_constructor'] = array(
+	'class'    => 'Missao_config',
+	'function' => 'load',
+	'filename' => 'missao_config.php',
+	'filepath' => 'hooks'
+);
+
 $hook['display_override'] = array(
-    'class' => 'Template',
+    'class'    => 'Template',
     'function' => 'init',
     'filename' => 'template.php',
     'filepath' => 'hooks'

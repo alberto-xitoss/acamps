@@ -1,0 +1,172 @@
+@import "bootstrap/reset.less";
+@import "bootstrap/variables.less";
+@import "bootstrap/mixins.less";
+@import "bootstrap/scaffolding.less";
+@import "bootstrap/layouts.less";
+@import "bootstrap/type.less";
+@import "bootstrap/forms.less";
+@import "bootstrap/buttons.less";
+@import "bootstrap/alerts.less";
+@import "bootstrap/highlights.less";
+@import "bootstrap/utilities.less";
+
+/* Estilos da página de inscrições */
+body{
+	#gradient.vertical-three-colors(#2c98b5, #62e7df, 25%, #fafa9b);
+	color: #292929;
+}
+a { color: #292929; text-decoration:none; }
+a:hover { color: #18719b; }
+.container {
+    width: 900px;
+    position: relative;
+}
+/*
+
+Topo da Página
+
+*/
+#header div { margin: 0; position: absolute; }
+header a, #header a, #comshalom a {
+	display:block;
+	width:100%;
+	height:100%;
+}
+#logo {
+	background-image:url("../image/acamps_logo.png");
+	width:553px; height:204px;
+	position:relative;
+	top:20px; left:-20px;
+}
+#periodo {
+	background-image:url("../image/periodo.png");
+	width:239px; height:159px;
+	top:38px; right:100px;
+}
+/*
+
+Conteúdo
+
+*/
+#video-frame {
+	background-image: url("../image/video-frame.png");
+	width: 465px; height: 407px;
+	position: relative;
+	top:0; left:24px;
+}
+#video{
+	width:400px; height:300px;
+	margin: 17px 0 0 32px;
+}
+#insc-links {
+	width:260px; position: relative;
+	top:70px; right:85px;
+}
+#insc-links {
+	h2{
+		margin: 0; line-height:48px; position: relative;
+		.border-radius(40px);
+		.box-shadow2(0px 2px 1px #ffffff inset, 0px -1px 1px rgba(0,0,0,.6) inset);
+		#gradient.vertical(#ffef78, #f9cd48);
+	}
+	div{	
+		background: #fff;
+		margin:-12px 18px 0; padding:30px 20px 8px;
+		.border-radius(12px);
+		.box-shadow2(0px -3px 1px #d0d6ae inset, 0px 2px 3px rgba(0,0,0,.4));
+	}
+	p{
+		font-size: 1.1em;
+		line-height: 1.6em;
+	}
+}
+#participante{
+	font-weight: bold;
+}
+#conteudo {
+	background: #ffffff;
+	width: 800px; padding:20px;
+	
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	
+	.box-shadow2(0px -3px 1px #d7e3aa inset, 0px 2px 3px rgba(0,0,0,.4));
+}
+/*
+
+Rodapé
+
+*/
+footer, #footer {
+	height:140px; margin-top: 70px; padding-top: 17px;
+	background-color: #ffffff;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#dcdcdc));
+	background-image: -webkit-linear-gradient(top, #ffffff, #dcdcdc);
+	background-image:    -moz-linear-gradient(top, #ffffff, #dcdcdc);
+	background-image:     -ms-linear-gradient(top, #ffffff, #dcdcdc);
+	background-image:      -o-linear-gradient(top, #ffffff, #dcdcdc);
+	background-image:         linear-gradient(top, #ffffff, #dcdcdc);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffffff', EndColorStr='#dcdcdc');
+	-webkit-box-shadow: 0px 0px 14px rgba(0,0,0, .4);
+	-moz-box-shadow: 0px 0px 14px rgba(0,0,0, .4);
+	box-shadow: 0px 0px 14px rgba(0,0,0, .4);
+}
+.column-3 {
+	width: 300px;
+	float: left;
+}
+footer h2, #footer h2 {
+	margin-bottom:0.5em;
+	text-align: left;
+}
+#social p{ font-size:1.2em; font-weight:bold; }
+#social img{ vertical-align: middle; margin-right: 7px; }
+#pjj {
+	background-image: url("../image/pjj_logo.png");
+	width:117px; height:80px;
+}
+#comshalom {
+	background-image: url("../image/shalom_logo.png");
+	width:140px; height:66px;
+	position:relative; top:14px; left:30px;
+}
+/*
+
+Página de Informações
+
+*/
+#continuar { margin-top: 2em; }
+h2, h3{ text-shadow: 1px 1px 1px rgba(0,0,0, 0.3); margin-bottom: .4em; }
+h2{ text-align: center; margin-bottom: 1.2em; }
+/*
+
+Formulários
+
+*/
+hr {
+	border-bottom-color: rgba(255, 255, 255, 0.90);
+	border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+.form-horizontal .control-label { width: 200px; }
+.form-horizontal .controls { margin-left: 220px; }
+.help-inline, .help-block { color: #8DA7B0; }
+#pesquisa h3 {color:#000; font-weight: normal;}
+/*
+
+Página de Sucesso
+
+*/
+#sucesso
+{
+	img{
+		float: left;
+		margin-right: 16px;
+	}
+	img+p{
+		font-size:1.2em;
+		line-height:2em;
+		height: 160px;
+		margin-bottom: 18px;
+	}
+}
