@@ -74,10 +74,12 @@ class Pessoa extends MY_Controller {
 	 * @param $id_pessoa
 	 */
 	
-	function corrigir($id_pessoa) {
+	function corrigir($id_pessoa)
+	{
 		
 		// Se não for passado um número de inscrição
-		if(empty($id_pessoa)){
+		if(empty($id_pessoa))
+		{
 			redirect('admin/buscar');
 			return;
 		}
@@ -85,21 +87,25 @@ class Pessoa extends MY_Controller {
 		//----------------------------------------------------------------------
 		
 		// Reenviando Foto
-		if($this->input->post('adicionar_foto')){
-			
+		if($this->input->post('adicionar_foto'))
+		{
 			$this->load->model('pessoa_model');
 			
-			if($this->pessoa_model->existe($id_pessoa)){
+			if($this->pessoa_model->existe($id_pessoa))
+			{
 				// Salvando Imagem
-				// ---------------------------------------------------
-				$caminho_foto = $this->_preparar_imagem($id_pessoa);
-				if($caminho_foto){
+				$this->load->library('inscricoes');
+				$caminho_foto = $this->inscricoes->preparar_imagem($id_pessoa);
+				if($caminho_foto)
+				{
 					$this->pessoa_model->atualizar($id_pessoa, array('ds_foto'=>$caminho_foto));
 				}
 				// ---------------------------------------------------
-				redirect('admin/pessoa/'.$id_pessoa);
+				//redirect('admin/pessoa/'.$id_pessoa);
 				return;
-			}else{
+			}
+			else
+			{
 				redirect('admin/buscar');
 				return;
 			}

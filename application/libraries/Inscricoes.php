@@ -70,7 +70,7 @@ class Inscricoes
 		// Salvando Imagem
 		if($tipo != 'e')
 		{
-			$caminho_foto = $this->_preparar_imagem($id);
+			$caminho_foto = $this->preparar_imagem($id);
 			if($caminho_foto){
 				$this->CI->pessoa_model->adicionar_foto($id, $caminho_foto);
 			}
@@ -78,7 +78,7 @@ class Inscricoes
 		
 		// Enviando Email
 		if($this->open && ENVIRONMENT == 'production'){
-			$this->_enviar_email($id, $dados['nm_pessoa'], $dados['ds_email']);
+			$this->enviar_email($id, $dados['nm_pessoa'], $dados['ds_email']);
 		}
 		
 		if($this->open)
@@ -94,28 +94,41 @@ class Inscricoes
 		}
 	}
 	
-	function _preparar_imagem($id)
+	function preparar_imagem($id)
 	{
 		//Obtendo as configurações do arquivo 'config/acamps.php'
 		$upload = $this->CI->config->item('upload');
 		$upload['file_name'] = $id;
 		
 		$this->CI->load->library('upload', $upload);
-
+		
 		if($this->CI->upload->do_upload('ds_foto'))
 		{
 			$file = $this->CI->upload->data();
-
+			$this->CI->firephp->log($file);
+			if(strtolower($file['file_type']) == 'image/bmp')
+			{
+				$image = imagecreatefrombmp($file['full_path']);
+				$output_path = $file['file_path'].$file['raw_name'].'.jpg';
+				imagejpeg($image, $output_path);
+				imagedestroy($image);
+				unlink($file['full_path']);
+				
+				$file['file_name'] = $file['raw_name'].'.jpg';
+				$file['file_type'] = 'image/jpeg';
+				$file['full_path'] = $output_path;
+			}
+			$this->CI->firephp->log($file);
 			// Processando Foto
 			$img_config['image_library'] = 'gd2';
 			$img_config['source_image'] = $file['full_path'];
 			$img_config['maintain_ratio'] = TRUE;
 			
-			if($file['image_width'] > $this->max_size)
+			if($file['image_width'] > $this->max_size || empty($file['image_width']))
 			{
 				$img_config['width'] = $this->max_size;
 			}
-			if($file['image_height'] > $this->max_size)
+			if($file['image_height'] > $this->max_size || empty($file['image_height']))
 			{
 				$img_config['height'] = $this->max_size;
 			}
@@ -130,7 +143,7 @@ class Inscricoes
 		return false;
 	}
 	
-	function _enviar_email($id_pessoa, $nm_pessoa, $ds_email)
+	function enviar_email($id_pessoa, $nm_pessoa, $ds_email)
 	{
 		$this->CI->load->library('email');
 		
