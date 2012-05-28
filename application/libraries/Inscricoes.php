@@ -105,7 +105,7 @@ class Inscricoes
 		if($this->CI->upload->do_upload('ds_foto'))
 		{
 			$file = $this->CI->upload->data();
-			$this->CI->firephp->log($file);
+			
 			if(strtolower($file['file_type']) == 'image/bmp')
 			{
 				$image = imagecreatefrombmp($file['full_path']);
@@ -118,7 +118,7 @@ class Inscricoes
 				$file['file_type'] = 'image/jpeg';
 				$file['full_path'] = $output_path;
 			}
-			$this->CI->firephp->log($file);
+			
 			// Processando Foto
 			$img_config['image_library'] = 'gd2';
 			$img_config['source_image'] = $file['full_path'];

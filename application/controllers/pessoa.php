@@ -100,8 +100,8 @@ class Pessoa extends MY_Controller {
 				{
 					$this->pessoa_model->atualizar($id_pessoa, array('ds_foto'=>$caminho_foto));
 				}
-				// ---------------------------------------------------
-				//redirect('admin/pessoa/'.$id_pessoa);
+				
+				redirect('admin/pessoa/'.$id_pessoa);
 				return;
 			}
 			else
