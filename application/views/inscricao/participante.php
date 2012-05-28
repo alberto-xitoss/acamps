@@ -1,7 +1,7 @@
 <h2>Formulário de Inscrição</h2>
 
 <?php if(isset($erro) && $erro): ?>
-	<div class="alert alert-error">
+	<div class="alert alert-error alert-block">
 		<?php echo validation_errors(); ?>
 	</div>
 <?php endif; ?>
@@ -193,7 +193,8 @@
 	</div>
 </div>
 <!-- Pesquisa -->
-<div id="pesquisa" class="alert alert-info alert-block" ><h3>Antes de concluir sua inscrição diga-nos <strong>como ficou sabendo do Acamp's</strong>?</h3>
+<div id="pesquisa" class="alert alert-info alert-block" >
+	<h3>Antes de concluir sua inscrição diga-nos <strong>como ficou sabendo do Acamp's</strong>?</h3>
 	<?php foreach ($divulgacao as $meio): ?>
 		<label for="meio_<?php echo $meio['id_meio'] ?>"  class="radio">
 		<?php echo form_radio(array(
