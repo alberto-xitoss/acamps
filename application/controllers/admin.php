@@ -1,25 +1,16 @@
 <?php
+
 /* Admin
  *
  * Principal Controller do Sistema Acamp's.
- *
- * Atributos:
- *   template
- *   title
- *   css
- *   js
- * 
- * Métodos:
- *   index
- *   login
- *   buscar
 */
+
 class Admin extends CI_Controller {
 
 	public $template = 'admin_template';
 	public $title = "Sistema Acamp's";
 	public $css = array('admin');
-	public $js =  array('jquery.min');
+	//public $js = array('jquery.min');
 
 	/* Admin - construtor
 	 *
@@ -63,7 +54,6 @@ class Admin extends CI_Controller {
 			
 			$this->load->model('usuario');
 			$usuario = $this->usuario->autenticar($this->input->post('nm_usuario'), $this->input->post('pw_usuario'));
-			//log_message('error', print_r($usuario,true));
 			if($usuario){
 				
 				$this->session->set_userdata(array(
@@ -82,7 +72,6 @@ class Admin extends CI_Controller {
 		}
 		
 		$this->template = 'default';
-		$this->load->helper('form');
 		$this->load->view('admin/login', $view_data);
 		
 	}

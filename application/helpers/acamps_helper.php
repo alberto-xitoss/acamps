@@ -25,6 +25,9 @@
 		}
 	}
 	
+	/*
+	 * Traduz mês do inglês pro português
+	*/
 	function traduz_mes($month)
 	{
 		$months = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Setembro', 'October', 'November', 'December');
@@ -34,6 +37,9 @@
 		return str_replace($months, $meses, $month);
 	}
 	
+	/*
+	 * Cria objeto imagem a partir de um arquivo de imagem BMP
+	*/
 	function imagecreatefrombmp($filename)
 	{
 		// version 1.00

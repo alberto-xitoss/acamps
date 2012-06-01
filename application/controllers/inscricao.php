@@ -4,20 +4,19 @@ class Inscricao extends MY_Controller{
 
 	public $template = 'inscricao_template';
 	public $title = 'Acampamento de Jovens Shalom';
+	public $description = "O Acampamento de Jovens Shalom é um evento promovido pelo Projeto Juventude para Jesus da Comunidade Católica Shalom. A 39ª edição do Acamp's acontecerá dos dias 2 a 7 de Julho de 2012, na fazenda Guarany em Pacajus, a 50km de Fortaleza.";
 	public $css = array('inscricao');
-	public $js = array('jquery.min');
 
-	function __construct() {
+	function __construct()
+	{
 		parent::__construct();
 		$this->load->model('cidade');
 		$this->load->model('servico');
 		$this->load->model('setor');
 	}
 
-	function index(){
-		// Como a página inicial tem muitas diferenças das páginas de formulário,
-		// usamos o template padrão e fazemos a página separadamente
-		$this->template = 'default';
+	function index()
+	{
 		$this->load->view('inscricao/home');
 	}
 
@@ -72,9 +71,9 @@ class Inscricao extends MY_Controller{
 		}
 		
 		$this->title = "Acamp's > Formulário de Inscrição";
-		$this->js  []= 'jquery-ui.min';
-		$this->js  []= 'jquery.ui.datepicker-pt-BR';
-		$this->js  []= 'valida.min';
+		//$this->js  []= 'jquery-ui.min';
+		//$this->js  []= 'jquery.ui.datepicker-pt-BR';
+		//$this->js  []= 'valida.min';
 		$this->css []= 'jquery-ui';
 		
 		$form_data['cidades'] = $this->cidade->listar();
@@ -117,9 +116,9 @@ class Inscricao extends MY_Controller{
 		}
 
 		$this->title = "Acamp's > Formulário de Incrição > Serviço";
-		$this->js  []= 'jquery-ui.min';
-		$this->js  []= 'jquery.ui.datepicker-pt-BR';
-		$this->js  []= 'valida.min';
+		//$this->js  []= 'jquery-ui.min';
+		//$this->js  []= 'jquery.ui.datepicker-pt-BR';
+		//$this->js  []= 'valida.min';
 		$this->css []= 'jquery-ui';
 		
 		$form_data['cidades'] = $this->cidade->listar();
@@ -164,9 +163,9 @@ class Inscricao extends MY_Controller{
 		}
 
 		$this->title = "Acamp's > Formulário de Incrição > Comunidade de Vida";
-		$this->js  []= 'jquery-ui.min';
-		$this->js  []= 'jquery.ui.datepicker-pt-BR';
-		$this->js  []= 'valida.min';
+		//$this->js  []= 'jquery-ui.min';
+		//$this->js  []= 'jquery.ui.datepicker-pt-BR';
+		//$this->js  []= 'valida.min';
 		$this->css []= 'jquery-ui';
 
 		$form_data['servicos'] = $this->servico->listar();
@@ -203,7 +202,7 @@ class Inscricao extends MY_Controller{
 			$this->title = "Acamp's - Boleto de Pagamento: ".$dados['id_pessoa'];
 			$this->template = 'default';
 			$this->css = array('boleto');
-			$this->js = array();
+			//$this->js = array();
 			
 			$this->load->view('inscricao/boleto',$viewdata);
 		}

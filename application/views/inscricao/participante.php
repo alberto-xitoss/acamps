@@ -1,3 +1,4 @@
+<div id="conteudo" class="container clearfix">
 <h2>Formulário de Inscrição</h2>
 
 <?php if(isset($erro) && $erro): ?>
@@ -207,6 +208,20 @@
 </div>
 <p align="center"><input type="submit" value="Confirmar" name="confirmar" class="btn btn-primary btn-large" /></p>
 <?php echo form_close();?>
+</div>
+
+<script src="<?php echo $this->config->item('js_url') ?>valida.min.js"></script>
+
+<?php if(ENVIRONMENT === "production"): ?>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+	<script src="http://jquery-ui.googlecode.com/svn/trunk/ui/i18n/jquery.ui.datepicker-pt-BR.js"></script>
+<?php else: ?>
+	<script src="<?php echo $this->config->item('js_url') ?>jquery.min.js"></script>
+	<script src="<?php echo $this->config->item('js_url') ?>jquery-ui.min.js"></script>
+	<script src="<?php echo $this->config->item('js_url') ?>jquery.ui.datepicker-pt-BR.js"></script>
+<?php endif ?>
+
 <script>
 
     $(function(){

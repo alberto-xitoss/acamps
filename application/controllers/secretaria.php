@@ -1,8 +1,8 @@
 <?php
 
 /* Secretaria
-*
-* Contém as funções usadas apenas pela secretaria.
+ *
+ * Contém as funções usadas apenas pela secretaria.
 */
 
 class Secretaria extends CI_Controller {

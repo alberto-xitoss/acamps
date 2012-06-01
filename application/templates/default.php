@@ -1,15 +1,14 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="pt"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="pt"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="pt"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="pt"> <!--<![endif]-->
 <head>
 <meta charset=utf-8 />
-<meta name="description" content="O Acampamento de Jovens Shalom é um evento promovido pelo Projeto Juventude para Jesus da Comunidade Católica Shalom. A 39ª edição do Acamp's acontecerá dos dias 2 a 7 de Julho de 2012, na fazenda Guarany em Pacajus, a 50km de Fortaleza." />
-<link rel="image_src" href="<?php echo $this->config->item('img_url').'facebook-thumbnail.jpg' ?>" />
 <title>{title}</title>
-<!--[if IE]>
-  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]-->
+<meta name="description" content="{description}" />
+<meta name="viewport" content="width=device-width">
 {css}
-{js}
 </head>
 <body>
 {conteudo}

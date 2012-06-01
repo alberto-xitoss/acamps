@@ -345,7 +345,7 @@ class Pessoa extends MY_Controller {
 				$this->load->library('inscricoes', array('open'=>FALSE));
 				$id_pessoa = $this->inscricoes->inscrever('p');
 
-				$this->session->set_flashdata('auto_pagar', true);
+				//$this->session->set_flashdata('auto_pagar', true);
 				redirect('admin/pessoa/'.$id_pessoa);
 				return;
 			}
@@ -387,7 +387,7 @@ class Pessoa extends MY_Controller {
 				$this->load->library('inscricoes', array('open'=>FALSE));
 				$id_pessoa = $this->inscricoes->inscrever('s');
 				
-				$this->session->set_flashdata('auto_liberar', true);
+				//$this->session->set_flashdata('auto_liberar', true);
 				redirect('admin/pessoa/'.$id_pessoa);
 				return;
 			}
@@ -430,7 +430,7 @@ class Pessoa extends MY_Controller {
 				$this->load->library('inscricoes', array('open'=>FALSE));
 				$id_pessoa = $this->inscricoes->inscrever('v');
 				
-				$this->session->set_flashdata('auto_liberar', true);
+				//$this->session->set_flashdata('auto_liberar', true);
 				redirect('admin/pessoa/'.$id_pessoa);
 				return;
 			}
@@ -473,7 +473,7 @@ class Pessoa extends MY_Controller {
 				$this->load->library('inscricoes', array('open'=>FALSE));
 				$id_pessoa = $this->inscricoes->inscrever('e');
 				
-				$this->session->set_flashdata('auto_liberar', true);
+				//$this->session->set_flashdata('auto_liberar', true);
 				redirect('admin/pessoa/'.$id_pessoa);
 				return;
 			}

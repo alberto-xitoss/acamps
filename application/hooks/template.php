@@ -25,19 +25,22 @@ class Template {
         // Definindo os URL.
         $this->template_path = $CI->config->item('template_path');
         $this->css_url = $CI->config->item('css_url');
-        $this->js_url = $CI->config->item('js_url');
+        //$this->js_url = $CI->config->item('js_url');
 
         // Pegando a saida que o CI gera normalmente.
         $output = $CI->output->get_output();
-
+		
         // Pegando o valor de title, se definido no controller.
         $title = (isset($CI->title)) ? $CI->title : '';
-
+		
+        // Pegando o valor de description, se definido no controller.
+        $description = (isset($CI->description)) ? $CI->description : '';
+		
         // Links CSS definidos no controlador.
         $css = (isset($CI->css)) ? $this->createCSSLinks($CI->css) : '';
 
         // Links JS definidos no controlador.
-        $js = (isset($CI->js)) ? $this->createJSLinks($CI->js) : '';
+        //$js = (isset($CI->js)) ? $this->createJSLinks($CI->js) : '';
 
         // Se layout estiver definido e a regexp nao bater.
         if (isset($CI->template) && !preg_match('/(.+).php$/', $CI->template)){
@@ -62,19 +65,21 @@ class Template {
             $template = $CI->load->file($template, true);
             // Substitui o texto {content_for_layout} pelo valor de output em layout.
             $view = str_replace('{conteudo}', $output, $template);
-            // Substitui o texto {title_for_layout} pelo valor de title em view.
+            // Substitui o texto {title}
             $view = str_replace('{title}', $title, $view);
+            // Substitui o texto {description}
+            $view = str_replace('{description}', $description, $view);
             // Links CSS.
             $view = str_replace('{css}', $css, $view);
             // Links JS.
-            $view = str_replace('{js}', $js, $view);
+            //$view = str_replace('{js}', $js, $view);
 			
-			// Substitui libs js locais pelas do Google CDN
+			/* // Substitui libs js locais pelas do Google CDN
 			if(ENVIRONMENT == 'production'){
 				$view = preg_replace('/http.*jquery\.min\.js/', "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js", $view);
 				$view = preg_replace('/http.*jquery-ui\.min\.js/', "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js", $view);
 				$view = preg_replace('/http.*jquery\.ui\.datepicker.*js/', "http://jquery-ui.googlecode.com/svn/trunk/ui/i18n/jquery.ui.datepicker-pt-BR.js", $view);
-			}
+			} */
         }else{
             $view = $output;
         }
@@ -120,13 +125,13 @@ class Template {
     *
     * @return void
     */
-    private function createJSLinks($links){
+    /* private function createJSLinks($links){
         $html = "";
         for ($i = 0; $i < count($links); $i++){
             $html .= "<script src='" . $this->js_url . $links[$i] . ".js'></script> \n";
         }
         return $html;
-    }
+    } */
 }
 
 ?>

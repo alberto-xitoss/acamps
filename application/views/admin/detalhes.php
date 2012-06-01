@@ -371,11 +371,11 @@ $(function(){
 	// Comandos automáticos
 	
 	<?php if($this->session->flashdata('auto_pagar')): ?>
-	$('#pagar').click();
+	//$('#pagar').click();
 	<?php endif ?>
 	
 	<?php if($this->session->flashdata('auto_liberar')): ?>
-	$('.confirmacao.liberacao').click();
+	//$('.confirmacao.liberacao').click();
 	<?php endif ?>
 	
 });

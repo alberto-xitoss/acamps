@@ -9,7 +9,6 @@ class Relatorio extends CI_Controller {
 	public $template = 'admin_template';
 	public $title = "Sistema Acamp's";
 	public $css = array('admin');
-	public $js = array();
 	
 	/*
 	 * Construtor Pessoa
