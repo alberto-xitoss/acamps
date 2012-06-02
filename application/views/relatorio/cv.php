@@ -19,5 +19,4 @@
     </tr>
 <?php endforeach?>
 </table>
-<br/>
 <?php endforeach ?>

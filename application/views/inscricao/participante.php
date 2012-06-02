@@ -210,29 +210,17 @@
 <?php echo form_close();?>
 </div>
 
-<script src="<?php echo $this->config->item('js_url') ?>valida.min.js"></script>
-
-<?php if(ENVIRONMENT === "production"): ?>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
-	<script src="http://jquery-ui.googlecode.com/svn/trunk/ui/i18n/jquery.ui.datepicker-pt-BR.js"></script>
-<?php else: ?>
-	<script src="<?php echo $this->config->item('js_url') ?>jquery.min.js"></script>
-	<script src="<?php echo $this->config->item('js_url') ?>jquery-ui.min.js"></script>
-	<script src="<?php echo $this->config->item('js_url') ?>jquery.ui.datepicker-pt-BR.js"></script>
-<?php endif ?>
-
 <script>
 
-    $(function(){
+	$(function(){
 		
-        // Alterando obrigatoriedade do campo 1ª Eucaristia
-        $('#bl_fez_comunhao_n').click(function(){
-            $('[name=bl_fazer_comunhao]').attr('disabled',false).addClass('obrigatorio').change();
-        });
-        $('#bl_fez_comunhao_s').click(function(){
-            $('[name=bl_fazer_comunhao]').attr('disabled',true).removeClass('obrigatorio').removeData('obrigatorio').change();
-        });
+		// Alterando obrigatoriedade do campo 1ª Eucaristia
+		$('#bl_fez_comunhao_n').click(function(){
+			$('[name=bl_fazer_comunhao]').attr('disabled',false).addClass('obrigatorio').change();
+		});
+		$('#bl_fez_comunhao_s').click(function(){
+			$('[name=bl_fazer_comunhao]').attr('disabled',true).removeClass('obrigatorio').removeData('obrigatorio').change();
+		});
 
 		ativarValidacao($("form"));
 		
@@ -244,9 +232,9 @@
 				$(this).change();
 			},
 			showOn: "button",
-			buttonImage: "<?php echo $this->config->item('img_url'); ?>calendar.png",
+			buttonImage: "<?php echo img_url() ?>calendar.png",
 			buttonImageOnly: true
 		});
-    })
-    
+	})
+
 </script>

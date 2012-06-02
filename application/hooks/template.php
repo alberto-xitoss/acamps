@@ -59,27 +59,19 @@ class Template {
             if ($CI->template != '.php') show_error("You have specified a invalid layout: " . $CI->template);
         }
 
-        // Se o arquivo layout existir.
+        // Se o arquivo layout existir
         if (file_exists($template)){
-            // Carrega o conteudo do  arquivo.
+            // Carrega o conteudo do  arquivo
             $template = $CI->load->file($template, true);
-            // Substitui o texto {content_for_layout} pelo valor de output em layout.
+            // Substitui o texto {content_for_layout} pelo valor de output em layout
             $view = str_replace('{conteudo}', $output, $template);
             // Substitui o texto {title}
             $view = str_replace('{title}', $title, $view);
             // Substitui o texto {description}
             $view = str_replace('{description}', $description, $view);
-            // Links CSS.
+            // Links CSS
             $view = str_replace('{css}', $css, $view);
-            // Links JS.
-            //$view = str_replace('{js}', $js, $view);
 			
-			/* // Substitui libs js locais pelas do Google CDN
-			if(ENVIRONMENT == 'production'){
-				$view = preg_replace('/http.*jquery\.min\.js/', "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js", $view);
-				$view = preg_replace('/http.*jquery-ui\.min\.js/', "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js", $view);
-				$view = preg_replace('/http.*jquery\.ui\.datepicker.*js/', "http://jquery-ui.googlecode.com/svn/trunk/ui/i18n/jquery.ui.datepicker-pt-BR.js", $view);
-			} */
         }else{
             $view = $output;
         }

@@ -2,28 +2,22 @@
 
 class Inscricao extends MY_Controller{
 
-	public $template = 'inscricao_template';
-	public $title = 'Acampamento de Jovens Shalom';
-	public $description = "O Acampamento de Jovens Shalom é um evento promovido pelo Projeto Juventude para Jesus da Comunidade Católica Shalom. A 39ª edição do Acamp's acontecerá dos dias 2 a 7 de Julho de 2012, na fazenda Guarany em Pacajus, a 50km de Fortaleza.";
-	public $css = array('inscricao');
-
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model('cidade');
-		$this->load->model('servico');
-		$this->load->model('setor');
+		
+		$this->template->set_template('inscricao_template');
+		$this->template->set('title', "Acamp's - Acampamento de Jovens Shalom");
+		$this->template->set('description', "O Acampamento de Jovens Shalom é um evento promovido pelo Projeto Juventude para Jesus da Comunidade Católica Shalom. A 39ª edição do Acamp's acontecerá dos dias 2 a 7 de Julho de 2012, na fazenda Guarany em Pacajus, a 50km de Fortaleza.");
 	}
 
 	function index()
 	{
-		$this->load->view('inscricao/home');
+		$this->template->load_view('inscricao/home');
 	}
 
 	function info($tipo)
 	{
-		$this->title = "Acamp's > Regras de Participação";
-		
 		$viewdata['tipo'] = $tipo;
 		$viewdata['valor'] = ( $tipo=='participante' ? $this->config->item('valor_participante') : $this->config->item('valor_servico') );
 		$viewdata['edicao'] = $this->config->item('acamps_edicao');
@@ -38,7 +32,8 @@ class Inscricao extends MY_Controller{
 		$viewdata['inicio'] = $inicio->format('j/n/Y');
 		$viewdata['fim'] = $fim->format('j/n/Y');
 		
-		$this->load->view('inscricao/normas', $viewdata);
+		$this->template->set('title', "Acamp's > Regras de Participação");
+		$this->template->load_view('inscricao/normas', $viewdata);
 	}
 
 	function participante()
@@ -60,8 +55,8 @@ class Inscricao extends MY_Controller{
 				$view_data['ds_email']  = $_POST['ds_email'];
 				
 				// Página de retorno
-				$this->title = "Acamp's > Incrição realizada com Sucesso!";
-				$this->load->view('inscricao/sucesso',$view_data);
+				$this->template->set('title', "Acamp's > Incrição realizada com Sucesso!");
+				$this->template->load_view('inscricao/sucesso',$view_data);
 				return;
 			}
 			else
@@ -69,12 +64,7 @@ class Inscricao extends MY_Controller{
 				$form_data['erro'] = true;
 			}
 		}
-		
-		$this->title = "Acamp's > Formulário de Inscrição";
-		//$this->js  []= 'jquery-ui.min';
-		//$this->js  []= 'jquery.ui.datepicker-pt-BR';
-		//$this->js  []= 'valida.min';
-		$this->css []= 'jquery-ui';
+		$this->load->model('cidade');
 		
 		$form_data['cidades'] = $this->cidade->listar();
 		$form_data['cidades'] = array_reverse($form_data['cidades'], true);
@@ -83,7 +73,14 @@ class Inscricao extends MY_Controller{
 		
 		$this->load->model('divulgacao');
 		$form_data['divulgacao'] = $this->divulgacao->listar_meios();
-		$this->load->view('inscricao/participante', $form_data);
+		
+		$this->template->set('title', "Acamp's > Formulário de Inscrição");
+		$this->template->add_css('jquery-ui.css');
+		$this->template->add_js('jquery.min.js');
+		$this->template->add_js('jquery-ui.min.js');
+		$this->template->add_js('jquery.ui.datepicker-pt-BR.js');
+		$this->template->add_js('valida.js');
+		$this->template->load_view('inscricao/participante', $form_data);
 	}
 
 	function servico()
@@ -105,8 +102,8 @@ class Inscricao extends MY_Controller{
 				$view_data['ds_email']  = $_POST['ds_email'];
 				
 				// Página de retorno
-				$this->title = "Acamp's > Incrição realizada com Sucesso!";
-				$this->load->view('inscricao/sucesso',$view_data);
+				$this->template->set('title', "Acamp's > Incrição realizada com Sucesso!");
+				$this->template->load_view('inscricao/sucesso',$view_data);
 				return;
 			}
 			else
@@ -114,12 +111,8 @@ class Inscricao extends MY_Controller{
 				$form_data['erro'] = true;
 			}
 		}
-
-		$this->title = "Acamp's > Formulário de Incrição > Serviço";
-		//$this->js  []= 'jquery-ui.min';
-		//$this->js  []= 'jquery.ui.datepicker-pt-BR';
-		//$this->js  []= 'valida.min';
-		$this->css []= 'jquery-ui';
+		$this->load->model('cidade');
+		$this->load->model('servico');
 		
 		$form_data['cidades'] = $this->cidade->listar();
 		$form_data['cidades'] = array_reverse($form_data['cidades'], true);
@@ -131,7 +124,13 @@ class Inscricao extends MY_Controller{
 		$form_data['servicos'][0] = 'Selecione...';
 		$form_data['servicos'] = array_reverse($form_data['servicos'], true);
 		
-		$this->load->view('inscricao/servico', $form_data);
+		$this->template->set('title', "Acamp's > Formulário de Incrição > Serviço");
+		$this->template->add_css('jquery-ui.css');
+		$this->template->add_js('jquery.min.js');
+		$this->template->add_js('jquery-ui.min.js');
+		$this->template->add_js('jquery.ui.datepicker-pt-BR.js');
+		$this->template->add_js('valida.js');
+		$this->template->load_view('inscricao/servico', $form_data);
 	}
 
 	function cv()
@@ -152,8 +151,8 @@ class Inscricao extends MY_Controller{
 				$view_data['cd_tipo']   = 'v';
 				
 				// Página de retorno
-				$this->title = "Acamp's > Incrição realizada com Sucesso!";
-				$this->load->view('inscricao/sucesso',$view_data);
+				$this->template->set('title', "Acamp's > Incrição realizada com Sucesso!");
+				$this->template->load_view('inscricao/sucesso',$view_data);
 				return;
 			}
 			else
@@ -161,12 +160,9 @@ class Inscricao extends MY_Controller{
 				$form_data['erro'] = true;
 			}
 		}
-
-		$this->title = "Acamp's > Formulário de Incrição > Comunidade de Vida";
-		//$this->js  []= 'jquery-ui.min';
-		//$this->js  []= 'jquery.ui.datepicker-pt-BR';
-		//$this->js  []= 'valida.min';
-		$this->css []= 'jquery-ui';
+		
+		$this->load->model('servico');
+		$this->load->model('setor');
 
 		$form_data['servicos'] = $this->servico->listar();
 		$form_data['servicos'] = array_reverse($form_data['servicos'], true);
@@ -177,7 +173,14 @@ class Inscricao extends MY_Controller{
 		$form_data['setores'] = array_reverse($form_data['setores'], true);
 		$form_data['setores'][0] = 'Selecione...';
 		$form_data['setores'] = array_reverse($form_data['setores'], true);
-		$this->load->view('inscricao/cv', $form_data);
+		
+		$this->template->set('title', "Acamp's > Formulário de Incrição > Comunidade de Vida");
+		$this->template->add_css('jquery-ui.css');
+		$this->template->add_js('jquery.min.js');
+		$this->template->add_js('jquery-ui.min.js');
+		$this->template->add_js('jquery.ui.datepicker-pt-BR.js');
+		$this->template->add_js('valida.js');
+		$this->template->load_view('inscricao/cv', $form_data);
 	}
 	
 	function boleto($code)
@@ -199,12 +202,11 @@ class Inscricao extends MY_Controller{
 			$viewdata['dados'] = $dados;
 			$viewdata['valor'] = ( $dados['cd_tipo']=='p' ? $this->config->item('valor_participante') : $this->config->item('valor_servico') );
 			
-			$this->title = "Acamp's - Boleto de Pagamento: ".$dados['id_pessoa'];
-			$this->template = 'default';
-			$this->css = array('boleto');
-			//$this->js = array();
+			$this->template->set('title', "Acamp's - Boleto de Pagamento: ".$dados['id_pessoa']);
+			$this->template->set_template('default');
 			
-			$this->load->view('inscricao/boleto',$viewdata);
+			$this->template->add_css('boleto.css');
+			$this->template->load_view('inscricao/boleto', $viewdata);
 		}
 		else
 		{

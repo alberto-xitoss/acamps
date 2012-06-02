@@ -6,11 +6,6 @@
  */
 class Pessoa extends MY_Controller {
 	
-	public $template = 'admin_template';
-	public $title = "Sistema Acamp's";
-	public $css = array('admin');
-	public $js = array('jquery.min');
-	
 	/*
 	 * Construtor Pessoa
 	*/
@@ -20,20 +15,14 @@ class Pessoa extends MY_Controller {
 		if(!$this->session->userdata('logado')){
 			redirect('admin/login');
 		}
-	}
-	
-	/* index
-	 *
-	 * Essa função nunca é chamada.
-	*/
-	function index(){
 		
+		$this->template->set_template('admin_template');
+		$this->template->set('title', "Sistema Acamp's");
 	}
 	
 	/* função detalhes
 	 *
-	 * Página com os detalhes de um inscrito. Esta página contém um link para a
-	 * seção de pagamento desse inscrito e um botão para sua liberação.
+	 * Página com os detalhes de um inscrito.
 	 *
 	 * @param - id_pessoa
 	*/
@@ -62,8 +51,9 @@ class Pessoa extends MY_Controller {
 				$this->load->model('cidade');
 			}
 			
-			$this->js []= 'bootstrap-modal';
-			$this->load->view('admin/detalhes', array('pessoa'=>$pessoa));
+			$this->template->add_js ('jquery.min.js');
+			$this->template->add_js ('bootstrap-modal.js');
+			$this->template->load_view('admin/detalhes', array('pessoa'=>$pessoa));
 		}else{
 			redirect('admin/buscar');
 		}
@@ -143,6 +133,7 @@ class Pessoa extends MY_Controller {
 	 * função pagar
 	 *
 	 * Ainda não há validação da entrada.
+	 * Este é chamado por AJAX.
 	 *
 	 * @param id_pessoa - número de inscrição
 	*/
@@ -170,25 +161,17 @@ class Pessoa extends MY_Controller {
 		
 		if($this->input->post('pagar'))
 		{
-			
-			//log_message('error', 'PAGAMENTO: '.$pessoa->id_pessoa.' - '.$pessoa->nm_pessoa);
-			if($this->config->item('pagamento_simples')){
-				//$dados = $_POST;
-				//unset($dados['avista_pago']);
-				//unset($dados['pagar']);
-				
+			if($this->config->item('pagamento_simples'))
+			{
 				$dados['cd_tipo_pgto'] = $this->input->post('cd_tipo_pgto');
 				$dados['nr_a_pagar'] = $this->input->post('nr_a_pagar');
+				
 				if( !( $dados['nr_desconto'] = $this->input->post('nr_desconto') ) )
 				{
 					$dados['nr_desconto'] = 0;
 				}
-				$dados['nr_pago'] = floatval($dados['nr_a_pagar']) - floatval($dados['nr_desconto']);
 				
-				//$this->log->message('cd_tipo_pgto: '.$dados['cd_tipo_pgto']);
-				//$this->log->message('nr_a_pagar: '.$dados['nr_a_pagar']);
-				//$this->log->message('nr_desconto: '.$dados['nr_desconto']);
-				//$this->log->message('nr_pago: '.$dados['nr_pago']);
+				$dados['nr_pago'] = floatval($dados['nr_a_pagar']) - floatval($dados['nr_desconto']);
 				
 				$this->pessoa_model->efetuar_pagamento($pessoa->id_pessoa, $dados, $this->session->userdata('id_usuario'));
 				
@@ -354,12 +337,6 @@ class Pessoa extends MY_Controller {
 				$form_data['erro'] = true;
 			}
 		}
-		
-		$this->title = "Sistema Acamp's > Formulário de Incrição";
-		$this->css []= 'jquery-ui';
-		$this->js  []= 'jquery-ui.min';
-		$this->js  []= 'jquery.ui.datepicker-pt-BR';
-		
 		$this->load->model('cidade');
 		$form_data['cidades'] = $this->cidade->listar();
 		$form_data['cidades'] = array_reverse($form_data['cidades'], true);
@@ -372,7 +349,12 @@ class Pessoa extends MY_Controller {
 		$form_data['familias'][0] = 'Sem família';
 		$form_data['familias'] = array_reverse($form_data['familias'], true);
 		
-		$this->load->view('admin/inscricao_participante', $form_data);
+		$this->template->set('title', "Sistema Acamp's - Incrição de Participante");
+		$this->template->add_css('jquery-ui.css');
+		$this->template->add_js('jquery.min.js');
+		$this->template->add_js('jquery-ui.min.js');
+		$this->template->add_js('jquery.ui.datepicker-pt-BR.js');
+		$this->template->load_view('admin/inscricao_participante', $form_data);
 	}
 
 	function servico()
@@ -396,12 +378,6 @@ class Pessoa extends MY_Controller {
 				$form_data['erro'] = true;
 			}
 		}
-		
-		$this->title = "Sistema Acamp's > Formulário de Incrição";
-		$this->css []= 'jquery-ui';
-		$this->js  []= 'jquery-ui.min';
-		$this->js  []= 'jquery.ui.datepicker-pt-BR';
-		
 		$this->load->model('cidade');
 		$this->load->model('servico');
 		
@@ -415,7 +391,12 @@ class Pessoa extends MY_Controller {
 		$form_data['servicos'][0] = 'Selecione...';
 		$form_data['servicos'] = array_reverse($form_data['servicos'], true);
 		
-		$this->load->view('admin/inscricao_servico', $form_data);
+		$this->template->set('title', "Sistema Acamp's - Incrição de Serviço");
+		$this->template->add_css('jquery-ui.css');
+		$this->template->add_js('jquery.min.js');
+		$this->template->add_js('jquery-ui.min.js');
+		$this->template->add_js('jquery.ui.datepicker-pt-BR.js');
+		$this->template->load_view('admin/inscricao_servico', $form_data);
 	}
 
 	function cv()
@@ -439,12 +420,6 @@ class Pessoa extends MY_Controller {
 				$form_data['erro'] = true;
 			}
 		}
-		
-		$this->title = "Sistema Acamp's > Formulário de Incrição";
-		$this->css []= 'jquery-ui';
-		$this->js  []= 'jquery-ui.min';
-		$this->js  []= 'jquery.ui.datepicker-pt-BR';
-		
 		$this->load->model('setor');
 		$this->load->model('servico');
 		
@@ -458,7 +433,12 @@ class Pessoa extends MY_Controller {
 		$form_data['setores'][0] = 'Selecione...';
 		$form_data['setores'] = array_reverse($form_data['setores'], true);
 		
-		$this->load->view('admin/inscricao_cv', $form_data);
+		$this->template->set('title', "Sistema Acamp's - Incrição de Comunidade de Vida");
+		$this->template->add_css('jquery-ui.css');
+		$this->template->add_js('jquery.min.js');
+		$this->template->add_js('jquery-ui.min.js');
+		$this->template->add_js('jquery.ui.datepicker-pt-BR.js');
+		$this->template->load_view('admin/inscricao_cv', $form_data);
 	}
 	
 	function especial()
@@ -482,9 +462,6 @@ class Pessoa extends MY_Controller {
 				$form_data['erro'] = true;
 			}
 		}
-		
-		$this->title = "Sistema Acamp's > Incrição > Especial";
-		
 		$this->load->model('servico');
 		
 		$form_data['servicos'] = $this->servico->listar();
@@ -492,7 +469,8 @@ class Pessoa extends MY_Controller {
 		$form_data['servicos'][0] = 'Selecione...';
 		$form_data['servicos'] = array_reverse($form_data['servicos'], true);
 		
-		$this->load->view('admin/inscricao_especial', $form_data);
+		$this->template->set('title', "Sistema Acamp's - Incrição de Comunidade de Vida");
+		$this->template->load_view('admin/inscricao_especial', $form_data);
 	}
 }
 ?>

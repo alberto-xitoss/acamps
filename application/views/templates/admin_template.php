@@ -1,10 +1,15 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="pt"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="pt"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="pt"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="pt"> <!--<![endif]-->
 <head>
-<meta charset=utf-8 />
-<title>{title}</title>
-{css}
-{js}
+	<meta charset=utf-8 />
+	<title><?php echo $template['title'] ?></title>
+	<meta name="viewport" content="width=device-width">
+	<link rel="stylesheet" href="<?php echo css_url() ?>admin.css" />
+	<?php echo $template['meta'] ?>
+	<?php echo $template['js'] ?>
 </head>
 <body>
         <div id="menu">
@@ -61,6 +66,6 @@
             </ul>
             <span id="usuario"><?php echo $this->session->userdata('nm_usuario') ?> | <?php echo anchor('admin/logout', 'sair'); ?></span>
         </div>
-        {conteudo}
+        <?php echo $template['content'] ?>
 </body>
 </html>

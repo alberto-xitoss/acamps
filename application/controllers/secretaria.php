@@ -7,32 +7,19 @@
 
 class Secretaria extends CI_Controller {
 
-	public $template = 'admin_template';
-	public $title = "Sistema Acamp's > Secretaria";
-	public $css = array('admin');
-	public $js = array('jquery.min');
-
-	/* Secretaria - construtor
-	*
-	* No contrutor carregamos apenas a biblioteca Session porque ela será
-	* usada em todo o Controller.
+	/* 
+	 * Secretaria - construtor
 	*/
 	function __construct() {
 		parent::__construct();
 
 		// Autenticação
 		if(!$this->session->userdata('logado')){
-			// se NÃO está logado, vai para a tela de login
 			redirect('admin/login');
 		}
-	}
-
-	/* index
-	*
-	* Essa função nunca é chamada.
-	*/
-	function index(){
-
+		
+		$this->template->set_template('admin_template');
+		$this->template->set('title', "Sistema Acamp's - Secretaria");
 	}
 
 	function historico() {
@@ -69,7 +56,7 @@ class Secretaria extends CI_Controller {
 			$view['log'] []= $registro;
 		}
 
-		$this->load->view('/secretaria/historico', $view);
+		$this->template->load_view('/secretaria/historico', $view);
 
 	}
 
@@ -165,7 +152,7 @@ class Secretaria extends CI_Controller {
 			$registro->addChild('etiquetas', $nome_pdf_etiquetas);
 			$log->asXML($this->config->item('cache_path').'secretaria/log.xml');
 
-			$this->load->view('secretaria/gerado',array(
+			$this->template->load_view('secretaria/gerado',array(
 				'nr_etiquetas' => count($pessoas),
 				'cd_tipo' => $cd_tipo,
 				'etiquetas' => $nome_pdf_etiquetas,
@@ -173,7 +160,7 @@ class Secretaria extends CI_Controller {
 			));
 
 		}
-		elseif($this->input->post('verificar'))
+		elseif($this->input->post('listar'))
 		{
 
 			$this->load->model('pessoa_model');
@@ -183,7 +170,7 @@ class Secretaria extends CI_Controller {
 				$id_ini = $this->input->post('id_ini');
 				if(!$id_ini) $id_ini = 0;
 				$id_fim = $this->input->post('id_fim');
-				if(!$id_fim) $id_fim = 999999;
+				if(!$id_fim) $id_fim = 9999;
 
 				$viewdata['pessoas'] = $this->pessoa_model->verifica_etiqueta_participante($id_ini, $id_fim);
 				if(count($viewdata['pessoas'])==0)
@@ -226,7 +213,9 @@ class Secretaria extends CI_Controller {
 
 			$viewdata['tipo'] = $cd_tipo;
 			$viewdata['form'] = false;
-			$this->load->view('secretaria/etiquetas_view', $viewdata);
+			
+			$this->template->add_js('jquery.min.js');
+			$this->template->load_view('secretaria/etiquetas_view', $viewdata);
 
 		}
 		else
@@ -239,7 +228,9 @@ class Secretaria extends CI_Controller {
 				$viewdata['pessoas'] = $this->pessoa_model->verifica_etiqueta_amigos();
 
 				$this->load->model('familia');
-				$this->load->view('secretaria/etiquetas_view', $viewdata);
+				
+				$this->template->add_js('jquery.min.js');
+				$this->template->load_view('secretaria/etiquetas_view', $viewdata);
 				
 				return;
 			}
@@ -248,13 +239,14 @@ class Secretaria extends CI_Controller {
 				$this->load->model('pessoa_model');
 				$viewdata['pessoas'] = $this->pessoa_model->verifica_etiqueta_e();
 				
-				$this->load->view('secretaria/etiquetas_view', $viewdata);
+				$this->template->add_js('jquery.min.js');
+				$this->template->load_view('secretaria/etiquetas_view', $viewdata);
 				
 				return;
 			}
 			elseif($cd_tipo == 'visitante')
 			{
-				$this->load->view('secretaria/etiquetas_view', $viewdata);
+				$this->template->load_view('secretaria/etiquetas_view', $viewdata);
 				
 				return;
 			}
@@ -263,7 +255,7 @@ class Secretaria extends CI_Controller {
 			$this->load->model('setor');
 			
 			$viewdata['form'] = true; // Mostrar o form de verificação das etiquetas
-			$this->load->view('secretaria/etiquetas_view', $viewdata);
+			$this->template->load_view('secretaria/etiquetas_view', $viewdata);
 		}
 	}
 

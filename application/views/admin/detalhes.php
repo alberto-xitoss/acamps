@@ -3,7 +3,7 @@
     
 	<a href="#" id="foto" >
     <?php if(empty($pessoa['ds_foto'])): ?>
-		<img src="<?php echo $this->config->item('img_url') ?>sem_foto.png" alt="foto" title="Clique para enviar uma foto" />
+		<img src="<?php echo img_url() ?>sem_foto.png" alt="foto" title="Clique para enviar uma foto" />
     <?php else: ?>
 		<img src="<?php echo $pessoa['ds_foto'] ?>" alt="foto" title="Clique para substituir a foto" />
     <?php endif ?>
@@ -370,13 +370,13 @@ $(function(){
 	
 	// Comandos automáticos
 	
-	<?php if($this->session->flashdata('auto_pagar')): ?>
+	<?php //if($this->session->flashdata('auto_pagar')): ?>
 	//$('#pagar').click();
-	<?php endif ?>
+	<?php //endif ?>
 	
-	<?php if($this->session->flashdata('auto_liberar')): ?>
+	<?php //if($this->session->flashdata('auto_liberar')): ?>
 	//$('.confirmacao.liberacao').click();
-	<?php endif ?>
+	<?php //endif ?>
 	
 });
 </script>

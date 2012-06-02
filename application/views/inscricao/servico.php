@@ -180,19 +180,6 @@
 <?php echo form_close();?>
 </div>
 
-
-<script src="<?php echo $this->config->item('js_url') ?>valida.min.js"></script>
-
-<?php if(ENVIRONMENT === "production"): ?>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
-	<script src="http://jquery-ui.googlecode.com/svn/trunk/ui/i18n/jquery.ui.datepicker-pt-BR.js"></script>
-<?php else: ?>
-	<script src="<?php echo $this->config->item('js_url') ?>jquery.min.js"></script>
-	<script src="<?php echo $this->config->item('js_url') ?>jquery-ui.min.js"></script>
-	<script src="<?php echo $this->config->item('js_url') ?>jquery.ui.datepicker-pt-BR.js"></script>
-<?php endif ?>
-
 <script>
 
     $(function()
@@ -207,7 +194,7 @@
 				$(this).change();
 			},
 			showOn: "button",
-			buttonImage: "<?php echo $this->config->item('img_url'); ?>calendar.png",
+			buttonImage: "<?php echo img_url() ?>calendar.png",
 			buttonImageOnly: true
 		});
     })

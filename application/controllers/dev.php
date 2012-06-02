@@ -6,11 +6,6 @@
  */
 class Dev extends CI_Controller {
 	
-	public $template = 'admin_template';
-	public $title = "Sistema Acamp's";
-	public $css = array('bootstrap', 'admin');
-	public $js = array();
-	
 	/*
 	 * Construtor Dev
 	*/
@@ -21,6 +16,9 @@ class Dev extends CI_Controller {
 			redirect('admin/login');
 			return;
 		}
+		
+		$this->template->set_template('admin_template');
+		$this->template->set('title', "Sistema Acamp's");
 	}
 	
 	/*
@@ -31,7 +29,7 @@ class Dev extends CI_Controller {
 	{   
 		$this->load->helper('file');
 		$data['log'] = read_file($this->config->item('log_path').'log-'.date('Y-m-d').'.php');
-		$this->load->view('admin/log', $data);
+		$this->template->load_view('admin/log', $data);
 	}
 	
 	/**
@@ -40,6 +38,13 @@ class Dev extends CI_Controller {
 	*/
 	function limpar($secao = '')
 	{
+		
+		
+		return;// GAMBIARRA DE SEGURANÇA
+		
+		
+		
+		
 		if($secao == 'secretaria')
 		{
 			// Zera marcadores de crachá da tabela pessoa
