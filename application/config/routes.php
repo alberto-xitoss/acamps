@@ -38,7 +38,14 @@
 |
 */
 
-$route['default_controller'] = "inscricao";
+if(ENVIRONMENT != 'acamps')
+{
+	$route['default_controller'] = "inscricao";
+}
+else
+{
+	$route['default_controller'] = "admin";
+}
 $route['404_override'] = '';
 
 /*

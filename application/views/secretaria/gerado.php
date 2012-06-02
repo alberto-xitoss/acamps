@@ -24,9 +24,9 @@
 <div class="wrap well">
 
 	<p>Etiquetas geradas: <?php echo $nr_etiquetas ?></p>
-	<p><?php echo anchor(base_url().'cache/secretaria/'.$etiquetas, 'Baixar etiquetas', 'target="_blank"'); ?></p>
+	<p><strong><?php echo anchor(base_url().'cache/secretaria/'.$etiquetas, 'Baixar etiquetas', 'target="_blank"'); ?></strong></p>
 	<?php if(ENVIRONMENT != 'acamps' && $cd_tipo != 'e' && $cd_tipo != 'visitante'): ?>
-		<p><?php echo anchor(base_url().'cache/secretaria/'.$fotos, 'Baixar fotos', 'target="_blank"'); ?></p>
+		<p><strong><?php echo anchor(base_url().'cache/secretaria/'.$fotos, 'Baixar fotos', 'target="_blank"'); ?></strong></p>
 	<?php endif ?>
 	
 </div>

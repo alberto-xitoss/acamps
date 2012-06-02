@@ -18,7 +18,7 @@
 					<tr>
 						<td><input type="text" placeholder="0" name="id_ini" class="input-mini"></td>
 						<td><input type="text" placeholder="9999" name="id_fim" class="input-mini"></td>
-						<td><?php echo form_submit('verificar', 'Listar', 'class="btn"') ?></td>
+						<td><?php echo form_submit('listar', 'Listar', 'class="btn"') ?></td>
 					</tr>
 				</table>
 			<?php echo form_close() ?>
@@ -75,7 +75,7 @@
 						$servicos = array_merge(array('0'=>'Todos'), $servicos);
 						echo form_dropdown('id_servico', $servicos);
 					?></td>
-					<td><?php echo form_submit('verificar', 'Listar', 'class="btn"') ?></td>
+					<td><?php echo form_submit('listar', 'Listar', 'class="btn"') ?></td>
 				</tr>
 			</table>
 			<?php echo form_close() ?>
@@ -129,7 +129,7 @@
 							$setores = array_merge(array('0'=>'Todos'), $setores);
 							echo form_dropdown('id_setor', $setores);
 						?></td>
-						<td><?php echo form_submit('verificar', 'Listar', 'class="btn"') ?></td>
+						<td><?php echo form_submit('listar', 'Listar', 'class="btn"') ?></td>
 					</tr>
 				</table>
 			<?php echo form_close() ?>

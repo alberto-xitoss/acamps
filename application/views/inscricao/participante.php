@@ -1,7 +1,8 @@
+<div id="conteudo" class="container clearfix">
 <h2>Formulário de Inscrição</h2>
 
 <?php if(isset($erro) && $erro): ?>
-	<div class="alert alert-error">
+	<div class="alert alert-error alert-block">
 		<?php echo validation_errors(); ?>
 	</div>
 <?php endif; ?>
@@ -193,7 +194,8 @@
 	</div>
 </div>
 <!-- Pesquisa -->
-<div id="pesquisa" class="alert alert-info alert-block" ><h3>Antes de concluir sua inscrição diga-nos <strong>como ficou sabendo do Acamp's</strong>?</h3>
+<div id="pesquisa" class="alert alert-info alert-block" >
+	<h3>Antes de concluir sua inscrição diga-nos <strong>como ficou sabendo do Acamp's</strong>?</h3>
 	<?php foreach ($divulgacao as $meio): ?>
 		<label for="meio_<?php echo $meio['id_meio'] ?>"  class="radio">
 		<?php echo form_radio(array(
@@ -206,17 +208,19 @@
 </div>
 <p align="center"><input type="submit" value="Confirmar" name="confirmar" class="btn btn-primary btn-large" /></p>
 <?php echo form_close();?>
+</div>
+
 <script>
 
-    $(function(){
+	$(function(){
 		
-        // Alterando obrigatoriedade do campo 1ª Eucaristia
-        $('#bl_fez_comunhao_n').click(function(){
-            $('[name=bl_fazer_comunhao]').attr('disabled',false).addClass('obrigatorio').change();
-        });
-        $('#bl_fez_comunhao_s').click(function(){
-            $('[name=bl_fazer_comunhao]').attr('disabled',true).removeClass('obrigatorio').removeData('obrigatorio').change();
-        });
+		// Alterando obrigatoriedade do campo 1ª Eucaristia
+		$('#bl_fez_comunhao_n').click(function(){
+			$('[name=bl_fazer_comunhao]').attr('disabled',false).addClass('obrigatorio').change();
+		});
+		$('#bl_fez_comunhao_s').click(function(){
+			$('[name=bl_fazer_comunhao]').attr('disabled',true).removeClass('obrigatorio').removeData('obrigatorio').change();
+		});
 
 		ativarValidacao($("form"));
 		
@@ -228,9 +232,9 @@
 				$(this).change();
 			},
 			showOn: "button",
-			buttonImage: "<?php echo $this->config->item('img_url'); ?>calendar.png",
+			buttonImage: "<?php echo img_url() ?>calendar.png",
 			buttonImageOnly: true
 		});
-    })
-    
+	})
+
 </script>

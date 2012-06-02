@@ -1,3 +1,4 @@
+<div id="conteudo" class="container clearfix">
 <div id="info">
 <h2>Informações Gerais</h2>
 <p>O <strong>Acampamento de Jovens Shalom</strong> é um evento promovido pelo <strong>Projeto Juventude para Jesus</strong> da <strong>Comunidade Católica Shalom</strong> que tem como objetivo a evangelização e uma opção sadia de lazer para a juventude. Contamos com uma intensa programação de atividades de lazer, cursos formativos e noites descontraídas de diversão.</p>
@@ -53,4 +54,5 @@
 	<li>A Rádio Shalom AM 690 trará irformações diariamente.</li>
 </ol>
 <p align="center"><?php echo anchor('/inscricao/'.$tipo, 'Continuar Inscrição &raquo;', array('class'=>'btn btn-primary btn-large', 'id'=>'continuar'))//echo anchor('/inscricao/buscarinscricao/'.$tipo, 'Continuar Inscrição &raquo;') ?></p>
+</div>
 </div>

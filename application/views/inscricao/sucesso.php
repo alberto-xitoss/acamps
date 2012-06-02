@@ -1,3 +1,4 @@
+<div id="conteudo" class="container clearfix">
 <div id="sucesso">
 <h2>Inscrição realizada com sucesso!</h2>
 <?php if(isset($ds_foto)): ?>
@@ -20,4 +21,5 @@ Número de Inscrição: <span class="highlight"><?php echo $id_pessoa ?></span><
 	<p align="center"><a class="btn btn-primary btn-large" target="_blank" href="<?php echo site_url('/inscricao/boleto/').'/'.md5($id_pessoa.$ds_email) ?>">Imprimir Boleto</a></p>
 <?php endif; ?>
 
+</div>
 </div>

@@ -1,3 +1,4 @@
+<div id="conteudo" class="container clearfix">
 <h2>Formulário de Inscrição > Serviço</h2>
 
 <?php if(isset($erro) && $erro): ?>
@@ -177,6 +178,7 @@
 <p align="center"><input type="submit" value="Confirmar" name="confirmar" class="btn btn-primary btn-large" /></p>
 
 <?php echo form_close();?>
+</div>
 
 <script>
 
@@ -192,7 +194,7 @@
 				$(this).change();
 			},
 			showOn: "button",
-			buttonImage: "<?php echo $this->config->item('img_url'); ?>calendar.png",
+			buttonImage: "<?php echo img_url() ?>calendar.png",
 			buttonImageOnly: true
 		});
     })

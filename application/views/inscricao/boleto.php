@@ -1,7 +1,7 @@
 <div class="container">
 	<div id="header" class="clearfix">
-		<img class="logo" src="<?php echo $this->config->item('img_url') ?>logo_boleto.jpg" alt="Shalom/PJJ" width="202" height="50" />
-		<img class="acamps" src="<?php echo $this->config->item('img_url') ?>acamps_boleto.jpg" alt="Acamp's" width="149" height="40" />
+		<img class="logo" src="<?php echo img_url() ?>logo_boleto.jpg" alt="Shalom/PJJ" width="202" height="50" />
+		<img class="acamps" src="<?php echo img_url() ?>acamps_boleto.jpg" alt="Acamp's" width="149" height="40" />
 		<p class="title" align="center">Acampamento de Jovens Shalom</p>
 		<p class="title" align="center">Comprovante de Inscrição</p>
 	</div>
@@ -41,7 +41,7 @@
 	</div>
 	<hr/>
 	<div>
-		<img class="acamps" src="<?php echo $this->config->item('img_url') ?>acamps_boleto.jpg" alt="Acamp's" width="149" height="40" />
+		<img class="acamps" src="<?php echo img_url() ?>acamps_boleto.jpg" alt="Acamp's" width="149" height="40" />
 		<p class="title">Inscrição do Acampamento de Jovens Shalom</p>
 		<table>
 			<tbody>

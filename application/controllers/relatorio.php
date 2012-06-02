@@ -6,36 +6,32 @@
  */
 class Relatorio extends CI_Controller {
 	
-	public $template = 'admin_template';
-	public $title = "Sistema Acamp's";
-	public $css = array('admin');
-	public $js = array();
-	
 	/*
-	 * Construtor Pessoa
+	 * Construtor
 	*/
 	function __construct() {
 		parent::__construct();
-		// Autenticação
+		
 		if(!$this->session->userdata('logado')){ // se NÃO está logado
 			redirect('admin/login');
-			return;
 		}
-		$this->load->library('session');
+		
+		$this->template->set_template('admin_template');
+		$this->template->set('title', "Sistema Acamp's");
 	}
 	
 	/*
-	 * function log
+	 * function sintetico
 	 */
 	function sintetico()
 	{
 		$this->load->model('relatorio_model');
 		$tabelas = $this->relatorio_model->sintetico();
 		
-		$this->template = 'relatorio_template';
-		$this->css[0] = 'relatorio';
-		$this->title .= ' - Relatório Sintético';
-		$this->load->view('relatorio/sintetico', $tabelas);
+		$this->template->set_template('relatorio_template');
+		$this->template->add_css('relatorio.css');
+		$this->template->set('title', "Sistema Acamp's - Relatório Sintético");
+		$this->template->load_view('relatorio/sintetico', $tabelas);
 	}
 	
 	/*
@@ -60,16 +56,16 @@ class Relatorio extends CI_Controller {
 			$this->load->model('relatorio_model');
 			$viewdata['tabela'] = $this->relatorio_model->pagamento($dt_inicio, $dt_fim);
 			
-			$this->template = 'relatorio_template';
-			$this->title .= ' - Relatório de Pagamento';
-			$this->css[0] = 'relatorio';
-			$this->load->view('relatorio/pagamento', $viewdata);
+			$this->template->set_template('relatorio_template');
+			$this->template->add_css('relatorio.css');
+			$this->template->set('title', "Sistema Acamp's - Relatório de Pagamento");
+			$this->template->load_view('relatorio/pagamento', $viewdata);
 		}else{
-			$this->js  []= 'jquery.min';
-			$this->js  []= 'jquery-ui.min';
-			$this->js  []= 'jquery.ui.datepicker-pt-BR';
-			$this->css []= 'jquery-ui';
-			$this->load->view('admin/relatorio_view', array('tipo'=>'pagamento'));
+			$this->template->add_css('jquery-ui.css');
+			$this->template->add_js('jquery.min.js');
+			$this->template->add_js('jquery-ui.min.js');
+			$this->template->add_js('jquery.ui.datepicker-pt-BR.js');
+			$this->template->load_view('admin/relatorio_view', array('tipo'=>'pagamento'));
 		}
 	}
 	
@@ -98,13 +94,13 @@ class Relatorio extends CI_Controller {
 			$this->load->model('servico');
 			$viewdata['servico'] = $this->servico->buscar($this->input->post('id_servico'));
 			
-			$this->template = 'relatorio_template';
-			$this->title .= ' - Relatório de Serviço';
-			$this->css[0] = 'relatorio';
-			$this->load->view('relatorio/servico', $viewdata);
+			$this->template->set_template('relatorio_template');
+			$this->template->add_css('relatorio.css');
+			$this->template->set('title', "Sistema Acamp's - Relatório de Serviço");
+			$this->template->load_view('relatorio/servico', $viewdata);
 		}else{
 			$this->load->model('servico');
-			$this->load->view('admin/relatorio_view', array('tipo'=>'servico'));
+			$this->template->load_view('admin/relatorio_view', array('tipo'=>'servico'));
 		}
 	}
 	
@@ -133,13 +129,13 @@ class Relatorio extends CI_Controller {
 			$this->load->model('setor');
 			$viewdata['setor'] = $this->setor->buscar($this->input->post('id_setor'));
 			
-			$this->template = 'relatorio_template';
-			$this->title .= ' - Relatório da Comunidade de Vida';
-			$this->css[0] = 'relatorio';
-			$this->load->view('relatorio/cv', $viewdata);
+			$this->template->set_template('relatorio_template');
+			$this->template->add_css('relatorio.css');
+			$this->template->set('title', "Sistema Acamp's - Relatório da Comunidade de Vida");
+			$this->template->load_view('relatorio/cv', $viewdata);
 		}else{
 			$this->load->model('setor');
-			$this->load->view('admin/relatorio_view', array('tipo'=>'cv'));
+			$this->template->load_view('admin/relatorio_view', array('tipo'=>'cv'));
 		}
 	}
 }

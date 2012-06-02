@@ -3,9 +3,9 @@
     
 	<a href="#" id="foto" >
     <?php if(empty($pessoa['ds_foto'])): ?>
-		<img id="foto" src="<?php echo $this->config->item('img_url') ?>sem_foto.png" alt="foto" title="Clique para enviar uma foto" />
+		<img src="<?php echo img_url() ?>sem_foto.png" alt="foto" title="Clique para enviar uma foto" />
     <?php else: ?>
-		<img id="foto" src="<?php echo $pessoa['ds_foto'] ?>" alt="foto" title="Clique para substituir a foto" />
+		<img src="<?php echo $pessoa['ds_foto'] ?>" alt="foto" title="Clique para substituir a foto" />
     <?php endif ?>
     </a>
 	
@@ -57,11 +57,15 @@
 				}
 			}
 			
-		?><?php
-		if($pessoa['cd_tipo'] != 'v' && $pessoa['cd_tipo'] != 'e'): // Se não for da Comunidade de Vida
-			?><a class="btn boleto" target="_blank" href="<?php echo site_url('/inscricao/boleto/').'/'.md5($pessoa['id_pessoa'].$pessoa['ds_email']) ?>">Imprimir Boleto</a><?php
-		endif;
-			echo anchor('admin/excluir/'.$pessoa['id_pessoa'], 'Excluir Inscrição', 'class="btn btn-danger excluir confirmacao"');
+		?>
+		<?php if($pessoa['cd_tipo'] != 'v' && $pessoa['cd_tipo'] != 'e'): // Se não for da Comunidade de Vida ?>
+			<a class="btn boleto" target="_blank" href="<?php echo site_url('/inscricao/boleto/').'/'.md5($pessoa['id_pessoa'].$pessoa['ds_email']) ?>">Imprimir Boleto</a>
+		<?php endif ?>
+		<?php
+			if($this->session->userdata('permissao') & CORRECAO)
+			{
+				echo anchor('admin/excluir/'.$pessoa['id_pessoa'], 'Excluir Inscrição', 'class="btn btn-danger excluir confirmacao"');
+			}
 		?>
     </div>
 </div>
@@ -133,10 +137,13 @@
             </tr>
         <?php endif ?>
 <!----------------------------------------------------------------------------->
-        <tr>
+        <?php if ($pessoa['cd_tipo'] != 'e'): ?>
+		<tr>
             <th scope="col">Data de Nascimento</th>
             <td><input type="text" class="data span2" id="dt_nascimento" value="<?php echo date_create($pessoa['dt_nascimento'])->format('d/m/Y') ?>" name="dt_nascimento"></td>
         </tr>
+		<?php endif ?>
+<!----------------------------------------------------------------------------->
         <tr>
             <th scope="col">Sexo</th>
             <td>
@@ -145,7 +152,7 @@
 			</td>
         </tr>
 <!----------------------------------------------------------------------------->
-        <?php if ($pessoa['cd_tipo'] != 'v'): ?>
+        <?php if ($pessoa['cd_tipo'] != 'v' && $pessoa['cd_tipo'] != 'e'): ?>
             <tr>
                 <th scope="col">RG</th>
                 <td><input type="text" class="span2" id="nr_rg" value="<?php echo $pessoa['nr_rg'] ?>" name="nr_rg"></td>
@@ -196,7 +203,7 @@
 			</td>
         </tr>
 <!----------------------------------------------------------------------------->
-        <?php if ($pessoa['cd_tipo'] != 'v'): ?>
+        <?php if ($pessoa['cd_tipo'] != 'v' && $pessoa['cd_tipo'] != 'e'): ?>
             <tr>
                 <th>Barracão</th>
                 <td>
@@ -206,6 +213,7 @@
             </tr>
         <?php endif ?>
 <!----------------------------------------------------------------------------->
+		<?php if ($pessoa['cd_tipo'] != 'e'): ?>
 		<tr>
 			<th scope="col">Transporte</th>
 			<td>
@@ -213,6 +221,7 @@
 				<br/><label for="bl_transporte_n" class="radio"><input type="radio" class="obrigatorio" id="bl_transporte_n" value="0" name="bl_transporte" <?php if(!$pessoa['bl_transporte']) echo 'checked' ?>>Não</label>
 			</td>
 		</tr>
+		<?php endif ?>
 <!----------------------------------------------------------------------------->
         <?php if($pessoa['cd_tipo'] == 'p'): // Se for Participante ?>
             <tr>
@@ -234,12 +243,14 @@
             </tr>
         <?php endif ?>
 <!----------------------------------------------------------------------------->
-        <tr>
+        <?php if ($pessoa['cd_tipo'] != 'e'): ?>
+		<tr>
             <th scope="col">Alergia a alimentos</th>
             <td><input type="text" class="span5" id="nm_alergia_alimento" value="<?php echo $pessoa['nm_alergia_alimento'] ?>" name="nm_alergia_alimento"></td>
         </tr>
+		<?php endif ?>
 <!----------------------------------------------------------------------------->
-        <?php if ($pessoa['cd_tipo'] != 'v'): ?>
+        <?php if ($pessoa['cd_tipo'] != 'v'  && $pessoa['cd_tipo'] != 'e'): ?>
             <tr>
                 <th scope="col">Alergia a remédios</th>
                 <td><input type="text" class="span5" id="nm_alergia_remedio" value="<?php echo $pessoa['nm_alergia_remedio'] ?>" name="nm_alergia_remedio"></td>
@@ -299,6 +310,7 @@ $(function(){
     });
 	
     // Adicionar Foto
+	<?php if($pessoa['cd_tipo'] != 'e'): ?>
 	$("#foto-upload").modal({
 		'keyboard':true,
 		'backdrop':true,
@@ -308,6 +320,7 @@ $(function(){
 		event.preventDefault();
 		$("#foto-upload").modal('show');
 	});
+	<?php endif ?>
     
     // Botão que ativa edição dos dados de inscrição
     $("#ativar-correcao").click(function(event){
@@ -357,13 +370,13 @@ $(function(){
 	
 	// Comandos automáticos
 	
-	<?php if($this->session->flashdata('auto_pagar')): ?>
-	$('#pagar').click();
-	<?php endif ?>
+	<?php //if($this->session->flashdata('auto_pagar')): ?>
+	//$('#pagar').click();
+	<?php //endif ?>
 	
-	<?php if($this->session->flashdata('auto_liberar')): ?>
-	$('.confirmacao.liberacao').click();
-	<?php endif ?>
+	<?php //if($this->session->flashdata('auto_liberar')): ?>
+	//$('.confirmacao.liberacao').click();
+	<?php //endif ?>
 	
 });
 </script>

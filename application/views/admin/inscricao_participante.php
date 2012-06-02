@@ -221,7 +221,7 @@
 				$(this).change();
 			},
 			showOn: "button",
-			buttonImage: "<?php echo $this->config->item('img_url'); ?>calendar.png",
+			buttonImage: "<?php echo img_url() ?>calendar.png",
 			buttonImageOnly: true
 		});
     })

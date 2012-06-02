@@ -1,25 +1,11 @@
 <?php
+
 /* Admin
  *
  * Principal Controller do Sistema Acamp's.
- *
- * Atributos:
- *   template
- *   title
- *   css
- *   js
- * 
- * Métodos:
- *   index
- *   login
- *   buscar
 */
-class Admin extends CI_Controller {
 
-	public $template = 'admin_template';
-	public $title = "Sistema Acamp's";
-	public $css = array('admin');
-	public $js =  array('jquery.min');
+class Admin extends CI_Controller {
 
 	/* Admin - construtor
 	 *
@@ -28,6 +14,9 @@ class Admin extends CI_Controller {
 	*/
 	function __construct() {
 		parent::__construct();
+		
+		$this->template->set_template('admin_template');
+		$this->template->set('title', "Sistema Acamp's");
 	}
 	
 	/* index
@@ -63,7 +52,6 @@ class Admin extends CI_Controller {
 			
 			$this->load->model('usuario');
 			$usuario = $this->usuario->autenticar($this->input->post('nm_usuario'), $this->input->post('pw_usuario'));
-			//log_message('error', print_r($usuario,true));
 			if($usuario){
 				
 				$this->session->set_userdata(array(
@@ -81,9 +69,9 @@ class Admin extends CI_Controller {
 			}
 		}
 		
-		$this->template = 'default';
-		$this->load->helper('form');
-		$this->load->view('admin/login', $view_data);
+		$this->template->set_template('default');
+		$this->template->add_css('admin.css');
+		$this->template->load_view('admin/login', $view_data);
 		
 	}
 	
@@ -126,7 +114,6 @@ class Admin extends CI_Controller {
 		
 		if($this->input->post('buscar'))
 		{
-			
 			// Para escrever a string de consulta novamente no campo de busca, ao retornar a página de resultados
 			$viewdata['consulta'] = $this->input->post('consulta');
 			
@@ -140,10 +127,8 @@ class Admin extends CI_Controller {
 				$this->session->set_userdata('ultima_consulta', $viewdata['consulta']);
 			}
 		}
-		
 		else if($this->session->userdata('ultima_consulta'))
 		{
-			
 			// Recupera o valor da última consulta
 			if($this->session->userdata('ultima_consulta') == '*')
 			{
@@ -198,7 +183,7 @@ class Admin extends CI_Controller {
 			}
 		}
 		
-		$this->load->view('admin/buscar', $viewdata);
+		$this->template->load_view('admin/buscar', $viewdata);
 	}
 }
 
