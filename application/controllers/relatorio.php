@@ -28,7 +28,7 @@ class Relatorio extends CI_Controller {
 		$this->load->model('relatorio_model');
 		$tabelas = $this->relatorio_model->sintetico();
 		
-		$this->template->set_template('relatorio_template');
+		$this->template->set_template('default');
 		$this->template->add_css('relatorio.css');
 		$this->template->set('title', "Sistema Acamp's - Relatório Sintético");
 		$this->template->load_view('relatorio/sintetico', $tabelas);
@@ -56,7 +56,7 @@ class Relatorio extends CI_Controller {
 			$this->load->model('relatorio_model');
 			$viewdata['tabela'] = $this->relatorio_model->pagamento($dt_inicio, $dt_fim);
 			
-			$this->template->set_template('relatorio_template');
+			$this->template->set_template('default');
 			$this->template->add_css('relatorio.css');
 			$this->template->set('title', "Sistema Acamp's - Relatório de Pagamento");
 			$this->template->load_view('relatorio/pagamento', $viewdata);
@@ -94,7 +94,7 @@ class Relatorio extends CI_Controller {
 			$this->load->model('servico');
 			$viewdata['servico'] = $this->servico->buscar($this->input->post('id_servico'));
 			
-			$this->template->set_template('relatorio_template');
+			$this->template->set_template('default');
 			$this->template->add_css('relatorio.css');
 			$this->template->set('title', "Sistema Acamp's - Relatório de Serviço");
 			$this->template->load_view('relatorio/servico', $viewdata);
@@ -129,7 +129,7 @@ class Relatorio extends CI_Controller {
 			$this->load->model('setor');
 			$viewdata['setor'] = $this->setor->buscar($this->input->post('id_setor'));
 			
-			$this->template->set_template('relatorio_template');
+			$this->template->set_template('default');
 			$this->template->add_css('relatorio.css');
 			$this->template->set('title', "Sistema Acamp's - Relatório da Comunidade de Vida");
 			$this->template->load_view('relatorio/cv', $viewdata);
