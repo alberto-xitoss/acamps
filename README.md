@@ -8,12 +8,18 @@ Aplicação Web feita com o objetivo de ser um sistema completo para as inscriç
 do Acampamento de Jovens Shalom.  
 A aplicação possui:
 
- * Formulário de inscrição
+ * Inscrição online
  * Gerenciamento de pagamento e estado das inscrições
  * Gerenciamento de equipes de serviço
  * Gerenciamento dos inscritos da Comunidade de Vida
- * Impressão de crachás
- * Relatórios
+ * Impressão de etiquetas com código de barras, para os crachás
+ * Relatórios: Balanço geral de inscrições, Serviço por equipe, Financeiro, etc.
+ * Gerenciamento de reservas dos ônibus
+
+Funcionalidades externas a aplicação
+ * Controle de entrade e saída
+ * Controle de alimentação
+ * Acompanhamento da alimentação em tempo real pelo celular
  
-[Documentação](https://github.com/informaticapjj/acamps/wiki)
+[Veja a Documentação](https://github.com/informaticapjj/acamps/wiki)
 
