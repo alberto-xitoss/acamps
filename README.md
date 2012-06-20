@@ -16,7 +16,7 @@ A aplicação possui:
  * Relatórios: Balanço geral de inscrições, Serviço por equipe, Financeiro, etc.
  * Gerenciamento de reservas dos ônibus
 
-Funcionalidades externas a aplicação
+Funcionalidades externas a aplicação:
  * Controle de entrade e saída
  * Controle de alimentação
  * Acompanhamento da alimentação em tempo real pelo celular
