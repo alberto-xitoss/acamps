@@ -1,5 +1,5 @@
 # Configurações do CodeIgniter
-
+index.php
 application/config/production/*
 !application/config/production/exemplo*
 
