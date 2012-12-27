@@ -1,8 +1,8 @@
 <!doctype html>
-<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="pt"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="pt"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js lt-ie9" lang="pt"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="pt"> <!--<![endif]-->
+<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="pt"> <![endif]-->
+<!--[if IE 7]>    <html class="lt-ie9 lt-ie8" lang="pt"> <![endif]-->
+<!--[if IE 8]>    <html class="lt-ie9" lang="pt"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="pt"> <!--<![endif]-->
 <head>
 	<meta charset=utf-8 />
 	<title><?php echo $template['title'] ?></title>
@@ -21,8 +21,22 @@
                         <li><?php echo anchor('admin/inscrever/servico', 'Inscrever Serviço'); ?></li>
                         <li><?php echo anchor('admin/inscrever/cv', 'Inscrever Comunidade de Vida'); ?></li>
                         <li><?php echo anchor('admin/inscrever/especial', 'Inscrição Especial'); ?></li>
+                        <?php /*<li><?php echo anchor('admin/onibus', 'Gerenciar Ônibus'); ?></li>*/ ?>
                     </ul>
                 </li>
+                <li class="drop">Ônibus
+                	<ul class="sub">
+                		<li><?php echo anchor('admin/onibus/locais', 'Locais da saída/chegada'); ?></li>
+                		<li><?php echo anchor('admin/onibus/listas', 'Listas dos ônibus'); ?></li>
+                	</ul>
+                </li>
+                <?php if($this->session->userdata('permissao') & FINANCEIRO): ?>
+					<li class="drop">Financeiro
+						<ul class="sub">
+							<li><?php echo anchor('admin/auditar','Auditar Inscrições') ?></li>
+						</ul>
+					</li>
+                <?php endif ?>
                 <?php if($this->session->userdata('permissao') & SECRETARIA): ?>
 					<li class="drop">Secretaria
 						<ul class="sub">
@@ -44,7 +58,10 @@
 						<?php endif ?>
 						<li><?php echo anchor('admin/relatorio/servico', 'Serviço/Liberação') ?></li>
 						<li><?php echo anchor('admin/relatorio/cv', 'Comunidade de Vida') ?></li>
-						<?php /*<li class="disabled">Participantes por família</li>
+						<li><?php echo anchor('admin/relatorio/familia', 'Participantes por Família') ?></li>
+						<li><?php echo anchor_popup('admin/relatorio/pastoreio', 'Seminário por Idade') ?></li>
+						<li><?php echo anchor_popup('admin/relatorio/divulgacao', 'Pesquisa sobre Divulgação') ?></li>
+						<?php /*
 						<li class="disabled">Aniversariantes da semana</li>
 						<li class="disabled">Alimentação</li>
 						<li class="disabled">Portaria</li>

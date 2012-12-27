@@ -7,8 +7,11 @@
 			<div class="well">
 				<p>Etiquetas de <?php echo $registro->tipo; ?></p>
 				<p>Data: <?php echo $registro->data; ?></p>
-				<p><?php echo anchor(base_url().'cache/secretaria/'.$registro->etiquetas, 'Baixar etiquetas'); ?></p>
-				<p><?php echo anchor(base_url().'cache/secretaria/'.$registro->fotos, 'Baixar fotos'); ?></p>
+				<p><?php echo anchor(base_url().'cache/secretaria/'.$registro->etiquetas, 'Baixar etiquetas', 'target="_blank"'); ?></p>
+				<?php if(isset($registro->bordas)): ?>
+					<p><?php echo anchor(base_url().'cache/secretaria/'.$registro->bordas, 'Baixar etiquetas com bordas', 'target="_blank"'); ?></p>
+				<?php endif ?>
+				<p><?php echo anchor(base_url().'cache/secretaria/'.$registro->fotos, 'Baixar fotos'), 'target="_blank"'; ?></p>
 			</div>
 		<?php endforeach; ?>
 		</table>

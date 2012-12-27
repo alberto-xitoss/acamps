@@ -1,18 +1,28 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /*
- * -------------------------------------------------------------------
- *  CONSTANTES DA APLICAÇÃO ACAMP'S
- * -------------------------------------------------------------------
+ |-------------------------------------------------------------------
+ | CONSTANTES DA APLICAï¿½ï¿½O ACAMP'S
+ |-------------------------------------------------------------------
+ |
+ |               DEV.FIN.COR.LIB.SEC.DES.PAG | DEC | HEX
+ | DESENVOLVEDOR  1   1   1   1   1   1   1  | 127 | 7F
+ | FINANCEIRO     0   1   1   1   0   1   1  |  59 | 3B
+ | COORDENADORES  0   0   1   1   1   1   1  |  31 | 0F
+ | COORD. INSCR.  0   0   1   1   0   1   1  |  27 | 1B
+ | CAIXAS         0   0   0   0   0   0   1  |   1 | 01
+ | SECRETARIA     0   0   1   1   1   0   0  |  28 | 1C
+ | 
  */
 
-// Constantes de Permissão de Usuário
+// Constantes de Permissï¿½o de Usuï¿½rio
 define('PAGAMENTO', 1);
 define('DESCONTO', 2);
 define('SECRETARIA', 4);
 define('LIBERACAO', 8);
 define('CORRECAO', 16);
-define('DESENVOLVEDOR', 32);
+define('FINANCEIRO', 32);
+define('DESENVOLVEDOR', 64);
 
 /*
 |--------------------------------------------------------------------------

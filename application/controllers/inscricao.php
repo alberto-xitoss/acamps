@@ -45,7 +45,6 @@ class Inscricao extends MY_Controller{
 			if($this->form_validation->run())
 			{
 				unset($_POST['confirmar']);
-				
 				$this->load->library('inscricoes');
 				$view_data = $this->inscricoes->inscrever('p');
 				
@@ -79,7 +78,7 @@ class Inscricao extends MY_Controller{
 		$this->template->add_js('jquery.min.js');
 		$this->template->add_js('jquery-ui.min.js');
 		$this->template->add_js('jquery.ui.datepicker-pt-BR.js');
-		$this->template->add_js('valida.js');
+		$this->template->add_js('valida.min.js');
 		$this->template->load_view('inscricao/participante', $form_data);
 	}
 
@@ -129,7 +128,7 @@ class Inscricao extends MY_Controller{
 		$this->template->add_js('jquery.min.js');
 		$this->template->add_js('jquery-ui.min.js');
 		$this->template->add_js('jquery.ui.datepicker-pt-BR.js');
-		$this->template->add_js('valida.js');
+		$this->template->add_js('valida.min.js');
 		$this->template->load_view('inscricao/servico', $form_data);
 	}
 
@@ -179,13 +178,12 @@ class Inscricao extends MY_Controller{
 		$this->template->add_js('jquery.min.js');
 		$this->template->add_js('jquery-ui.min.js');
 		$this->template->add_js('jquery.ui.datepicker-pt-BR.js');
-		$this->template->add_js('valida.js');
+		$this->template->add_js('valida.min.js');
 		$this->template->load_view('inscricao/cv', $form_data);
 	}
 	
-	function boleto($code)
+	function boleto($code = "")
 	{
-		
 		$viewdata['periodo'] = $this->config->item('acamps_periodo');
 		
 		$inicio = DateTime::createFromFormat('j/n/Y', $this->config->item('acamps_inicio'));

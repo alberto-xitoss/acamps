@@ -1,7 +1,7 @@
 <?php
 	
 	/*
-	 * Coloca as primeiras letras do nome em maiúsculo e o restante em minúsculo
+	 * Coloca as primeiras letras do nome em maiÃºsculo e o restante em minÃºsculo
 	 * independente de como elas estiverem
 	*/
 	function normaliza_nome($nome)
@@ -26,13 +26,13 @@
 	}
 	
 	/*
-	 * Traduz mês do inglês pro português
+	 * Traduz mÃªs do inglÃªs pro portuguÃªs
 	*/
 	function traduz_mes($month)
 	{
 		$months = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Setembro', 'October', 'November', 'December');
 		
-		$meses = array('Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro');
+		$meses = array('Janeiro', 'Fevereiro', 'MarÃ§o', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro');
 		
 		return str_replace($months, $meses, $month);
 	}

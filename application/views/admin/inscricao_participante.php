@@ -65,6 +65,13 @@
 			<label for="bl_transporte_n"  class="radio"><input type="radio" id="bl_transporte_n" value="0" name="bl_transporte" <?php if(set_radio('bl_transporte', '0')) echo 'checked' ?>>Não</label>
 		</div>
 	</div>
+	<!-- Preferência de local de saída -->
+	<div class="control-group">
+		<label class="control-label">De onde prefere sair?</label>
+		<div class="controls">
+			<div class="controls"><?php echo form_dropdown('id_onibus_local', $locais_onibus, $this->input->post('id_onibus_local')); ?></div>
+		</div>
+	</div>
 </div>
 
 <!-- Família -->
@@ -196,6 +203,19 @@
 	<div class="controls">
 		<input type="file" size="32" class="obrigatorio" value="<?php echo set_value('ds_foto') ?>" name="ds_foto" id="ds_foto">
 	</div>
+</div>
+<!-- Pesquisa -->
+<div id="pesquisa" class="alert alert-info alert-block" >
+	<h3>Como ficou sabendo do Acamp's?</h3>
+	<?php foreach ($divulgacao as $meio): ?>
+		<label for="meio_<?php echo $meio['id_meio'] ?>"  class="radio">
+		<?php echo form_radio(array(
+			'name'    => 'id_meio',
+			'id'      => 'meio_'.$meio['id_meio'],
+			'value'   => $meio['id_meio'],
+			'checked' => set_radio('meio', $meio['id_meio']),
+		)) ?><?php echo $meio['nm_meio'] ?></label>
+	<?php endforeach ?>
 </div>
 <p align="center"><input type="submit" value="Confirmar" name="confirmar" class="btn btn-primary btn-large" /></p>
 <?php echo form_close();?>

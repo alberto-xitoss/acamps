@@ -221,9 +221,9 @@ class Relatorio_model extends CI_Model{
 		else if($this->db->platform() == 'mysql')
 		{
 			if($dt_inicio==$dt_fim){
-				$this->db->where("date(pagamento.dt_pgto) = '".$dt_inicio."'");
+				$this->db->where("date(pagamento.dt_pgto) = '".date_create_from_format("d/m/Y", $dt_inicio)->format('Y-m-d')."'");
 			}else{
-				$this->db->where("date(pagamento.dt_pgto) BETWEEN '".$dt_inicio."' AND '".$dt_fim."'");
+				$this->db->where("date(pagamento.dt_pgto) BETWEEN '".date_create_from_format("d/m/Y", $dt_inicio)->format('Y-m-d')."' AND '".date_create_from_format("d/m/Y", $dt_fim)->format('Y-m-d')."'");
 			}
 		}
 		
@@ -262,5 +262,37 @@ class Relatorio_model extends CI_Model{
 		$this->db->order_by('nm_setor, nm_pessoa');
 		
 		return $this->db->get()->result_array();
+	}
+	
+	function familia($id_familia = 0)
+	{
+		$this->db->select('pessoa.id_pessoa, pessoa.nm_pessoa, nm_familia')
+				->from('pessoa')
+				->join('familia', 'pessoa.id_familia = familia.id_familia');
+		if($id_familia){
+			$this->db->where('pessoa.id_familia', $id_familia);
+		}
+		$this->db->order_by('nm_familia, nm_pessoa');
+		
+		return $this->db->get()->result_array();
+	}
+	
+	function pastoreio()
+	{
+		$query = $this->db->query("SELECT DATE_FORMAT(NOW(), '%Y') - DATE_FORMAT(dt_nascimento, '%Y') - (DATE_FORMAT(NOW(), '00-%m-%d') < DATE_FORMAT(dt_nascimento, '00-%m-%d')) AS idade, count(*) AS num
+									FROM `pessoa` WHERE cd_tipo = 'p' AND id_status = 3 AND bl_seminario = 1
+									GROUP BY idade
+									ORDER BY idade");
+		return $query->result_array();
+	}
+	
+	public function divulgacao()
+	{
+		$query = $this->db->query("SELECT nm_meio, count( * ) AS nr_meio
+									FROM pesquisa_divulgacao
+									RIGHT JOIN meio_divulgacao ON meio_divulgacao.id_meio = pesquisa_divulgacao.id_meio
+									GROUP BY nm_meio
+									ORDER BY nr_meio DESC");
+		return $query->result_array();
 	}
 }

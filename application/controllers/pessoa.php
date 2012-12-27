@@ -1,4 +1,4 @@
-<?php
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /*
  * Description of pessoa
@@ -177,20 +177,20 @@ class Pessoa extends MY_Controller {
 				
 				if($pessoa->cd_tipo == 'p')
 				{
-					// Escolhendo Família
-					// ---------------------------------------------------
-					$this->load->model('familia');
-					$familia = $this->familia->familia_menor();
-					$this->pessoa_model->atualizar($pessoa->id_pessoa, array('id_familia'=>$familia));
-					// ---------------------------------------------------
+					if(empty($pessoa->id_familia))
+					{
+						$this->load->model('familia');
+						$familia = $this->familia->familia_menor();
+						$this->pessoa_model->atualizar($pessoa->id_pessoa, array('id_familia'=>$familia));
+					}
+					
+					/*if($pessoa->bl_transporte)
+					{
+						// Resevando uma vaga no ônibus
+						$nr_onibus = $this->pessoa_model->proximo_onibus();
+						$this->pessoa_model->escolher_onibus($pessoa->id_pessoa, $nr_onibus);
+					}*/
 				}
-				
-				/* if($pessoa->bl_transporte)
-				{
-					// Resevando uma vaga no ônibus
-					$this->load->model('missao_model');
-					$this->missao_model->onibus($pessoa->id_pessoa);
-				} */
 			}
 			
 			redirect('admin/pessoa/'.$id_pessoa);
@@ -265,12 +265,12 @@ class Pessoa extends MY_Controller {
 		if($pessoa->cd_tipo == 'p' && $pessoa->id_status == '3'){ // Revertendo pagamento de participante
 			
 			$this->pessoa_model->estornar_pagamento($id_pessoa);
-			//$this->missao_model->remover_onibus($id_pessoa);
+			$this->pessoa_model->remover_onibus($id_pessoa);
 			
 		}elseif($pessoa->cd_tipo == 's' && $pessoa->id_status == '3'){ // Revertendo pagamento de serviço
 			
 			$this->pessoa_model->estornar_pagamento($id_pessoa);
-			//$this->missao_model->remover_onibus($id_pessoa);
+			$this->pessoa_model->remover_onibus($id_pessoa);
 			
 		}elseif($pessoa->cd_tipo == 's' && $pessoa->id_status == '1'){ // Revertendo liberação de serviço
 			
@@ -279,7 +279,7 @@ class Pessoa extends MY_Controller {
 		}elseif($pessoa->cd_tipo == 'v' && $pessoa->id_status == '3'){ // Revertendo liberação de CV
 			
 			$this->pessoa_model->atualizar($id_pessoa, array('id_status' => '2'));
-			//$this->missao_model->remover_onibus($id_pessoa);
+			$this->pessoa_model->remover_onibus($id_pessoa);
 			
 		}
 		
@@ -348,6 +348,15 @@ class Pessoa extends MY_Controller {
 		$form_data['familias'] = array_reverse($form_data['familias'], true);
 		$form_data['familias'][0] = 'Sem família';
 		$form_data['familias'] = array_reverse($form_data['familias'], true);
+		
+		$this->load->model('onibus_local');
+		$form_data['onibus_locais'] = $this->onibus_local->listar();
+		$form_data['onibus_locais'] = array_reverse($form_data['onibus_locais'], true);
+		$form_data['onibus_locais'][0] = 'Selecione...';
+		$form_data['onibus_locais'] = array_reverse($form_data['onibus_locais'], true);
+		
+		$this->load->model('divulgacao');
+		$form_data['divulgacao'] = $this->divulgacao->listar_meios();
 		
 		$this->template->set('title', "Sistema Acamp's - Incrição de Participante");
 		$this->template->add_css('jquery-ui.css');

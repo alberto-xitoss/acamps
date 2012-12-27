@@ -12,7 +12,8 @@ class Admin extends CI_Controller {
 	 * No contrutor carregamos apenas a biblioteca Session porque ela será
 	 * usada em todo o Controller.
 	*/
-	function __construct() {
+	function __construct()
+	{
 		parent::__construct();
 		
 		$this->template->set_template('admin_template');
@@ -144,6 +145,33 @@ class Admin extends CI_Controller {
 		{
 			$this->load->model('pessoa_model');
 			
+			$this->load->library('pagination');
+			
+			$config['base_url'] = $this->config->item('base_url') . 'admin/buscar';
+			$config['total_rows'] = $this->pessoa_model->count($viewdata['consulta']);
+			$config['per_page'] = 14;
+			$config['num_links'] = 4;
+			$config['first_link'] = 'Primeiros';
+			$config['first_tag_open'] = '<li>';
+			$config['first_tag_close'] = '</li>';
+			$config['last_link'] = 'Últimos';
+			$config['last_tag_open'] = '<li>';
+			$config['last_tag_close'] = '</li>';
+			$config['full_tag_open'] = '<div class="pagination pagination-centered"><ul>';
+			$config['full_tag_close'] = '</ul></div>';
+			$config['num_tag_open'] = '<li>';
+			$config['num_tag_close'] = '</li>';
+			$config['cur_tag_open'] = '<li class="active"><a href="#">';
+			$config['cur_tag_close'] = '</a></li>';
+			$config['next_link'] = '&raquo;';
+			$config['next_tag_open'] = '<li>';
+			$config['next_tag_close'] = '</li>';
+			$config['prev_link'] = '&laquo;';
+			$config['prev_tag_open'] = '<li>';
+			$config['prev_tag_close'] = '</li>';
+			
+			$this->pagination->initialize($config);
+			
 			// Se a string de consulta contém números, busca pela inscrição
 			// Senão busca pelo nome
 			if(strpbrk($viewdata['consulta'], '0123456789'))
@@ -156,33 +184,9 @@ class Admin extends CI_Controller {
 			}
 			else
 			{
-				$this->load->library('pagination');
-				
-				$config['base_url'] = $this->config->item('base_url') . 'admin/buscar';
-				$config['total_rows'] = count($this->pessoa_model->buscar_por_nome($viewdata['consulta']));
-				$config['per_page'] = 14;
-				$config['num_links'] = 10;
-				$config['first_link'] = false;
-				$config['las_link'] = false;
-				$config['full_tag_open'] = '<div class="pagination pagination-centered"><ul>';
-				$config['full_tag_close'] = '</ul></div>';
-				$config['num_tag_open'] = '<li>';
-				$config['num_tag_close'] = '</li>';
-				$config['cur_tag_open'] = '<li class="active"><a href="#">';
-				$config['cur_tag_close'] = '</a></li>';
-				$config['next_link'] = '&raquo;';
-				$config['next_tag_open'] = '<li>';
-				$config['next_tag_close'] = '</li>';
-				$config['prev_link'] = '&laquo;';
-				$config['prev_tag_open'] = '<li>';
-				$config['prev_tag_close'] = '</li>';
-				
-				$this->pagination->initialize($config);
-				
-				$viewdata['resultado'] = $this->pessoa_model->buscar_por_nome($viewdata['consulta'], $config['per_page'], $this->uri->segment(3));
+				$viewdata['resultado'] = $this->pessoa_model->buscar_por_nome($viewdata['consulta'], null, $config['per_page'], $this->uri->segment(3));
 			}
 		}
-		
 		$this->template->load_view('admin/buscar', $viewdata);
 	}
 }

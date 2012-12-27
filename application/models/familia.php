@@ -3,7 +3,21 @@
 class Familia extends CI_Model{
 
     var $table = 'familia';
-
+	
+	function buscar($id_familia) {
+        $this->db->select('*');
+        $this->db->where('id_familia', $id_familia);
+        $query = $this->db->get($this->table);
+        
+        $familia = $query->row();
+        
+        if(empty($familia)){
+            return false;
+        }else{
+            return $familia;
+        }
+    }
+	
     function listar($cd=false){
         if($cd){
             $this->db->select('id_familia, cd_familia, nm_familia');

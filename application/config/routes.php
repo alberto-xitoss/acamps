@@ -38,7 +38,7 @@
 |
 */
 
-if(ENVIRONMENT != 'acamps')
+if(ENVIRONMENT == 'production')
 {
 	$route['default_controller'] = "inscricao";
 }
@@ -60,9 +60,13 @@ $route['^admin/(liberar.*|pagar.*|reverter.*|excluir.*|corrigir.*)$'] = "pessoa/
 $route['^admin/inscrever/(.*)$'] = "pessoa/$1";
 
 $route['^admin/(relatorio.*)$'] = '$1';
-$route['^admin/(dev.+)$'] = '$1';
-$route['^admin/(etiqueta/.+)$'] = 'secretaria/$1';
-$route['^admin/(secretaria/.+)$'] = '$1';
+$route['^admin/(dev.*)$'] = '$1';
+$route['^admin/(etiqueta/.*)$'] = 'secretaria/$1';
+$route['^admin/(secretaria.*)$'] = '$1';
+$route['^admin/(onibus.*)$'] = '$1';
+
+$route['^admin/(auditar)'] = "financeiro/$1";
+$route['^admin/(financeiro.*)'] = "$1";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

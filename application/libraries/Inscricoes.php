@@ -2,13 +2,13 @@
 
 class Inscricoes
 {		
-	// Instância do super controller
+	// InstÃ¢ncia do super controller
 	var $CI;
 	
-	// Largura máxima das fotos
+	// Largura mÃ¡xima das fotos
 	var $max_size = 160;
 	
-	// Se a inscrição foi feita pela internet deve ser TRUE
+	// Se a inscriÃ§Ã£o foi feita pela internet deve ser TRUE
 	// Se foi pelo Sistema Admin deve ser FALSE
 	var $open = TRUE;
 	
@@ -32,8 +32,8 @@ class Inscricoes
 		$dados = $_POST;
 		$dados['cd_tipo'] = $tipo;
 		
-		// Pesquisa de divulgação
-		if($tipo == 'p' && $this->open)
+		// Pesquisa de divulgaÃ§Ã£o
+		if($tipo == 'p')
 		{
 			$pesquisa = array();
 			if(isset($_POST['id_meio'])){
@@ -52,10 +52,10 @@ class Inscricoes
 		}
 		else
 		{
-			$dados['id_status'] = 2; // Status -> Pendente Liberação
+			$dados['id_status'] = 2; // Status -> Pendente LiberaÃ§Ã£o
 		}
 		
-		// Família pode ser escolhida no form de participante do Sistema Admin
+		// FamÃ­lia pode ser escolhida no form de participante do Sistema Admin
 		if($tipo == 'p' && !$this->open)
 		{
 			if($dados['id_familia'] == 0)
@@ -64,10 +64,10 @@ class Inscricoes
 			}
 		}
 		
-		// Gravando registro e retornando o número de inscrição gerado
+		// Gravando registro e retornando o nÃºmero de inscriÃ§Ã£o gerado
 		$id = $this->CI->pessoa_model->inscrever($dados);
 		
-		// Salvando Imagem
+		// Salvando Imagem e atribuindo Ã´nibus
 		if($tipo != 'e')
 		{
 			$caminho_foto = $this->preparar_imagem($id);
@@ -96,7 +96,7 @@ class Inscricoes
 	
 	function preparar_imagem($id)
 	{
-		//Obtendo as configurações do arquivo 'config/acamps.php'
+		//Obtendo as configuraï¿½ï¿½es do arquivo 'config/acamps.php'
 		$upload = $this->CI->config->item('upload');
 		$upload['file_name'] = $id;
 		
@@ -151,16 +151,16 @@ class Inscricoes
 		$this->CI->email->from('acamps@comshalom.org', "Acamp's - Acampamento de Jovens Shalom");
 		$this->CI->email->to($ds_email);
 		
-		$this->CI->email->subject("Inscrição Realizada");
+		$this->CI->email->subject("Inscriï¿½ï¿½o Realizada");
 		
-		// TODO - Usar template para as mensagens, para que cada missão tenha sua própria mensagem
+		// TODO - Usar template para as mensagens, para que cada missÃ£o tenha sua prÃ³pria mensagem
 		$msg = "<html><body>".
 		"<p>".$nm_pessoa."<br/>".
-		"Número de Inscrição: <strong>".$id_pessoa."</strong></p>".
+		"NÃºmero de InscriÃ§Ã£o: <strong>".$id_pessoa."</strong></p>".
 		"<br/>".
-		"<p><strong>IMPORTANTE - Guarde o número de sua inscrição!</strong></p>".
+		"<p><strong>IMPORTANTE - Guarde o nÃºmero de sua inscriÃ§Ã£o!</strong></p>".
 		"<br/>".
-		"<p>Pagar via Boleto no Shalom da Paz, Rua Maria Tomásia, n&deg; 72, Aldeota, Fortaleza:</p>".
+		"<p>Pagar via Boleto no Shalom da Paz, Rua Maria TomÃ¡sia, n&deg; 72, Aldeota, Fortaleza:</p>".
 		"<p><a href=\"http://projeto.comshalom.org/acamps/".$this->CI->config->item('missao_dir')."/inscricao/boleto/".md5($id_pessoa.$ds_email)."\">Imprimir Boleto</a></p>".
 		"</html></body>";
 		//***************************************************   

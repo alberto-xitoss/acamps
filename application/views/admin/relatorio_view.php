@@ -87,8 +87,22 @@
 <?php endif //--------------------------------------------------------------- ?>
 
 <?php if($tipo == 'familia'): ?>
+	<h2>Relatório de Participantes por Família</h2>
 	<div class="wrap relatorio">
-		
+		<p class="well well-small">Lista os participantes inscritos separados por família.</p>
+		<?php echo form_open('admin/relatorio/familia','target="_blank" class="form-inline"') ?>
+		<table>
+			<tr>
+				<td>Família:</td>
+				<td><?php
+					$familias = $this->familia->listar();
+					$familias = array_merge(array('0'=>'Todas'), $familias);
+					echo form_dropdown('id_familia', $familias);
+				?></td>
+				<td><?php echo form_submit('gerar_relatorio', 'Gerar Relatório', 'class="btn"') ?></td>
+			</tr>
+		</table>
+		<?php echo form_close() ?>
 	</div>
 <?php endif //--------------------------------------------------------------- ?>
 

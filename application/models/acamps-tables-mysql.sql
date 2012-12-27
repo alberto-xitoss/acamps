@@ -1,21 +1,25 @@
-﻿CREATE TABLE configuracao (
+DROP TABLE IF EXISTS configuracao;
+--#
+CREATE TABLE configuracao (
 	id_config serial PRIMARY KEY,
 	nm_config varchar(30) NOT NULL,
 	nm_valor text NOT NULL
 );
 --#
 INSERT INTO configuracao (nm_config, nm_valor) VALUES
-('missao', '{nm_missao}'),
-('valor_participante', '{nr_a_pagar_participante}'),
-('valor_servico', '{nr_a_pagar_servico}'),
-('edicao', '{nr_edicao}'),
-('data_inicio', '{dt_inicio}'),
-('data_fim', '{dt_fim}'),
-('form_online', 'false'),
-('pagamento_simples', 'true');
+('missao', '{missao}'),
+('valor_participante', '{valor_participante}'),
+('valor_servico', '{valor_servico}'),
+('edicao', '{edicao}'),
+('data_inicio', '{data_inicio}'),
+('data_fim', '{data_fim}'),
+('form_online', '{form_online}'),
+('pagamento_simples', '{pagamento_simples}');
 
 --#
 
+DROP TABLE IF EXISTS status;
+--#
 CREATE TABLE status(
 	id_status int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	ds_status varchar(25)
@@ -28,6 +32,8 @@ INSERT INTO status (ds_status) VALUES
 
 --#
 
+DROP TABLE IF EXISTS cidade;
+--#
 CREATE TABLE cidade(
 	id_cidade int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	nm_cidade varchar(50),
@@ -61,6 +67,8 @@ INSERT INTO cidade (nm_cidade, cd_estado) VALUES
 
 --#
 
+DROP TABLE IF EXISTS servico;
+--#
 CREATE TABLE servico(
 	id_servico int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	nm_servico varchar(30),
@@ -111,6 +119,8 @@ INSERT INTO servico (nm_servico) VALUES
 
 --#
 
+DROP TABLE IF EXISTS setor;
+--#
 CREATE TABLE setor(
 	id_setor int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	nm_setor varchar(30)
@@ -128,6 +138,8 @@ INSERT INTO setor (nm_setor) VALUES
 
 --#
 
+DROP TABLE IF EXISTS familia;
+--#
 CREATE TABLE familia(
 	id_familia int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	nm_familia varchar(50),
@@ -147,6 +159,8 @@ INSERT INTO familia (nm_familia, cd_familia) VALUES
 
 --#
 
+DROP TABLE IF EXISTS tipo_inscricao;
+--#
 CREATE TABLE tipo_inscricao(
 	cd_tipo char(1) PRIMARY KEY,
 	nm_tipo varchar(25)
@@ -160,8 +174,8 @@ INSERT INTO tipo_inscricao (cd_tipo, nm_tipo) VALUES
 
 --#
 
-
-
+DROP TABLE IF EXISTS pessoa;
+--#
 CREATE TABLE pessoa (
 	id_pessoa int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	cd_tipo char(1) NOT NULL,
@@ -205,24 +219,22 @@ ALTER TABLE pessoa AUTO_INCREMENT =1000;
 
 --#
 
+DROP TABLE IF EXISTS usuario;
+--#
 CREATE TABLE usuario(
 	id_usuario int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	nm_usuario varchar(20),
 	pw_usuario varchar(64),
 	cd_permissao int,
-	--               DCLSDP | DEC | HEX
-	-- DESENVOLVEDOR 111111 | 63  | 1F
-	-- COORDENADORES 011111 | 31  | 0F
-	-- COORD. INSCR. 011011 | 27  | 1B
-	-- CAIXAS        000001 | 1   | 01
-	-- SECRETARIA    011100 | 28  | 1C
 	dt_ultimo_login timestamp
 );
 --#
-INSERT INTO usuario (nm_usuario, pw_usuario, cd_permissao) VALUES ('{nm_usuario}', md5('{pw_usuario}'), 63);
+INSERT INTO usuario (nm_usuario, pw_usuario, cd_permissao) VALUES ('{usuario}', md5('{senha}'), 63);
 
 --#
 
+DROP TABLE IF EXISTS pagamento;
+--#
 CREATE TABLE pagamento(
 	id_pgto int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	id_pessoa int REFERENCES pessoa(id_pessoa),
@@ -236,6 +248,19 @@ CREATE TABLE pagamento(
 
 --#
 
+DROP TABLE IF EXISTS auditoria;
+--#
+CREATE TABLE auditoria(
+	id_pessoa integer NOT NULL,
+	bl_verificada smallint DEFAULT 0,
+	PRIMARY KEY (id_pessoa ),
+	FOREIGN KEY (id_pessoa) REFERENCES pessoa (id_pessoa)
+);
+
+--#
+
+DROP TABLE IF EXISTS cheque;
+--#
 CREATE TABLE cheque(
 	id_pgto int,
 	nr_parcela int,
@@ -262,6 +287,8 @@ CREATE TABLE cheque(
 
 --#
 
+DROP TABLE IF EXISTS pesquisa_divulgacao;
+--#
 CREATE TABLE pesquisa_divulgacao
 (
 	id_registro int NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -271,6 +298,8 @@ CREATE TABLE pesquisa_divulgacao
 
 --#
 
+DROP TABLE IF EXISTS meio_divulgacao;
+--#
 CREATE TABLE meio_divulgacao
 (
 	id_meio int NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -289,4 +318,38 @@ INSERT INTO meio_divulgacao (nm_meio) VALUES
 	('Email'),
 	('Blog'),
 	('Outro');
-	
+
+--#
+
+DROP TABLE IF EXISTS onibus_local;
+--#
+CREATE TABLE onibus_local
+(
+	id_onibus_local int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	nm_local varchar(80)
+);
+
+--#
+
+DROP TABLE IF EXISTS onibus;
+--#
+CREATE TABLE onibus
+(
+	id_onibus int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	id_onibus_local int NOT NULL,
+	nr_vagas int DEFAULT 46
+	FOREIGN KEY (id_onibus_local) REFERENCES onibus_local (id_onibus_local),
+);
+
+--#
+
+DROP TABLE IF EXISTS pessoa_onibus;
+--#
+CREATE TABLE pessoa_onibus
+(
+	id_onibus int NOT NULL,
+	id_pessoa int NOT NULL,
+	PRIMARY KEY (id_onibus, id_pessoa),
+	FOREIGN KEY (id_onibus) REFERENCES onibus (id_onibus),
+	FOREIGN KEY (id_pessoa) REFERENCES pessoa (id_pessoa)
+);

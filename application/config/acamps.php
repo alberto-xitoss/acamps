@@ -10,7 +10,6 @@
 */
 
 $config['barcode_path'] = str_replace('\\','/',FCPATH).'barcode/';
-$config['cache_path'] = str_replace('\\','/',FCPATH).'cache/';
 
 /*
 |--------------------------------------------------------------------------
@@ -49,8 +48,4 @@ $config['upload'] = array(
 |
 */
 
-if(ENVIRONMENT == 'production'){
-	define('FPDF_FONTPATH', $_SERVER['DOCUMENT_ROOT'].'/fpdf/font/');
-}else{
-	define('FPDF_FONTPATH', $_SERVER['DOCUMENT_ROOT'].'/acamps/assets/font/');
-}
+define('FPDF_FONTPATH', $_SERVER['DOCUMENT_ROOT'].'/acamps/assets/font/');

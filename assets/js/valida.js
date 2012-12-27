@@ -104,7 +104,7 @@ function ativarValidacao($form) {
         if($files.size() > 0){
             $files.each(function(){
                 OK &= validaFile(this);
-            })
+            });
         }
         
         for(i in radioGroups){

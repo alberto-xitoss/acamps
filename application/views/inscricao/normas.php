@@ -17,7 +17,7 @@
 <div class='alert alert-block alert-success'><p>O valor da inscrição é <strong>R$ <?php echo $valor ?></strong> (À vista ou cheque).</p>
 <p>O prazo para se inscrever é até o dia <strong><?php echo $prazo_inscricao ?></strong>.</p></div>
 <?php if($tipo=='participante'): ?>
-<p class="alert">Só pode participar do Acamp's quem tem entre 14 e 28 anos!</p>
+<p class="alert">Só pode participar do Acamp's quem tem entre 12 e 28 anos!</p>
 <?php endif; ?>
 <h3>O que levar?</h3>
 <ul>

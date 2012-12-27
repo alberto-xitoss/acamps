@@ -16,7 +16,7 @@
 		<?php if($this->session->userdata('permissao') & DESCONTO): // Verificando Permissão do usuário ?>
 			<tr>
 				<th>Desconto:</th>
-				<td><input id="avista_desconto" name="nr_desconto" type="text" /></td>
+				<td><input id="avista_desconto" name="nr_desconto" type="text" placeholder="0.00" /></td>
 			</tr>
 			<tr>
 				<th>Total:</th>
@@ -26,7 +26,7 @@
 		<?php endif ?>
 		<tr>
 			<th>Valor Pago:</th>
-			<td><input id="avista_pago" name="avista_pago" type="text" /></td>
+			<td><input id="avista_pago" name="avista_pago" type="text" placeholder="<?php echo $pessoa->nr_a_pagar ?>" /></td>
 		</tr>
 		<tr>
 			<th>Troco:</th>

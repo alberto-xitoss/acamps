@@ -1,0 +1,110 @@
+#onibus {
+	position: absolute;
+	top: (@menu-height + @menu-padding + 1);
+	right: 0;
+	left: 0;
+	bottom: 0;
+	
+	h2 {
+		text-align: left;
+		margin: 0 0 1em;
+	}
+	h3 {
+		font-size: 1.2em;
+		text-align: left;
+	}
+	.well { margin: 0; }
+}
+
+.coluna-esquerda, .coluna-direita{
+	width: 50%;
+	max-height: 100%;
+	overflow: auto;
+}
+.coluna-esquerda{ float: left; }
+
+#onibus-geral {
+	padding: 14px;
+	
+	p {
+		margin: 1em 0 0;
+	}
+	.onibus-alocado {
+		display: inline-block;
+		margin: 0 4px 4px 0;
+		padding: 4px 0;
+		background: #fff;
+		border: 1px solid darken(#fff, 9%);
+		.border-radius(3px);
+		
+		.numero, .vagas {
+			padding: 4px 6px;
+		}
+		.numero {
+			border-right: 1px solid darken(#fff, 9%);
+		}
+	}
+	.well {
+		padding: 6px 6px 2px;
+	}
+}
+#onibus-busca {
+	padding: 14px;
+	
+	#nome {
+		width: 50%;
+		min-width: 200px;
+	}
+	#buscar {
+		width: auto;
+	}
+	table {
+		margin-top: 12px;
+		
+		td:first-child { width: 1px; }
+		td:last-child { width: 1px; }
+	}
+}
+#onibus-lista {
+	padding: 14px;
+	
+	.cabecalho {
+		margin-bottom: 20px;
+		
+		span {
+			font-size: 20px;
+			font-weight: bold;
+		}
+		& > * {
+			display: inline-block;
+			vertical-align: middle;
+		}
+	}
+	
+	td:first-child {
+		width: 1px;
+		color: lighten(#000, 50%);
+	}
+	td:last-child {
+		width: 1px;
+		& > a { background-image: url("@{iconAlphaSpritePath}"); }
+	}
+	tr:hover td:last-child {
+		& > a { background-image: url("@{iconSpritePath}"); }
+	}
+	// Coordenadores
+	tr:nth-child(-n+2) td {
+		background-color: lighten(@blue, 53%);
+	}
+	// Coordenadores
+	tr:nth-child(-n+2):hover td {
+		background-color: lighten(@blue, 50.5%);
+	}
+}
+#onibus-numero {
+	padding: 8px;
+	margin-right: 16px;
+	background-color: darken(#fff, 5%);
+	border: 1px solid darken(#fff, 12%);
+	.border-radius(4px);
+}

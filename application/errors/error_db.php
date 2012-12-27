@@ -28,7 +28,8 @@ margin:				0 0 4px 0;
 <body>
 	<div id="content">
 		<h1><?php echo $heading; ?></h1>
-		<?php echo $message; ?>
+		<?php echo 'Fale com os responsáveis pelo sistema.'; ?>
+		<?php //echo $message; ?>
 	</div>
 </body>
 </html>

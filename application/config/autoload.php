@@ -40,7 +40,6 @@
 
 $autoload['packages'] = array(APPPATH.'third_party');
 
-
 /*
 | -------------------------------------------------------------------
 |  Auto-load Libraries
@@ -52,10 +51,8 @@ $autoload['packages'] = array(APPPATH.'third_party');
 |
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
-$autoload['libraries'] = array('database', 'session', 'log', 'template');
-if(ENVIRONMENT == 'development'){
-	$autoload['libraries'] []= 'firephp';
-}
+
+$autoload['libraries'] = array('database', 'session', 'log', 'template', 'firephp');
 
 /*
 | -------------------------------------------------------------------

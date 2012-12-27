@@ -1,16 +1,37 @@
 # Configurações do CodeIgniter
-.htaccess
-application/config/database.php
-application/config/email.php
+
+application/config/production/*
+!application/config/production/exemplo*
+
+assets/css/
+assets/js/*min*
+
+logs/log*
+
+# Composer
+
+composer.lock
+vendor/
 
 # Kubuntu
+
 *~*.class
 *.pyc
 *.pyo
 
 # Windows
+
 Thumbs.db
 Desktop.ini
 
 # Aptana
+
 .project
+
+# Eclipse
+
+.buildpath
+.jsdtscope
+.settings/
+deployment.properties
+deployment.xml

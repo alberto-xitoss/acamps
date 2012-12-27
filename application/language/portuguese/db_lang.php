@@ -2,8 +2,8 @@
 
 $lang['db_invalid_connection_str'] = 'Unable to determine the database settings based on the connection string you submitted.';
 $lang['db_unable_to_connect'] = 'Unable to connect to your database server using the provided settings.';
-$lang['db_unable_to_select'] = 'Unable to select the specified database: %s';
-$lang['db_unable_to_create'] = 'Unable to create the specified database: %s';
+$lang['db_unable_to_select'] = 'Unable to select the specified database';
+$lang['db_unable_to_create'] = 'Unable to create the specified database';
 $lang['db_invalid_query'] = 'The query you submitted is not valid.';
 $lang['db_must_set_table'] = 'You must set the database table to be used with your query.';
 $lang['db_must_use_set'] = 'You must use the "set" method to update an entry.';
@@ -22,8 +22,8 @@ $lang['db_invalid_cache_path'] = 'The cache path you submitted is not valid or w
 $lang['db_table_name_required'] = 'A table name is required for that operation.';
 $lang['db_column_name_required'] = 'A column name is required for that operation.';
 $lang['db_column_definition_required'] = 'A column definition is required for that operation.';
-$lang['db_unable_to_set_charset'] = 'Unable to set client connection character set: %s';
-$lang['db_error_heading'] = 'A Database Error Occurred';
+$lang['db_unable_to_set_charset'] = 'Unable to set client connection character set';
+$lang['db_error_heading'] = 'Ocorreu um erro com o banco de dados';
 
 /* End of file db_lang.php */
 /* Location: ./system/language/english/db_lang.php */

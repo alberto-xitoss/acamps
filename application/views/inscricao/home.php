@@ -1,6 +1,6 @@
 <div class="container">
 	<div id="video-frame" class="pull-left">
-		<div id="video"><iframe width="400" height="301" src="http://www.youtube.com/embed/FVuQn1qgVKQ" frameborder="0" allowfullscreen></iframe></div>
+		<div id="video"><iframe width="400" height="301" src="http://www.youtube.com/embed/txQuO4AAD-c" frameborder="0" allowfullscreen></iframe></div>
 	</div>
 	<div id="insc-links" class="pull-right">
 		<h2>Inscreva-se</h2>

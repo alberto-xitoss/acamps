@@ -15,7 +15,7 @@
 |
 */
 
-$config['base_url']	= 'http://'.$_SERVER['SERVER_NAME'].'/acamps/'.basename(FCPATH).'/';
+$config['base_url']	= 'http://'.$_SERVER['SERVER_NAME'].'/acamps/';
 
 /*
 |--------------------------------------------------------------------------
@@ -45,7 +45,7 @@ $config['index_page'] = '';
 | 'ORIG_PATH_INFO'	Uses the ORIG_PATH_INFO
 |
 */
-$config['uri_protocol']	= 'QUERY_STRING';
+$config['uri_protocol']	= 'AUTO';
 
 /*
 |--------------------------------------------------------------------------
@@ -195,7 +195,6 @@ $config['log_threshold'] = 1;
 
 $config['log_path'] = str_replace('\\','/',FCPATH).'logs/';
 
-
 /*
 |--------------------------------------------------------------------------
 | Date Format for Logs
@@ -252,12 +251,12 @@ $config['encryption_key'] = 'hsvPYBVOTmodTFmzTeHrHToyiBatZcWg';
 $config['sess_cookie_name']		= 'acamps_sess';
 $config['sess_expiration']		= 7200;
 $config['sess_expire_on_close']	= FALSE;
-$config['sess_encrypt_cookie']	= TRUE;
-$config['sess_use_database']	= FALSE;
+$config['sess_encrypt_cookie']		= TRUE;
+$config['sess_use_database']		= FALSE;
 $config['sess_table_name']		= '';
-$config['sess_match_ip']		= FALSE;
+$config['sess_match_ip']			= FALSE;
 $config['sess_match_useragent']	= TRUE;
-$config['sess_time_to_update']	= 300;
+$config['sess_time_to_update']		= 300;
 
 /*
 |--------------------------------------------------------------------------
@@ -270,14 +269,7 @@ $config['sess_time_to_update']	= 300;
 |
 */
 $config['cookie_prefix']	= '';
-if(ENVIRONMENT == 'production')
-{
-	$config['cookie_domain']	= 'projeto.comshalom.org';
-}
-else
-{
-	$config['cookie_domain']	= '';
-}
+$config['cookie_domain']	= '.localhost';
 $config['cookie_path']		= '/';
 
 /*
@@ -289,11 +281,7 @@ $config['cookie_path']		= '/';
 | COOKIE data is encountered
 |
 */
-if(ENVIRONMENT == 'production'){	
-	$config['global_xss_filtering'] = TRUE;
-}else{
-	$config['global_xss_filtering'] = FALSE;
-}
+$config['global_xss_filtering'] = FALSE;
 
 /*
 |--------------------------------------------------------------------------
@@ -307,11 +295,7 @@ if(ENVIRONMENT == 'production'){
 | 'csrf_cookie_name' = The cookie name
 | 'csrf_expire' = The number in seconds the token should expire.
 */
-if(ENVIRONMENT == 'production'){	
-	$config['csrf_protection'] = TRUE;
-}else{
-	$config['csrf_protection'] = FALSE;
-}
+$config['csrf_protection'] = FALSE;
 $config['csrf_token_name'] = 'acamps_sec';
 $config['csrf_cookie_name'] = 'acamps_sec';
 $config['csrf_expire'] = 7200;

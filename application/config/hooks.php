@@ -17,12 +17,5 @@ $hook['post_controller_constructor'] = array(
 	'filepath' => 'hooks'
 );
 
-/* $hook['display_override'] = array(
-    'class'    => 'Template',
-    'function' => 'init',
-    'filename' => 'template.php',
-    'filepath' => 'hooks'
-); */
-
 /* End of file hooks.php */
 /* Location: ./application/config/hooks.php */

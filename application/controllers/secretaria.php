@@ -128,8 +128,9 @@ class Secretaria extends CI_Controller {
 			}
 
 			$this->load->library('fpdf');
-
+			
 			$nome_pdf_etiquetas = $this->_pdf_etiquetas($pessoas);
+			$nome_pdf_bordas = $this->_pdf_bordas($pessoas);
 
 			$nome_pdf_fotos = "";
 			if(ENVIRONMENT != 'acamps' && $cd_tipo != 'e' && $cd_tipo != 'visitante')
@@ -150,12 +151,14 @@ class Secretaria extends CI_Controller {
 			$registro->addChild('tipo', $cd_tipo);
 			$registro->addChild('fotos', $nome_pdf_fotos);
 			$registro->addChild('etiquetas', $nome_pdf_etiquetas);
+			$registro->addChild('bordas', $nome_pdf_bordas);
 			$log->asXML($this->config->item('cache_path').'secretaria/log.xml');
 
 			$this->template->load_view('secretaria/gerado',array(
 				'nr_etiquetas' => count($pessoas),
 				'cd_tipo' => $cd_tipo,
 				'etiquetas' => $nome_pdf_etiquetas,
+				'bordas' => $nome_pdf_bordas,
 				'fotos' => $nome_pdf_fotos
 			));
 
@@ -260,7 +263,7 @@ class Secretaria extends CI_Controller {
 	}
 
 	/*
-	* function a4
+	* function _pdf_etiquetas
 	* 
 	* TODO Refatorar para que o tamanho da folha seja dinâmico. Definir variáveis para
 	* o tamanho das etiquetas, das margens, dos espaçamento, etc.
@@ -277,7 +280,7 @@ class Secretaria extends CI_Controller {
 		//$pdf->SetAutoPageBreak(true,8);
 		
 		//Papel Carta
-		$this->fpdf->SetMargins(4,13); // 5 no meio
+		$this->fpdf->SetMargins(4,10); // 5 no meio
 		//$this->fpdf->SetAutoPageBreak(true,13);
 
 		$pdf->SetFont('Arial', '', 9);
@@ -290,20 +293,20 @@ class Secretaria extends CI_Controller {
 				$pdf->AddPage();
 				//$x = $pdf->GetX()+102;
 				//$y = $pdf->GetY()-25.5;
-				$x = $pdf->GetX()-105.5;
-				$y = $pdf->GetY()-25.5;
+				$x = $pdf->GetX()-109;
+				$y = $pdf->GetY() - 30;
 			}
 			if($d%2 == 0)
 			{
 				//$x -= 102;
 				//$y += 25.5;
-				$x -= 105.5;
+				$x -= 109;
 				$y += 25.5;
 			}
 			else
 			{
 				//$x += 102;
-				$x += 105.5;
+				$x += 109;
 			}
 			$pdf->SetXY($x, $y);
 			
@@ -372,6 +375,123 @@ class Secretaria extends CI_Controller {
 		}
 		
 		$nome = 'etiquetas '.$pessoas[0]['cd_tipo'].' '.date('d-m H-i').'.pdf';
+		
+		// Salvando no servidor
+		$pdf->Output($this->config->item('cache_path').'secretaria/'.$nome,'F');
+		return $nome;
+	}
+	
+	function _pdf_bordas($pessoas) {
+
+		$barcode_path = $this->config->item('barcode_path');
+
+		//$pdf = new FPDF(array('orientation'=>'P', 'unit'=>'mm', 'size'=>'A4'));
+		$pdf = new FPDF(array('orientation'=>'P', 'unit'=>'mm', 'size'=>'Letter'));
+
+		//Papel A4 210 x 297
+		//$pdf->SetMargins(5,6); // 4 no meio
+		//$pdf->SetAutoPageBreak(true,8);
+		
+		//Papel Carta
+		$this->fpdf->SetMargins(4,10); // 5 no meio
+		//$this->fpdf->SetAutoPageBreak(true,13);
+
+		$pdf->SetFont('Arial', '', 9);
+
+		$d = 0;
+		foreach($pessoas as $pessoa)
+		{
+			if($d%18 == 0)
+			{
+				$pdf->AddPage();
+				//$x = $pdf->GetX()+102;
+				//$y = $pdf->GetY()-25.5;
+				$x = $pdf->GetX()-113;
+				$y = $pdf->GetY() - 30;
+			}
+			if($d%2 == 0)
+			{
+				//$x -= 102;
+				//$y += 25.5;
+				$x -= 102;
+				$y += 25.5;
+			}
+			else
+			{
+				//$x += 102;
+				$x += 102;
+			}
+			$pdf->SetXY($x, $y);
+			
+			$pdf->Rect($x+210, $y, 102, 25.5);
+			
+			$pdf->SetXY($x, $y);
+			
+			$pdf->SetXY($x+3, $y);
+			$pdf->SetFont('', 'B', 13);
+			// Nome escolhido para o crachá
+			$pdf->Write(12.3,utf8_decode($pessoa['nm_cracha']));
+
+			$pdf->SetXY($x+3, $y+7);
+			$pdf->SetFont('', '', 9);
+			// Nome completo
+			$pdf->Write(8.6,utf8_decode($pessoa['nm_pessoa']));
+			
+			$pdf->SetXY($x+3, $y+10.9);
+			$pdf->SetFont('', 'B', 10);
+			// Seminário/Aprofundamento ou Nome do serviço
+			if($pessoa['cd_tipo'] == 'amigos')
+			{
+				$pdf->Write(10.3, utf8_decode('Seminário'));
+			}
+			elseif($pessoa['cd_tipo'] == 'p')
+			{
+				$pdf->Write(10.3,utf8_decode($pessoa['ds_seminario']));
+			}
+			elseif($pessoa['cd_tipo'] != 'visitante')
+			{
+				$pdf->Write(10.3,utf8_decode($pessoa['nm_servico']));
+			}
+			
+			$pdf->SetXY($x+3, $y+16.9);
+			$pdf->SetFont('', '', 9);
+			// Cidade ou Setor da CV
+			if($pessoa['cd_tipo'] == 'v')
+			{
+				$pdf->Write(8.5, 'CV: '.utf8_decode($pessoa['nm_setor']));
+			}
+			elseif($pessoa['cd_tipo'] == 'p' || $pessoa['cd_tipo'] == 's')
+			{
+				$pdf->Write(8.5,utf8_decode($pessoa['nm_cidade']).' / '.$pessoa['cd_estado']);
+			}
+			
+			$pdf->SetXY($x+69, $y); // Correção para etiqueta 2011.1
+			if($pessoa['cd_tipo'] == 'p' || $pessoa['cd_tipo'] == 'amigos')
+			{
+				$pdf->Cell(11,19,$pessoa['id_pessoa'].' / '.$pessoa['cd_familia'],0,0,'C');
+			}
+			elseif($pessoa['cd_tipo'] != 'visitante')
+			{
+				$pdf->Cell(11,19,$pessoa['id_pessoa'],0,0,'C');
+			}
+			
+			if($pessoa['cd_tipo'] != 'visitante')
+			{
+				// Gerando imagem do código de barras, se ela ainda não existir
+				if(!file_exists($barcode_path.$pessoa['id_pessoa'].'.png'))
+				{
+					$this->_barcode($pessoa['id_pessoa']);
+				}
+
+				$pdf->SetXY($x+67, $y+11.6); // Correção para etiqueta 2011.1
+				// Imprimindo código de barras no PDF
+				$pdf->Image($barcode_path.$pessoa['id_pessoa'].'.png');
+			}
+			
+			$d++;
+		}
+		
+		$nome = 'bordas '.$pessoas[0]['cd_tipo'].' '.date('d-m H-i').'.pdf';
 		
 		// Salvando no servidor
 		$pdf->Output($this->config->item('cache_path').'secretaria/'.$nome,'F');

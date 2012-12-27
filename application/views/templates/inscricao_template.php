@@ -21,7 +21,7 @@
 			<div class="column-3">
 				<h2>Adote um Jovem</h2>
 				<p><strong>Faça uma Doação</strong></p>
-				<p>(85) 8893 9539 - Célio</p>
+				<p>(85) 8690 1014 - Rose</p>
 			</div>
 			<div id="social" class="column-3">
 				<h2>Fique ligado</h2>

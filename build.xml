@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="assets" default="build">
+	
+	<target name="compile.less">
+		<exec command="lessc assets/less/inscricao.less > assets/css/inscricao.css --yui-compress"/>
+		<exec command="lessc assets/less/admin.less > assets/css/admin.css --yui-compress"/>
+		<exec command="lessc assets/less/boleto.less > assets/css/boleto.css --yui-compress"/>
+		<exec command="lessc assets/less/relatorio.less > assets/css/relatorio.css --yui-compress"/>
+	</target>
+	
+	<target name="minify.js">
+		<jsMin targetDir="./assets/js" suffix=".min" failOnError="false">
+			<fileset dir="./assets/js">
+				<include name="valida.js"/>
+			</fileset>
+		</jsMin>
+	</target>
+	
+	<target name="build" depends="compile.less, minify.js">
+		
+	</target>
+	
+</project>

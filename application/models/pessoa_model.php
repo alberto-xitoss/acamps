@@ -77,6 +77,58 @@ class Pessoa_model extends CI_Model
 		$foto['ds_foto'] = $caminho;
 		$this->db->update($this->table, $foto);
 	}
+	
+	public function proximo_onibus()
+	{
+		// Verificando qual ônibus tem vaga
+		$query = $this->db->query("SELECT nr_onibus, count(*) as nr_pessoas
+									FROM onibus
+									WHERE nr_onibus < 100
+									GROUP BY nr_onibus
+									ORDER BY nr_onibus ASC");
+		
+		if($query->num_rows() == 0) // Se nenhum ônibus começou a ser preeenchido
+		{
+			$nr_onibus = 1; // Seleciona o ônibus 1
+		}
+		else
+		{
+			foreach ($query->result() as $row)
+			{
+				if($row->nr_pessoas < 44) // Total de vagas é 46 -- 2 vagas são reservadas para o coordenador e seu assistente
+				{
+					$nr_onibus = $row->nr_onibus;
+					break;
+				}
+			}
+			if(!isset($nr_onibus))
+			{
+				$nr_onibus = $query->num_rows() + 1;
+			}
+		}
+		return $nr_onibus;
+	}
+	
+	public function listar_onibus()
+	{
+		return $this->db->query("SELECT nr_onibus, count(*) as nr_pessoas FROM onibus GROUP BY nr_onibus")->result();
+	}
+	
+	public function escolher_onibus($id_pessoa = false, $nr_onibus = false)
+	{
+		if($id_pessoa && $nr_onibus)
+		{
+			$query = $this->db->query("INSERT INTO onibus(id_pessoa, nr_onibus) VALUES ($id_pessoa, $nr_onibus)");
+		}
+	}
+	
+	public function remover_onibus($id_pessoa = false)
+	{
+		if($id_pessoa)
+		{
+			$this->db->query("DELETE FROM onibus WHERE id_pessoa = $id_pessoa");
+		}
+	}
 
 	function existe($id_pessoa)
 	{
@@ -85,6 +137,125 @@ class Pessoa_model extends CI_Model
 			return true;
 		else
 			return false;
+	}
+	
+	function buscar($fields, $conditions,  $limit=false, $offset=false)
+	{
+		if(empty($fields))
+		{
+			$fields = array('pessoa.*',
+							'tipo_inscricao.nm_tipo',
+							'status.ds_status',
+							'cidade.*',
+							'familia.*',
+							'servico.*',
+							'setor.*',
+							'nr_apagar');
+		}
+		
+		$nr_apagar_index = array_search('nr_apagar', $fields);
+		if($nr_apagar_index !== FALSE)
+		{
+			$fields[$nr_apagar_index] = "(CASE
+										WHEN pessoa.cd_tipo = 'p' THEN (SELECT nm_valor FROM configuracao WHERE nm_config = 'valor_participante')
+										WHEN pessoa.cd_tipo = 's' THEN (SELECT nm_valor FROM configuracao WHERE nm_config = 'valor_servico')
+										END) as nr_a_pagar";
+		}
+		$id_pessoa_index = array_search('id_pessoa', $fields);
+		if($id_pessoa_index !== FALSE)
+		{
+			$fields[$id_pessoa_index] = "pessoa.id_pessoa";
+		}
+		$id_status_index = array_search('id_status', $fields);
+		if($id_status_index !== FALSE)
+		{
+			$fields[$id_status_index] = "pessoa.id_status";
+		}
+		$cd_tipo_index = array_search('cd_tipo', $fields);
+		if($cd_tipo_index !== FALSE)
+		{
+			$fields[$cd_tipo_index] = "pessoa.cd_tipo";
+		}
+		
+		$fields = implode(',', $fields);
+		$this->db->select($fields);
+		$this->db->from($this->table);
+
+		if(strpos($fields, 'status') !== FALSE)
+		{
+			$this->db->join('status', 'pessoa.id_status = status.id_status', 'left');
+		}
+		if(strpos($fields, 'tipo') !== FALSE)
+		{
+			$this->db->join('tipo_inscricao', 'pessoa.cd_tipo = tipo_inscricao.cd_tipo');
+		}
+		if(strpos($fields, 'cidade') !== FALSE)
+		{
+			$this->db->join('cidade', 'pessoa.id_cidade = cidade.id_cidade', 'left');
+		}
+		if(strpos($fields, 'familia') !== FALSE)
+		{
+			$this->db->join('familia', 'pessoa.id_familia = familia.id_familia', 'left');
+		}
+		if(strpos($fields, 'servico') !== FALSE)
+		{
+			$this->db->join('servico', 'pessoa.id_servico = servico.id_servico', 'left');
+		}
+		if(strpos($fields, 'setor') !== FALSE)
+		{
+			$this->db->join('setor', 'pessoa.id_setor = setor.id_setor', 'left');
+		}
+		if(strpos($fields, 'onibus') !== FALSE)
+		{
+			$this->db->join('onibus', 'pessoa.id_pessoa = onibus.id_pessoa', 'left');
+		}
+		
+		foreach ($conditions as $field => $value)
+		{
+			if(empty($value))
+			{
+				$this->db->where($field);
+			}
+			else
+			{
+				if(strpos($field, "nm_pessoa") !== FALSE)
+				{
+					$this->db->like('nm_pessoa',normaliza_nome($value));
+				}
+				elseif (strpos($field, "cd_tipo") !== FALSE)
+				{
+					foreach (str_split($value) as $tipo)
+					{
+						$or_conds []= "pessoa.cd_tipo = '".$tipo."'";
+					}
+					$this->db->where('('.implode(" OR ", $or_conds).')');
+				}
+				elseif (strpos($field, "id_status") !== FALSE)
+				{
+					$this->db->where("pessoa.id_status", $value);
+				}
+				else
+				{
+					$this->db->where($field, $value);
+				}
+			}
+		}
+		
+		$this->db->order_by("nm_pessoa", "asc");
+		$this->db->order_by("id_pessoa", "asc");
+
+		if($limit && !$offset)
+		{
+			$this->db->limit($limit);
+		}
+		else if($limit && $offset)
+		{
+			$this->db->limit($limit, $offset);
+		}
+
+		$query = $this->db->get();
+
+		return $query->result();
 	}
 
 	function buscar_por_id($id_pessoa, $array = false)
@@ -107,6 +278,7 @@ class Pessoa_model extends CI_Model
 					 ->join('servico', 'pessoa.id_servico = servico.id_servico', 'left')
 					 ->join('setor', 'pessoa.id_setor = setor.id_setor', 'left')
 					 ->join('pagamento', 'pessoa.id_pessoa = pagamento.id_pessoa', 'left')
+					 //->join('onibus', 'pessoa.id_pessoa = onibus.id_pessoa', 'left')
 					 ->join('tipo_inscricao', 'pessoa.cd_tipo = tipo_inscricao.cd_tipo')
 					 ->where('pessoa.id_pessoa',$id_pessoa);
 			$query = $this->db->get();
@@ -167,25 +339,61 @@ class Pessoa_model extends CI_Model
 		}
 	}
 	
-	function buscar_por_nome($nm_pessoa, $limit=false, $offset=false)
+	function buscar_por_nome($nm_pessoa, $fields,  $limit=false, $offset=false)
 	{
 		if(isset($nm_pessoa))
 		{
-			$this->db->select("pessoa.*, tipo_inscricao.nm_tipo, status.ds_status, cidade.nm_cidade, familia.*, servico.*, setor.*,
-								(CASE
-									WHEN pessoa.cd_tipo = 'p' THEN ".$this->config->item('valor_participante')."
-									WHEN pessoa.cd_tipo = 's' THEN ".$this->config->item('valor_servico')."
-								END) as nr_a_pagar")
-						->from($this->table)
-						->join('status', 'pessoa.id_status = status.id_status', 'left')
-						->join('tipo_inscricao', 'pessoa.cd_tipo = tipo_inscricao.cd_tipo')
-						->join('cidade', 'pessoa.id_cidade = cidade.id_cidade', 'left')
-						->join('familia', 'pessoa.id_familia = familia.id_familia', 'left')
-						->join('servico', 'pessoa.id_servico = servico.id_servico', 'left')
-						->join('setor', 'pessoa.id_setor = setor.id_setor', 'left')
-						->like('pessoa.nm_pessoa',normaliza_nome($nm_pessoa))
-						->order_by("nm_pessoa", "asc")
-						->order_by("id_pessoa", "asc");
+			if(empty($fields))
+			{
+				$fields = array('pessoa.*',
+								'tipo_inscricao.nm_tipo',
+								'status.ds_status',
+								'cidade.nm_cidade',
+								'familia.*',
+								'servico.*',
+								'setor.*',
+								'nr_apagar');
+			}
+			$nr_apagar_index = array_search('nr_apagar', $fields); 
+			if($nr_apagar_index !== FALSE)
+			{
+				$fields[$nr_apagar_index] = "(CASE
+											WHEN pessoa.cd_tipo = 'p' THEN (SELECT nm_valor FROM configuracao WHERE nm_config = 'valor_participante')
+											WHEN pessoa.cd_tipo = 's' THEN (SELECT nm_valor FROM configuracao WHERE nm_config = 'valor_servico')
+										END) as nr_a_pagar";
+			}
+			$fields = implode(',', $fields);
+			$this->db->select($fields);
+			$this->db->from($this->table);
+			
+			if(strpos($fields, 'status') !== FALSE)
+			{
+				$this->db->join('status', 'pessoa.id_status = status.id_status', 'left');
+			}
+			if(strpos($fields, 'tipo_inscricao') !== FALSE)
+			{
+				$this->db->join('tipo_inscricao', 'pessoa.cd_tipo = tipo_inscricao.cd_tipo');
+			}
+			if(strpos($fields, 'cidade') !== FALSE)
+			{
+				$this->db->join('cidade', 'pessoa.id_cidade = cidade.id_cidade', 'left');
+			}
+			if(strpos($fields, 'familia') !== FALSE)
+			{
+				$this->db->join('familia', 'pessoa.id_familia = familia.id_familia', 'left');
+			}
+			if(strpos($fields, 'servico') !== FALSE)
+			{
+				$this->db->join('servico', 'pessoa.id_servico = servico.id_servico', 'left');
+			}
+			if(strpos($fields, 'setor') !== FALSE)
+			{
+				$this->db->join('setor', 'pessoa.id_setor = setor.id_setor', 'left');
+			}
+			
+			$this->db->like('pessoa.nm_pessoa',normaliza_nome($nm_pessoa));
+			$this->db->order_by("nm_pessoa", "asc");
+			$this->db->order_by("id_pessoa", "asc");
 			
 			if($limit && !$offset)
 			{
@@ -202,6 +410,12 @@ class Pessoa_model extends CI_Model
 		}
 		
 		return array();
+	}
+	
+	function count($nm_pessoa) {
+		$this->db->like('pessoa.nm_pessoa',normaliza_nome($nm_pessoa));
+		$this->db->from($this->table);
+		return $this->db->count_all_results();
 	}
 	
 	/*
@@ -236,9 +450,72 @@ class Pessoa_model extends CI_Model
 	 * function consultar_pagamento
 	 * @param $id_pessoa
 	 */
-	function consultar_pagamento($id_pessoa)
+	function consultar_pagamento($data)
 	{
+		$this->db->select("pessoa.id_pessoa, pessoa.nm_pessoa, pagamento.nr_pago, pagamento.nr_desconto, pagamento.dt_pgto, usuario.nm_usuario, auditoria.bl_verificada, 
+				(CASE
+					WHEN pessoa.cd_tipo='p' THEN 'Participante'
+					WHEN pessoa.cd_tipo='s' THEN 'Serviço'
+				END) AS nm_tipo,
+				(CASE
+					WHEN pagamento.cd_tipo_pgto = 'd' THEN 'À vista'
+					WHEN pagamento.cd_tipo_pgto = 'c' THEN 'Cheque'
+					WHEN pagamento.cd_tipo_pgto = 'cp' THEN 'Cheque pré-datado'
+				END) AS nm_tipo_pgto")
+				->from('pagamento')
+				->join('pessoa', 'pagamento.id_pessoa = pessoa.id_pessoa')
+				->join('usuario', 'pagamento.id_usuario = usuario.id_usuario')
+				->join('auditoria', 'pagamento.id_pessoa = auditoria.id_pessoa', 'left');
 		
+		if($this->db->platform() == 'postgre')
+		{
+			$this->db->where("date_trunc('day', pagamento.dt_pgto) = '".$data."'");
+		}
+		else if($this->db->platform() == 'mysql')
+		{
+			$this->db->where("date(pagamento.dt_pgto) = '".date_create_from_format("d/m/Y", $data)->format('Y-m-d')."'");
+		}
+		
+		$this->db->order_by('nm_pessoa');
+		
+		return $this->db->get()->result_array();
+	}
+	
+	function verificar_inscricao($id_pessoa) {
+		$query = $this->db->get_where('auditoria', array('id_pessoa'=>$id_pessoa));
+		if($query->num_rows() == 1)
+		{
+			$reg = $query->first_row();
+			if(!$reg->bl_verificada){
+				$this->db->update('auditoria', array('bl_verificada' => 1), array('id_pessoa' => $id_pessoa));
+			}
+			return true;
+		}
+		elseif($query->num_rows() == 0)
+		{
+			$this->db->insert('auditoria', array('id_pessoa' => $id_pessoa, 'bl_verificada' => 1));
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	function reverter_verificacao($id_pessoa) {
+		$query = $this->db->get_where('auditoria', array('id_pessoa'=>$id_pessoa));
+		if($query->num_rows() == 1)
+		{
+			$reg = $query->first_row();
+			if($reg->bl_verificada){
+				$this->db->update('auditoria', array('bl_verificada' => 0), array('id_pessoa' => $id_pessoa));
+			}
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
 	/*

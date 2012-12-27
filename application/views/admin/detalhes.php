@@ -12,6 +12,9 @@
     <h1><?php echo $pessoa['id_pessoa']; ?> - <?php echo $pessoa['nm_pessoa']; ?></h1>
     <p>Tipo de inscrição: <?php echo $pessoa['nm_tipo'] ?></p>
     <p>Situação: <span><?php echo $pessoa['ds_status']; ?></span></p>
+	<?php if($pessoa['id_status'] == 3): ?>
+	<p>Ônibus: <?php echo $pessoa['nr_onibus'] ?></p>
+	<?php endif ?>
 	
 	<div class="comandos">
 		<?php
@@ -152,11 +155,12 @@
 			</td>
         </tr>
 <!----------------------------------------------------------------------------->
-        <?php if ($pessoa['cd_tipo'] != 'v' && $pessoa['cd_tipo'] != 'e'): ?>
-            <tr>
+        <tr>
                 <th scope="col">RG</th>
                 <td><input type="text" class="span2" id="nr_rg" value="<?php echo $pessoa['nr_rg'] ?>" name="nr_rg"></td>
             </tr>
+        <?php if ($pessoa['cd_tipo'] != 'v' && $pessoa['cd_tipo'] != 'e'): ?>
+            
             <tr>
                 <th scope="col">Telefone</th>
                 <td><input type="text" class="span2" id="nr_telefone" value="<?php echo $pessoa['nr_telefone'] ?>" name="nr_telefone"></td>

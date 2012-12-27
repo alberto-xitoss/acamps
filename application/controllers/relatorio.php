@@ -39,17 +39,21 @@ class Relatorio extends CI_Controller {
 	 */
 	function pagamento()
 	{
-		if($this->input->post('gerar_relatorio')){
-			
+		if($this->input->post('gerar_relatorio'))
+		{
 			$dt_inicio = $this->input->post('dt_inicio');
 			if(empty($dt_inicio)){ $dt_inicio = date('d/m/Y'); }
+			
 			$dt_fim = $this->input->post('dt_fim');
 			if(empty($dt_fim)){ $dt_fim = date('d/m/Y'); }
 			
-			if($dt_inicio != $dt_fim){
+			if($dt_inicio != $dt_fim)
+			{
 				$viewdata['dt_inicio'] = $dt_inicio;
 				$viewdata['dt_fim'] = $dt_fim;
-			}else{
+			}
+			else
+			{
 				$viewdata['dt_pgto'] = $dt_inicio;
 			}
 			
@@ -60,7 +64,9 @@ class Relatorio extends CI_Controller {
 			$this->template->add_css('relatorio.css');
 			$this->template->set('title', "Sistema Acamp's - Relatório de Pagamento");
 			$this->template->load_view('relatorio/pagamento', $viewdata);
-		}else{
+		}
+		else
+		{
 			$this->template->add_css('jquery-ui.css');
 			$this->template->add_js('jquery.min.js');
 			$this->template->add_js('jquery-ui.min.js');
@@ -72,22 +78,17 @@ class Relatorio extends CI_Controller {
 	/*
 	 * function servico
 	 */
-	function servico() {
-		// Autenticação
-		if(!$this->session->userdata('logado')){ // se NÃO está logado
-			redirect('admin/login');
-			return;
-		}
-		
-		//----------------------------------------------------------------------
-		
-		if($this->input->post('gerar_relatorio')){
+	function servico()
+	{
+		if($this->input->post('gerar_relatorio'))
+		{
 			
 			$this->load->model('relatorio_model');
 			
 			$tabela = $this->relatorio_model->servico($this->input->post('id_servico'));
 			
-			foreach($tabela as $linha){
+			foreach($tabela as $linha)
+			{
 				$viewdata['tabela'][ $linha['nm_servico'] ][ $linha['id_status'] ] []= $linha;
 			}
 			
@@ -98,7 +99,9 @@ class Relatorio extends CI_Controller {
 			$this->template->add_css('relatorio.css');
 			$this->template->set('title', "Sistema Acamp's - Relatório de Serviço");
 			$this->template->load_view('relatorio/servico', $viewdata);
-		}else{
+		}
+		else
+		{
 			$this->load->model('servico');
 			$this->template->load_view('admin/relatorio_view', array('tipo'=>'servico'));
 		}
@@ -108,21 +111,15 @@ class Relatorio extends CI_Controller {
 	 * function cv
 	 */
 	
-	function cv() {
-		// Autenticação
-		if(!$this->session->userdata('logado')){ // se NÃO está logado
-			redirect('admin/login');
-			return;
-		}
-		
-		//----------------------------------------------------------------------
-		
-		if($this->input->post('gerar_relatorio')){
-			
+	function cv()
+	{
+		if($this->input->post('gerar_relatorio'))
+		{
 			$this->load->model('relatorio_model');
 			$tabela = $this->relatorio_model->cv($this->input->post('id_setor'));
 			
-			foreach($tabela as $linha){
+			foreach($tabela as $linha)
+			{
 				$viewdata['tabela'][$linha['nm_setor']] []= $linha;
 			}
 			
@@ -133,10 +130,59 @@ class Relatorio extends CI_Controller {
 			$this->template->add_css('relatorio.css');
 			$this->template->set('title', "Sistema Acamp's - Relatório da Comunidade de Vida");
 			$this->template->load_view('relatorio/cv', $viewdata);
-		}else{
+		}
+		else
+		{
 			$this->load->model('setor');
 			$this->template->load_view('admin/relatorio_view', array('tipo'=>'cv'));
 		}
+	}
+	
+	function familia()
+	{
+		if($this->input->post('gerar_relatorio'))
+		{
+			$this->load->model('relatorio_model');
+			$tabela = $this->relatorio_model->familia($this->input->post('id_familia'));
+			
+			foreach($tabela as $linha)
+			{
+				$viewdata['tabela'][$linha['nm_familia']] []= $linha;
+			}
+			
+			$this->template->set_template('default');
+			$this->template->add_css('relatorio.css');
+			$this->template->add_js('jquery.min.js');
+			$this->template->set('title', "Sistema Acamp's - Relatório de Famílias");
+			$this->template->load_view('relatorio/familia', $viewdata);
+		}
+		else
+		{
+			$this->load->model('familia');
+			$this->template->load_view('admin/relatorio_view', array('tipo'=>'familia'));
+		}
+	}
+	
+	function pastoreio()
+	{
+		$this->load->model('relatorio_model');
+		$tabela = $this->relatorio_model->pastoreio();
+		
+		$this->template->set_template('default');
+		$this->template->add_css('relatorio.css');
+		$this->template->set('title', "Sistema Acamp's - Relatório de Participantes do Seminário por Idade");
+		$this->template->load_view('relatorio/pastoreio', array('tabela'=>$tabela));
+	}
+	
+	function divulgacao()
+	{
+		$this->load->model('relatorio_model');
+		$tabela = $this->relatorio_model->divulgacao();
+		
+		$this->template->set_template('default');
+		$this->template->add_css('relatorio.css');
+		$this->template->set('title', "Sistema Acamp's - Pesquisa sobre Meios de Divulgação");
+		$this->template->load_view('relatorio/divulgacao', array('tabela'=>$tabela));
 	}
 }
 
