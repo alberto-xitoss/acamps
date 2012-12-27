@@ -81,16 +81,11 @@ if (defined('ENVIRONMENT'))
 		// Se você não pretende colocar a aplicação na internet, não se preocupe com essa configuração.
 		$system_path = "Caminho para a pasta do CodeIgniter no servidor";
 	}
-	/*
-	if(ENVIRONMENT == 'development' || ENVIRONMENT == 'acamps')
-	{
-		// Uma possibilidade de configuração do servidor
-		$system_path = $_SERVER['DOCUMENT_ROOT']."/codeigniter/ci <versão>";
-	}
-	*/
 	else
 	{
 		$system_path = 'system';
+		// Uma possibilidade de configuração do servidor
+		//$system_path = $_SERVER['DOCUMENT_ROOT']."/codeigniter/ci <versão>";
 	}
 
 /*
