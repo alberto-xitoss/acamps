@@ -76,7 +76,7 @@ if (defined('ENVIRONMENT'))
  *
  */
 	
-	elseif(ENVIRONMENT == 'production')
+	if(ENVIRONMENT == 'production')
 	{
 		// Se você não pretende colocar a aplicação na internet, não se preocupe com essa configuração.
 		$system_path = "Caminho para a pasta do CodeIgniter no servidor";
