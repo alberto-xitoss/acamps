@@ -1,5 +1,5 @@
 <div class="form">
-<h2>Formulário de Inscrição > Participante</h2>
+<h2>Formulário de Inscrição - Participante</h2>
     <?php if(isset($erro) && $erro): ?>
         <div class="alert alert-error alert-block">
         <?php echo validation_errors(); ?>
@@ -68,9 +68,7 @@
 	<!-- Preferência de local de saída -->
 	<div class="control-group">
 		<label class="control-label">De onde prefere sair?</label>
-		<div class="controls">
-			<div class="controls"><?php echo form_dropdown('id_onibus_local', $locais_onibus, $this->input->post('id_onibus_local')); ?></div>
-		</div>
+		<div class="controls"><?php echo form_dropdown('id_onibus_local', $onibus_locais, $this->input->post('id_onibus_local')); ?></div>
 	</div>
 </div>
 

@@ -349,8 +349,8 @@ class Pessoa extends MY_Controller {
 		$form_data['familias'][0] = 'Sem família';
 		$form_data['familias'] = array_reverse($form_data['familias'], true);
 		
-		$this->load->model('onibus_local');
-		$form_data['onibus_locais'] = $this->onibus_local->listar();
+		$this->load->model('onibus_local_model');
+		$form_data['onibus_locais'] = $this->onibus_local_model->listar();
 		$form_data['onibus_locais'] = array_reverse($form_data['onibus_locais'], true);
 		$form_data['onibus_locais'][0] = 'Selecione...';
 		$form_data['onibus_locais'] = array_reverse($form_data['onibus_locais'], true);
@@ -400,6 +400,12 @@ class Pessoa extends MY_Controller {
 		$form_data['servicos'][0] = 'Selecione...';
 		$form_data['servicos'] = array_reverse($form_data['servicos'], true);
 		
+		$this->load->model('onibus_local_model');
+		$form_data['onibus_locais'] = $this->onibus_local_model->listar();
+		$form_data['onibus_locais'] = array_reverse($form_data['onibus_locais'], true);
+		$form_data['onibus_locais'][0] = 'Selecione...';
+		$form_data['onibus_locais'] = array_reverse($form_data['onibus_locais'], true);
+		
 		$this->template->set('title', "Sistema Acamp's - Incrição de Serviço");
 		$this->template->add_css('jquery-ui.css');
 		$this->template->add_js('jquery.min.js');
@@ -441,6 +447,12 @@ class Pessoa extends MY_Controller {
 		$form_data['setores'] = array_reverse($form_data['setores'], true);
 		$form_data['setores'][0] = 'Selecione...';
 		$form_data['setores'] = array_reverse($form_data['setores'], true);
+		
+		$this->load->model('onibus_local_model');
+		$form_data['onibus_locais'] = $this->onibus_local_model->listar();
+		$form_data['onibus_locais'] = array_reverse($form_data['onibus_locais'], true);
+		$form_data['onibus_locais'][0] = 'Selecione...';
+		$form_data['onibus_locais'] = array_reverse($form_data['onibus_locais'], true);
 		
 		$this->template->set('title', "Sistema Acamp's - Incrição de Comunidade de Vida");
 		$this->template->add_css('jquery-ui.css');

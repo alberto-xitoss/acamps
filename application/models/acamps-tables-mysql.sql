@@ -1,11 +1,48 @@
 DROP TABLE IF EXISTS configuracao;
 --#
-CREATE TABLE configuracao (
+DROP TABLE IF EXISTS status;
+--#
+DROP TABLE IF EXISTS cidade;
+--#
+DROP TABLE IF EXISTS servico;
+--#
+DROP TABLE IF EXISTS setor;
+--#
+DROP TABLE IF EXISTS familia;
+--#
+DROP TABLE IF EXISTS tipo_inscricao;
+--#
+DROP TABLE IF EXISTS cheque;
+--#
+DROP TABLE IF EXISTS pagamento;
+--#
+DROP TABLE IF EXISTS auditoria;
+--#
+DROP TABLE IF EXISTS pesquisa_divulgacao;
+--#
+DROP TABLE IF EXISTS meio_divulgacao;
+--#
+DROP TABLE IF EXISTS onibus_local;
+--#
+DROP TABLE IF EXISTS onibus;
+--#
+DROP TABLE IF EXISTS pessoa_onibus;
+--#
+DROP TABLE IF EXISTS pessoa;
+--#
+DROP TABLE IF EXISTS usuario;
+
+--#
+
+CREATE TABLE configuracao
+(
 	id_config serial PRIMARY KEY,
 	nm_config varchar(30) NOT NULL,
 	nm_valor text NOT NULL
 );
+
 --#
+
 INSERT INTO configuracao (nm_config, nm_valor) VALUES
 ('missao', '{missao}'),
 ('valor_participante', '{valor_participante}'),
@@ -18,13 +55,14 @@ INSERT INTO configuracao (nm_config, nm_valor) VALUES
 
 --#
 
-DROP TABLE IF EXISTS status;
---#
-CREATE TABLE status(
+CREATE TABLE status
+(
 	id_status int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	ds_status varchar(25)
 );
+
 --#
+
 INSERT INTO status (ds_status) VALUES
 	('Aguardando Pagamento'),
 	('Aguardando Liberação'),
@@ -32,14 +70,15 @@ INSERT INTO status (ds_status) VALUES
 
 --#
 
-DROP TABLE IF EXISTS cidade;
---#
-CREATE TABLE cidade(
+CREATE TABLE cidade
+(
 	id_cidade int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	nm_cidade varchar(50),
 	cd_estado char(2)
 );
+
 --#
+
 INSERT INTO cidade (nm_cidade, cd_estado) VALUES
 	('Aquiraz', 'CE'),
 	('Aracati', 'CE'),
@@ -67,15 +106,16 @@ INSERT INTO cidade (nm_cidade, cd_estado) VALUES
 
 --#
 
-DROP TABLE IF EXISTS servico;
---#
-CREATE TABLE servico(
+CREATE TABLE servico
+(
 	id_servico int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	nm_servico varchar(30),
 	nm_coordenador varchar (100),
 	nr_limite_pessoas int DEFAULT 0
 );
+
 --#
+
 INSERT INTO servico (nm_servico) VALUES
 	('1ª Eucaristia'),
 	('Acolhimento'),
@@ -119,9 +159,8 @@ INSERT INTO servico (nm_servico) VALUES
 
 --#
 
-DROP TABLE IF EXISTS setor;
---#
-CREATE TABLE setor(
+CREATE TABLE setor
+(
 	id_setor int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	nm_setor varchar(30)
 );
@@ -138,15 +177,16 @@ INSERT INTO setor (nm_setor) VALUES
 
 --#
 
-DROP TABLE IF EXISTS familia;
---#
-CREATE TABLE familia(
+CREATE TABLE familia
+(
 	id_familia int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	nm_familia varchar(50),
 	cd_familia char(1),
 	nm_responsavel varchar(100)
 );
+
 --#
+
 INSERT INTO familia (nm_familia, cd_familia) VALUES
 	('Amarelo','A'),
 	('Azul','B'),
@@ -159,13 +199,14 @@ INSERT INTO familia (nm_familia, cd_familia) VALUES
 
 --#
 
-DROP TABLE IF EXISTS tipo_inscricao;
---#
-CREATE TABLE tipo_inscricao(
+CREATE TABLE tipo_inscricao
+(
 	cd_tipo char(1) PRIMARY KEY,
 	nm_tipo varchar(25)
 );
+
 --#
+
 INSERT INTO tipo_inscricao (cd_tipo, nm_tipo) VALUES
 	('p', 'Participante'),
 	('s', 'Serviço'),
@@ -174,9 +215,8 @@ INSERT INTO tipo_inscricao (cd_tipo, nm_tipo) VALUES
 
 --#
 
-DROP TABLE IF EXISTS pessoa;
---#
-CREATE TABLE pessoa (
+CREATE TABLE pessoa
+(
 	id_pessoa int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	cd_tipo char(1) NOT NULL,
 	id_status int REFERENCES status(id_status),
@@ -214,28 +254,30 @@ CREATE TABLE pessoa (
 	dt_alteracao timestamp,
 	nr_boleto int DEFAULT 0
 );
+
 --#
+
 ALTER TABLE pessoa AUTO_INCREMENT =1000;
 
 --#
 
-DROP TABLE IF EXISTS usuario;
---#
-CREATE TABLE usuario(
+CREATE TABLE usuario
+(
 	id_usuario int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	nm_usuario varchar(20),
 	pw_usuario varchar(64),
 	cd_permissao int,
 	dt_ultimo_login timestamp
 );
+
 --#
+
 INSERT INTO usuario (nm_usuario, pw_usuario, cd_permissao) VALUES ('{usuario}', md5('{senha}'), 63);
 
 --#
 
-DROP TABLE IF EXISTS pagamento;
---#
-CREATE TABLE pagamento(
+CREATE TABLE pagamento
+(
 	id_pgto int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	id_pessoa int REFERENCES pessoa(id_pessoa),
 	cd_tipo_pgto varchar(2),
@@ -248,9 +290,8 @@ CREATE TABLE pagamento(
 
 --#
 
-DROP TABLE IF EXISTS auditoria;
---#
-CREATE TABLE auditoria(
+CREATE TABLE auditoria
+(
 	id_pessoa integer NOT NULL,
 	bl_verificada smallint DEFAULT 0,
 	PRIMARY KEY (id_pessoa ),
@@ -259,9 +300,8 @@ CREATE TABLE auditoria(
 
 --#
 
-DROP TABLE IF EXISTS cheque;
---#
-CREATE TABLE cheque(
+CREATE TABLE cheque
+(
 	id_pgto int,
 	nr_parcela int,
 	nr_valor numeric(5,2),
@@ -287,8 +327,6 @@ CREATE TABLE cheque(
 
 --#
 
-DROP TABLE IF EXISTS pesquisa_divulgacao;
---#
 CREATE TABLE pesquisa_divulgacao
 (
 	id_registro int NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -298,14 +336,14 @@ CREATE TABLE pesquisa_divulgacao
 
 --#
 
-DROP TABLE IF EXISTS meio_divulgacao;
---#
 CREATE TABLE meio_divulgacao
 (
 	id_meio int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	nm_meio varchar(50)
 );
+
 --#
+
 INSERT INTO meio_divulgacao (nm_meio) VALUES
 	('Pais'),
 	('Amigo'),
@@ -321,8 +359,6 @@ INSERT INTO meio_divulgacao (nm_meio) VALUES
 
 --#
 
-DROP TABLE IF EXISTS onibus_local;
---#
 CREATE TABLE onibus_local
 (
 	id_onibus_local int NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -331,20 +367,16 @@ CREATE TABLE onibus_local
 
 --#
 
-DROP TABLE IF EXISTS onibus;
---#
 CREATE TABLE onibus
 (
 	id_onibus int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	id_onibus_local int NOT NULL,
-	nr_vagas int DEFAULT 46
-	FOREIGN KEY (id_onibus_local) REFERENCES onibus_local (id_onibus_local),
+	nr_vagas int DEFAULT 46,
+	FOREIGN KEY (id_onibus_local) REFERENCES onibus_local (id_onibus_local)
 );
 
 --#
 
-DROP TABLE IF EXISTS pessoa_onibus;
---#
 CREATE TABLE pessoa_onibus
 (
 	id_onibus int NOT NULL,

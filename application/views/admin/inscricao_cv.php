@@ -1,5 +1,5 @@
 <div class="form">
-<h2>Formulário de Inscrição > Comunidade de Vida</h2>
+<h2>Formulário de Inscrição - Comunidade de Vida</h2>
     <?php if(isset($erro) && $erro): ?>
         <div class="alert alert-error alert-block">
         <?php echo validation_errors(); ?>
@@ -30,6 +30,11 @@
 			</label>
 		</div>
 	</div>
+	<!-- RG -->
+	<div class="control-group">
+		<label for="nr_rg" class="control-label">RG</label>
+		<div class="controls"><input type="text" class="span2" id="nr_rg" value="<?php echo set_value('nr_rg') ?>" name="nr_rg"></div>
+	</div>
 	<!-- Setor -->
 	<div class="control-group">
 		<label for="id_setor" class="control-label">Setor</label>
@@ -47,6 +52,11 @@
 			<label for="bl_transporte_s"  class="radio"><input type="radio" id="bl_transporte_s" value="1" name="bl_transporte" <?php if(set_radio('bl_transporte', '1')) echo 'checked' ?>>Sim</label>
 			<label for="bl_transporte_n"  class="radio"><input type="radio" id="bl_transporte_n" value="0" name="bl_transporte" <?php if(set_radio('bl_transporte', '0')) echo 'checked' ?>>Não</label>
 		</div>
+	</div>
+	<!-- Preferência de local de saída -->
+	<div class="control-group">
+		<label class="control-label">De onde prefere sair?</label>
+		<div class="controls"><?php echo form_dropdown('id_onibus_local', $onibus_locais, $this->input->post('id_onibus_local')); ?></div>
 	</div>
 </div>
 

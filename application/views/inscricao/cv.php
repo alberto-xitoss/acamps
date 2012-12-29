@@ -19,6 +19,11 @@
 	<label for="nm_cracha" class="control-label">Nome no Crachá</label>
 	<div class="controls"><input type="text" class="obrigatorio somenteLetras span5" id="nm_cracha" value="<?php echo set_value('nm_cracha') ?>" name="nm_cracha"></div>
 </div>
+<!-- RG -->
+<div class="control-group">
+	<label for="nr_rg" class="control-label">RG</label>
+	<div class="controls"><input type="text" class="obrigatorio somenteNumeros span2" id="nr_rg" value="<?php echo set_value('nr_rg') ?>" name="nr_rg"></div>
+</div>
 <!-- Data de Nascimento -->
 <div class="control-group">
 	<label for="dt_nascimento" class="control-label">Data de Nascimento</label>

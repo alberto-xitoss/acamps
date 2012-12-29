@@ -112,7 +112,7 @@ class Template{
 			}
 			if($src === 'jquery.ui.datepicker-pt-BR.js')
 			{
-				$src = "http://jquery-ui.googlecode.com/svn/trunk/ui/i18n/jquery.ui.datepicker-pt-BR.js";
+				$src = "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/i18n/jquery.ui.datepicker-pt-BR.js";
 			}
 		}
 		

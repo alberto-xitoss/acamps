@@ -2,11 +2,14 @@
 index.php
 application/config/production/*
 !application/config/production/exemplo*
+application/config/database.php
 
 assets/css/
 assets/js/*min*
 
 logs/log*
+fotos/*
+!fotos/index.html
 
 # Composer
 

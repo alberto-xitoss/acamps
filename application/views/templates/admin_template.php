@@ -21,12 +21,11 @@
                         <li><?php echo anchor('admin/inscrever/servico', 'Inscrever Serviço'); ?></li>
                         <li><?php echo anchor('admin/inscrever/cv', 'Inscrever Comunidade de Vida'); ?></li>
                         <li><?php echo anchor('admin/inscrever/especial', 'Inscrição Especial'); ?></li>
-                        <?php /*<li><?php echo anchor('admin/onibus', 'Gerenciar Ônibus'); ?></li>*/ ?>
                     </ul>
                 </li>
                 <li class="drop">Ônibus
                 	<ul class="sub">
-                		<li><?php echo anchor('admin/onibus/locais', 'Locais da saída/chegada'); ?></li>
+                		<li><?php echo anchor('admin/onibus/locais', 'Locais de saída/chegada'); ?></li>
                 		<li><?php echo anchor('admin/onibus/listas', 'Listas dos ônibus'); ?></li>
                 	</ul>
                 </li>

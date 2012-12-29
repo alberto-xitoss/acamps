@@ -96,7 +96,7 @@ class Inscricoes
 	
 	function preparar_imagem($id)
 	{
-		//Obtendo as configura��es do arquivo 'config/acamps.php'
+		//Obtendo as configurações do arquivo 'config/acamps.php'
 		$upload = $this->CI->config->item('upload');
 		$upload['file_name'] = $id;
 		

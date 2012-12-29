@@ -1,5 +1,5 @@
 <div class="form">
-<h2>Formulário de Inscrição > Especial</h2>
+<h2>Formulário de Inscrição - Especial</h2>
     <?php if(isset($erro) && $erro): ?>
         <div class="alert alert-error alert-block">
         <?php echo validation_errors(); ?>
