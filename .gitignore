@@ -10,6 +10,10 @@ assets/js/*min*
 logs/log*
 fotos/*
 !fotos/index.html
+cache/secretaria/*
+!cache/secretaria/index.html
+barcode/*
+!/barcode/index.html
 
 # Composer
 

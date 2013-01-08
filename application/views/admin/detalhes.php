@@ -13,7 +13,7 @@
     <p>Tipo de inscrição: <?php echo $pessoa['nm_tipo'] ?></p>
     <p>Situação: <span><?php echo $pessoa['ds_status']; ?></span></p>
 	<?php if($pessoa['id_status'] == 3): ?>
-	<p>Ônibus: <?php echo $pessoa['nr_onibus'] ?></p>
+	  <!-- <p>Ônibus: <?php // echo $pessoa['nr_onibus'] ?></p> -->
 	<?php endif ?>
 	
 	<div class="comandos">
@@ -105,6 +105,23 @@
             <th scope="col">Nome no crachá</th>
             <td><input type="text" class="span5" id="nm_cracha" value="<?php echo $pessoa['nm_cracha'] ?>" name="nm_cracha"></td>
         </tr>
+<!----------------------------------------------------------------------------->
+        <?php if ($pessoa['cd_tipo'] != 'e'): ?>
+        <tr>
+			<th scope="col">De onde prefere sair?</th>
+			<td><?php
+				$onibus_locais = $this->onibus_local_model->listar();
+				$onibus_locais = array_reverse($onibus_locais, true);
+				$onibus_locais[0] = 'Nenhuma preferência';
+				$onibus_locais = array_reverse($onibus_locais, true);
+				if(empty($pessoa['id_onibus_local'])){
+					$pessoa['id_onibus_local'] = 0;
+				}
+				echo form_dropdown('id_onibus_local', $onibus_locais, $pessoa['id_onibus_local']);
+			?>
+			</td>
+		</tr>
+		<?php endif ?>
 <!----------------------------------------------------------------------------->
         <?php if($pessoa['cd_tipo'] != 'p'): // Se não for Participante ?>
             <tr>

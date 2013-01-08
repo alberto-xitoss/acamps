@@ -50,6 +50,9 @@ class Pessoa extends MY_Controller {
 			}else{
 				$this->load->model('cidade');
 			}
+			if($pessoa['cd_tipo'] != 'e'){
+				$this->load->model('onibus_local_model');
+			}
 			
 			$this->template->add_js ('jquery.min.js');
 			$this->template->add_js ('bootstrap-modal.js');
