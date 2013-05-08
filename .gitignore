@@ -1,44 +1,40 @@
-# Configurações do CodeIgniter
-index.php
-application/config/production/*
-!application/config/production/exemplo*
-application/config/database.php
+### Build ###
+build/
 
-assets/css/
-assets/js/*min*
-
-logs/log*
+### CodeIgniter ###
+logs/*
+!logs/index.html
 fotos/*
 !fotos/index.html
 cache/secretaria/*
 !cache/secretaria/index.html
+cache/*
+!cache/index.html
 barcode/*
-!/barcode/index.html
+!barcode/index.html
 
-# Composer
-
+### Composer ###
 composer.lock
 vendor/
 
-# Kubuntu
+### Sublime Text 2 ###
+*.sublime-project
+*.sublime-workspace
 
+### Kubuntu ###
 *~*.class
 *.pyc
 *.pyo
 
-# Windows
-
+### Windows ###
 Thumbs.db
 Desktop.ini
 
-# Aptana
-
+### Eclipse ###
 .project
-
-# Eclipse
-
 .buildpath
 .jsdtscope
 .settings/
+.externalToolBuilders/
 deployment.properties
 deployment.xml
