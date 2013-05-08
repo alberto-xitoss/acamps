@@ -1,6 +1,6 @@
 <?php
 
-class Servico extends CI_Model{
+class Servico_model extends CI_Model{
 
     var $table = 'servico';
 	

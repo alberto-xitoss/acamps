@@ -1,6 +1,6 @@
 <?php
 
-class Familia extends CI_Model{
+class Familia_model extends CI_Model{
 
     var $table = 'familia';
 	

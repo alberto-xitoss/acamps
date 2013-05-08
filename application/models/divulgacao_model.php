@@ -1,6 +1,6 @@
 <?php
 
-class Divulgacao extends CI_Model {
+class Divulgacao_model extends CI_Model {
 	
 	var $tabela = array(
 		'meios' => 'meio_divulgacao',

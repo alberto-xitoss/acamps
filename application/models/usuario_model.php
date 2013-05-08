@@ -1,6 +1,6 @@
 <?php
 
-class Usuario extends CI_Model {
+class Usuario_model extends CI_Model {
     
     var $table = 'usuario';
 

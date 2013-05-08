@@ -1,6 +1,6 @@
 <?php
 
-class Cidade extends CI_Model{
+class Cidade_model extends CI_Model{
 
     var $table = 'cidade';
 

@@ -1,6 +1,6 @@
 <?php
 
-class Setor extends CI_Model{
+class Setor_model extends CI_Model{
 
     var $table = 'setor';
 
