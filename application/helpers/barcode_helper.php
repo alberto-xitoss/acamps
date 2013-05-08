@@ -34,9 +34,6 @@ function barcode_image($file, $bars, $scale = 1, $height = 0){
 	/* output the image */
 	
 	//header("Content-Type: image/png; name=\"barcode.png\"");
-	//$CI =& get_instance();
-	//$CI->firephp->warn($im);
-	//$CI->firephp->warn($file);
 	return imagepng($im, $file);
 }
 

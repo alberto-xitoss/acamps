@@ -7,10 +7,8 @@
 
 class Admin extends CI_Controller {
 
-	/* Admin - construtor
-	 *
-	 * No contrutor carregamos apenas a biblioteca Session porque ela será
-	 * usada em todo o Controller.
+	/*
+	 * Admin - construtor
 	*/
 	function __construct()
 	{
@@ -46,13 +44,14 @@ class Admin extends CI_Controller {
 			redirect('admin/buscar');
 			return;
 		}
-		
 		$view_data = array();
 		
 		if($this->input->post('login')){
 			
-			$this->load->model('usuario');
-			$usuario = $this->usuario->autenticar($this->input->post('nm_usuario'), $this->input->post('pw_usuario'));
+			$this->load->model('usuario_model');
+			$usuario = $this->usuario_model->autenticar(
+				$this->input->post('nm_usuario'), 
+				$this->input->post('pw_usuario'));
 			if($usuario){
 				
 				$this->session->set_userdata(array(
@@ -73,7 +72,6 @@ class Admin extends CI_Controller {
 		$this->template->set_template('default');
 		$this->template->add_css('admin.css');
 		$this->template->load_view('admin/login', $view_data);
-		
 	}
 	
 	/* logout
@@ -83,12 +81,12 @@ class Admin extends CI_Controller {
    */
 	function logout(){
 		if($this->session->userdata('logado')){
-			$this->load->model('usuario');
+			$this->load->model('usuario_model');
 			// Salva data do último login
 			if($this->db->platform() == 'postgre'){
-				$this->usuario->atualizar($this->session->userdata('id_usuario'),array('dt_ultimo_login'=>date('d m Y H:i:s')));
+				$this->usuario_model->atualizar($this->session->userdata('id_usuario'),array('dt_ultimo_login'=>date('d m Y H:i:s')));
 			}elseif($this->db->platform() == 'mysql'){
-				$this->usuario->atualizar($this->session->userdata('id_usuario'), array('dt_ultimo_login'=>date('Y-m-d H:i:s')));
+				$this->usuario_model->atualizar($this->session->userdata('id_usuario'), array('dt_ultimo_login'=>date('Y-m-d H:i:s')));
 			}
 		
 			$this->session->sess_destroy();

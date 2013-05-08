@@ -56,7 +56,7 @@
 	<!-- Preferência de local de saída -->
 	<div class="control-group">
 		<label class="control-label">De onde prefere sair?</label>
-		<div class="controls"><?php echo form_dropdown('id_onibus_local', $onibus_locais, $this->input->post('id_onibus_local')); ?></div>
+		<div class="controls"><?php echo form_dropdown('id_onibus_local_preferencia', $onibus_locais, $this->input->post('id_onibus_local_preferencia')); ?></div>
 	</div>
 </div>
 

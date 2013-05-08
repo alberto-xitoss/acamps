@@ -12,6 +12,11 @@ class Missao_config
 			$CI->load->model('config_model');
 			
 			$missao_config = $CI->config_model->get_all();
+
+			// FIXME
+			if(empty($missao_config)){
+				return;
+			}
 			
 			//------------------------
 			// Configurações da missão

@@ -1,3 +1,25 @@
+DROP TABLE IF EXISTS cheque;
+--#
+DROP TABLE IF EXISTS pagamento;
+--#
+DROP TABLE IF EXISTS auditoria;
+--#
+DROP TABLE IF EXISTS pesquisa_divulgacao;
+--#
+DROP TABLE IF EXISTS meio_divulgacao;
+--#
+DROP TABLE IF EXISTS pessoa_onibus;
+--#
+DROP TABLE IF EXISTS onibus_ida;
+--#
+DROP TABLE IF EXISTS onibus_volta;
+--#
+DROP TABLE IF EXISTS onibus_local;
+--#
+DROP TABLE IF EXISTS pessoa;
+--#
+DROP TABLE IF EXISTS usuario;
+--#
 DROP TABLE IF EXISTS configuracao;
 --#
 DROP TABLE IF EXISTS status;
@@ -11,32 +33,12 @@ DROP TABLE IF EXISTS setor;
 DROP TABLE IF EXISTS familia;
 --#
 DROP TABLE IF EXISTS tipo_inscricao;
---#
-DROP TABLE IF EXISTS cheque;
---#
-DROP TABLE IF EXISTS pagamento;
---#
-DROP TABLE IF EXISTS auditoria;
---#
-DROP TABLE IF EXISTS pesquisa_divulgacao;
---#
-DROP TABLE IF EXISTS meio_divulgacao;
---#
-DROP TABLE IF EXISTS onibus_local;
---#
-DROP TABLE IF EXISTS onibus;
---#
-DROP TABLE IF EXISTS pessoa_onibus;
---#
-DROP TABLE IF EXISTS pessoa;
---#
-DROP TABLE IF EXISTS usuario;
 
 --#
 
 CREATE TABLE configuracao
 (
-	id_config serial PRIMARY KEY,
+	id_config int AUTO_INCREMENT PRIMARY KEY,
 	nm_config varchar(30) NOT NULL,
 	nm_valor text NOT NULL
 );
@@ -57,7 +59,7 @@ INSERT INTO configuracao (nm_config, nm_valor) VALUES
 
 CREATE TABLE status
 (
-	id_status int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	id_status int AUTO_INCREMENT PRIMARY KEY,
 	ds_status varchar(25)
 );
 
@@ -72,7 +74,7 @@ INSERT INTO status (ds_status) VALUES
 
 CREATE TABLE cidade
 (
-	id_cidade int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	id_cidade int AUTO_INCREMENT PRIMARY KEY,
 	nm_cidade varchar(50),
 	cd_estado char(2)
 );
@@ -108,7 +110,7 @@ INSERT INTO cidade (nm_cidade, cd_estado) VALUES
 
 CREATE TABLE servico
 (
-	id_servico int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	id_servico int AUTO_INCREMENT PRIMARY KEY,
 	nm_servico varchar(30),
 	nm_coordenador varchar (100),
 	nr_limite_pessoas int DEFAULT 0
@@ -161,7 +163,7 @@ INSERT INTO servico (nm_servico) VALUES
 
 CREATE TABLE setor
 (
-	id_setor int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	id_setor int AUTO_INCREMENT PRIMARY KEY,
 	nm_setor varchar(30)
 );
 --#
@@ -179,7 +181,7 @@ INSERT INTO setor (nm_setor) VALUES
 
 CREATE TABLE familia
 (
-	id_familia int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	id_familia int AUTO_INCREMENT PRIMARY KEY,
 	nm_familia varchar(50),
 	cd_familia char(1),
 	nm_responsavel varchar(100)
@@ -217,9 +219,9 @@ INSERT INTO tipo_inscricao (cd_tipo, nm_tipo) VALUES
 
 CREATE TABLE pessoa
 (
-	id_pessoa int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	id_pessoa int AUTO_INCREMENT PRIMARY KEY,
 	cd_tipo char(1) NOT NULL,
-	id_status int REFERENCES status(id_status),
+	id_status int,
 	nm_pessoa varchar(200) NOT NULL CHECK (nm_pessoa <> ''),
 	nm_cracha varchar(100) NOT NULL CHECK (nm_pessoa <> ''),
 	dt_nascimento date NOT NULL,
@@ -227,13 +229,13 @@ CREATE TABLE pessoa
 	ds_endereco varchar(300),
 	nr_cep varchar(15),
 	ds_bairro varchar(200),
-	id_cidade int REFERENCES cidade(id_cidade),
+	id_cidade int,
 	nr_rg varchar(20),
 	nr_telefone varchar(20),
 	ds_email varchar(100),
-	id_familia int REFERENCES familia(id_familia),
-	id_servico int REFERENCES servico(id_servico),
-	id_setor int REFERENCES setor(id_setor),
+	id_familia int,
+	id_servico int,
+	id_setor int,
 	bl_seminario boolean,
 	bl_alimentacao boolean,
 	bl_barracao boolean,
@@ -252,7 +254,12 @@ CREATE TABLE pessoa
 	nr_cracha int DEFAULT 0,
 	dt_inscricao timestamp DEFAULT now(),
 	dt_alteracao timestamp,
-	nr_boleto int DEFAULT 0
+	nr_boleto int DEFAULT 0,
+	FOREIGN KEY (id_status) REFERENCES status(id_status) ON DELETE RESTRICT ON UPDATE CASCADE,
+	FOREIGN KEY (id_cidade) REFERENCES cidade(id_cidade) ON DELETE SET NULL,
+	FOREIGN KEY (id_familia) REFERENCES familia(id_familia) ON DELETE SET NULL,
+	FOREIGN KEY (id_servico) REFERENCES servico(id_servico) ON DELETE SET NULL,
+	FOREIGN KEY (id_setor) REFERENCES setor(id_setor) ON DELETE SET NULL
 );
 
 --#
@@ -263,7 +270,7 @@ ALTER TABLE pessoa AUTO_INCREMENT =1000;
 
 CREATE TABLE usuario
 (
-	id_usuario int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	id_usuario int AUTO_INCREMENT PRIMARY KEY,
 	nm_usuario varchar(20),
 	pw_usuario varchar(64),
 	cd_permissao int,
@@ -278,24 +285,25 @@ INSERT INTO usuario (nm_usuario, pw_usuario, cd_permissao) VALUES ('{usuario}', 
 
 CREATE TABLE pagamento
 (
-	id_pgto int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	id_pessoa int REFERENCES pessoa(id_pessoa),
+	id_pgto int AUTO_INCREMENT PRIMARY KEY,
+	id_pessoa int,
 	cd_tipo_pgto varchar(2),
 	nr_a_pagar numeric(5,2),
 	nr_pago numeric(5,2),
 	nr_desconto numeric(5,2),
 	dt_pgto timestamp DEFAULT now(),
-	id_usuario int REFERENCES usuario(id_usuario)
+	id_usuario int,
+	FOREIGN KEY (id_pessoa) REFERENCES pessoa(id_pessoa) ON DELETE CASCADE,
+	FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE SET NULL
 );
 
 --#
 
 CREATE TABLE auditoria
 (
-	id_pessoa integer NOT NULL,
+	id_pessoa integer PRIMARY KEY,
 	bl_verificada smallint DEFAULT 0,
-	PRIMARY KEY (id_pessoa ),
-	FOREIGN KEY (id_pessoa) REFERENCES pessoa (id_pessoa)
+	FOREIGN KEY (id_pessoa) REFERENCES pessoa (id_pessoa) ON DELETE CASCADE
 );
 
 --#
@@ -322,7 +330,7 @@ CREATE TABLE cheque
 	nr_telefone varchar(20),
 	ds_obs varchar(400),
 	PRIMARY KEY (id_pgto, nr_parcela),
-	FOREIGN KEY (id_pgto) REFERENCES pagamento(id_pgto) ON DELETE RESTRICT
+	FOREIGN KEY (id_pgto) REFERENCES pagamento(id_pgto) ON DELETE CASCADE
 );
 
 --#
@@ -361,27 +369,40 @@ INSERT INTO meio_divulgacao (nm_meio) VALUES
 
 CREATE TABLE onibus_local
 (
-	id_onibus_local int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	id_onibus_local int PRIMARY KEY AUTO_INCREMENT,
 	nm_local varchar(80)
 );
 
 --#
 
-CREATE TABLE onibus
+CREATE TABLE onibus_ida
 (
-	id_onibus int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	id_onibus_local int NOT NULL,
+	id_onibus_ida int PRIMARY KEY AUTO_INCREMENT,
+	id_onibus_local int,
 	nr_vagas int DEFAULT 46,
-	FOREIGN KEY (id_onibus_local) REFERENCES onibus_local (id_onibus_local)
+	FOREIGN KEY (id_onibus_local) REFERENCES onibus_local (id_onibus_local) ON DELETE SET NULL
+);
+
+--#
+
+CREATE TABLE onibus_volta
+(
+	id_onibus_volta int PRIMARY KEY AUTO_INCREMENT,
+	id_onibus_local int,
+	nr_vagas int DEFAULT 46,
+	FOREIGN KEY (id_onibus_local) REFERENCES onibus_local (id_onibus_local) ON DELETE SET NULL
 );
 
 --#
 
 CREATE TABLE pessoa_onibus
 (
-	id_onibus int NOT NULL,
-	id_pessoa int NOT NULL,
-	PRIMARY KEY (id_onibus, id_pessoa),
-	FOREIGN KEY (id_onibus) REFERENCES onibus (id_onibus),
-	FOREIGN KEY (id_pessoa) REFERENCES pessoa (id_pessoa)
+	id_pessoa int PRIMARY KEY,
+	id_onibus_local_preferencia int,
+	id_onibus_ida int,
+	id_onibus_volta int,
+	FOREIGN KEY (id_pessoa) REFERENCES pessoa (id_pessoa) ON DELETE CASCADE,
+	FOREIGN KEY (id_onibus_local_preferencia) REFERENCES onibus_local (id_onibus_local) ON DELETE SET NULL,
+	FOREIGN KEY (id_onibus_ida) REFERENCES onibus_ida (id_onibus_ida) ON DELETE SET NULL,
+	FOREIGN KEY (id_onibus_volta) REFERENCES onibus_volta (id_onibus_volta) ON DELETE SET NULL
 );

@@ -230,7 +230,7 @@ class Secretaria extends CI_Controller {
 				$this->load->model('pessoa_model');
 				$viewdata['pessoas'] = $this->pessoa_model->verifica_etiqueta_amigos();
 
-				$this->load->model('familia');
+				$this->load->model('familia_model');
 				
 				$this->template->add_js('jquery.min.js');
 				$this->template->load_view('secretaria/etiquetas_view', $viewdata);
@@ -254,8 +254,8 @@ class Secretaria extends CI_Controller {
 				return;
 			}
 
-			$this->load->model('servico');
-			$this->load->model('setor');
+			$this->load->model('servico_model');
+			$this->load->model('setor_model');
 			
 			$viewdata['form'] = true; // Mostrar o form de verificação das etiquetas
 			$this->template->load_view('secretaria/etiquetas_view', $viewdata);

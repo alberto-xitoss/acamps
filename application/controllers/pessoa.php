@@ -41,17 +41,17 @@ class Pessoa extends MY_Controller {
 
 		if($pessoa){
 			if($pessoa['cd_tipo'] == 'p'){
-				$this->load->model('familia');
+				$this->load->model('familia_model');
 			}else{
-				$this->load->model('servico');
+				$this->load->model('servico_model');
 			}
 			if($pessoa['cd_tipo'] == 'v'){
-				$this->load->model('setor');
+				$this->load->model('setor_model');
 			}else{
-				$this->load->model('cidade');
+				$this->load->model('cidade_model');
 			}
 			if($pessoa['cd_tipo'] != 'e'){
-				$this->load->model('onibus_local_model');
+				//$this->load->model('onibus_local_model');
 			}
 			
 			$this->template->add_js ('jquery.min.js');
@@ -182,8 +182,8 @@ class Pessoa extends MY_Controller {
 				{
 					if(empty($pessoa->id_familia))
 					{
-						$this->load->model('familia');
-						$familia = $this->familia->familia_menor();
+						$this->load->model('familia_model');
+						$familia = $this->familia_model->familia_menor();
 						$this->pessoa_model->atualizar($pessoa->id_pessoa, array('id_familia'=>$familia));
 					}
 					
@@ -268,12 +268,12 @@ class Pessoa extends MY_Controller {
 		if($pessoa->cd_tipo == 'p' && $pessoa->id_status == '3'){ // Revertendo pagamento de participante
 			
 			$this->pessoa_model->estornar_pagamento($id_pessoa);
-			$this->pessoa_model->remover_onibus($id_pessoa);
+			//$this->pessoa_model->remover_onibus($id_pessoa);
 			
 		}elseif($pessoa->cd_tipo == 's' && $pessoa->id_status == '3'){ // Revertendo pagamento de serviço
 			
 			$this->pessoa_model->estornar_pagamento($id_pessoa);
-			$this->pessoa_model->remover_onibus($id_pessoa);
+			//$this->pessoa_model->remover_onibus($id_pessoa);
 			
 		}elseif($pessoa->cd_tipo == 's' && $pessoa->id_status == '1'){ // Revertendo liberação de serviço
 			
@@ -282,7 +282,7 @@ class Pessoa extends MY_Controller {
 		}elseif($pessoa->cd_tipo == 'v' && $pessoa->id_status == '3'){ // Revertendo liberação de CV
 			
 			$this->pessoa_model->atualizar($id_pessoa, array('id_status' => '2'));
-			$this->pessoa_model->remover_onibus($id_pessoa);
+			//$this->pessoa_model->remover_onibus($id_pessoa);
 			
 		}
 		
@@ -311,7 +311,7 @@ class Pessoa extends MY_Controller {
 			$this->pessoa_model->estornar_pagamento($id_pessoa);
 			
 		if($pessoa->cd_tipo != 'p' && $pessoa->id_status != '2'){
-			$this->load->model('servico');
+			$this->load->model('servico_model');
 		}
 		
 		$this->pessoa_model->excluir($pessoa->id_pessoa);
@@ -340,26 +340,23 @@ class Pessoa extends MY_Controller {
 				$form_data['erro'] = true;
 			}
 		}
-		$this->load->model('cidade');
-		$form_data['cidades'] = $this->cidade->listar();
+		$this->load->model('cidade_model');
+		$form_data['cidades'] = $this->cidade_model->listar();
 		$form_data['cidades'] = array_reverse($form_data['cidades'], true);
 		$form_data['cidades'][0] = 'Selecione...';
 		$form_data['cidades'] = array_reverse($form_data['cidades'], true);
 		
-		$this->load->model('familia');
-		$form_data['familias'] = $this->familia->listar();
+		$this->load->model('familia_model');
+		$form_data['familias'] = $this->familia_model->listar();
 		$form_data['familias'] = array_reverse($form_data['familias'], true);
 		$form_data['familias'][0] = 'Sem família';
 		$form_data['familias'] = array_reverse($form_data['familias'], true);
 		
 		$this->load->model('onibus_local_model');
 		$form_data['onibus_locais'] = $this->onibus_local_model->listar();
-		$form_data['onibus_locais'] = array_reverse($form_data['onibus_locais'], true);
-		$form_data['onibus_locais'][0] = 'Selecione...';
-		$form_data['onibus_locais'] = array_reverse($form_data['onibus_locais'], true);
 		
-		$this->load->model('divulgacao');
-		$form_data['divulgacao'] = $this->divulgacao->listar_meios();
+		$this->load->model('divulgacao_model');
+		$form_data['divulgacao'] = $this->divulgacao_model->listar_meios();
 		
 		$this->template->set('title', "Sistema Acamp's - Incrição de Participante");
 		$this->template->add_css('jquery-ui.css');
@@ -390,24 +387,21 @@ class Pessoa extends MY_Controller {
 				$form_data['erro'] = true;
 			}
 		}
-		$this->load->model('cidade');
-		$this->load->model('servico');
+		$this->load->model('cidade_model');
+		$this->load->model('servico_model');
 		
-		$form_data['cidades'] = $this->cidade->listar();
+		$form_data['cidades'] = $this->cidade_model->listar();
 		$form_data['cidades'] = array_reverse($form_data['cidades'], true);
 		$form_data['cidades'][0] = 'Selecione...';
 		$form_data['cidades'] = array_reverse($form_data['cidades'], true);
 		
-		$form_data['servicos'] = $this->servico->listar();
+		$form_data['servicos'] = $this->servico_model->listar();
 		$form_data['servicos'] = array_reverse($form_data['servicos'], true);
 		$form_data['servicos'][0] = 'Selecione...';
 		$form_data['servicos'] = array_reverse($form_data['servicos'], true);
 		
 		$this->load->model('onibus_local_model');
 		$form_data['onibus_locais'] = $this->onibus_local_model->listar();
-		$form_data['onibus_locais'] = array_reverse($form_data['onibus_locais'], true);
-		$form_data['onibus_locais'][0] = 'Selecione...';
-		$form_data['onibus_locais'] = array_reverse($form_data['onibus_locais'], true);
 		
 		$this->template->set('title', "Sistema Acamp's - Incrição de Serviço");
 		$this->template->add_css('jquery-ui.css');
@@ -438,24 +432,21 @@ class Pessoa extends MY_Controller {
 				$form_data['erro'] = true;
 			}
 		}
-		$this->load->model('setor');
-		$this->load->model('servico');
+		$this->load->model('setor_model');
+		$this->load->model('servico_model');
 		
-		$form_data['servicos'] = $this->servico->listar();
+		$form_data['servicos'] = $this->servico_model->listar();
 		$form_data['servicos'] = array_reverse($form_data['servicos'], true);
 		$form_data['servicos'][0] = 'Selecione...';
 		$form_data['servicos'] = array_reverse($form_data['servicos'], true);
 		
-		$form_data['setores'] = $this->setor->listar();
+		$form_data['setores'] = $this->setor_model->listar();
 		$form_data['setores'] = array_reverse($form_data['setores'], true);
 		$form_data['setores'][0] = 'Selecione...';
 		$form_data['setores'] = array_reverse($form_data['setores'], true);
 		
 		$this->load->model('onibus_local_model');
 		$form_data['onibus_locais'] = $this->onibus_local_model->listar();
-		$form_data['onibus_locais'] = array_reverse($form_data['onibus_locais'], true);
-		$form_data['onibus_locais'][0] = 'Selecione...';
-		$form_data['onibus_locais'] = array_reverse($form_data['onibus_locais'], true);
 		
 		$this->template->set('title', "Sistema Acamp's - Incrição de Comunidade de Vida");
 		$this->template->add_css('jquery-ui.css');
@@ -486,9 +477,9 @@ class Pessoa extends MY_Controller {
 				$form_data['erro'] = true;
 			}
 		}
-		$this->load->model('servico');
+		$this->load->model('servico_model');
 		
-		$form_data['servicos'] = $this->servico->listar();
+		$form_data['servicos'] = $this->servico_model->listar();
 		$form_data['servicos'] = array_reverse($form_data['servicos'], true);
 		$form_data['servicos'][0] = 'Selecione...';
 		$form_data['servicos'] = array_reverse($form_data['servicos'], true);

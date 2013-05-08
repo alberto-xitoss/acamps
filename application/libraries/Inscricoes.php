@@ -39,10 +39,9 @@ class Inscricoes
 			if(isset($_POST['id_meio'])){
 				$pesquisa['id_meio'] = $_POST['id_meio'];
 				unset($dados['id_meio']);
-				$this->CI->load->model('divulgacao');
-				$this->CI->divulgacao->inserir($pesquisa);
+				$this->CI->load->model('divulgacao_model');
+				$this->CI->divulgacao_model->inserir($pesquisa);
 			}
-			
 		}
 		
 		// Atribuindo status inicial
@@ -63,6 +62,11 @@ class Inscricoes
 				$dados['id_familia'] = NULL;
 			}
 		}
+
+		if(isset($_POST['id_onibus_local_preferencia'])){
+			$id_onibus_local_preferencia = $_POST['id_onibus_local_preferencia'];
+			unset($dados['id_onibus_local_preferencia']);
+		}
 		
 		// Gravando registro e retornando o número de inscrição gerado
 		$id = $this->CI->pessoa_model->inscrever($dados);
@@ -73,6 +77,9 @@ class Inscricoes
 			$caminho_foto = $this->preparar_imagem($id);
 			if($caminho_foto){
 				$this->CI->pessoa_model->adicionar_foto($id, $caminho_foto);
+			}
+			if(isset($id_onibus_local_preferencia)){
+				$this->CI->pessoa_model->escolher_local_onibus($id, $id_onibus_local_preferencia);
 			}
 		}
 		
@@ -161,7 +168,7 @@ class Inscricoes
 		"<p><strong>IMPORTANTE - Guarde o número de sua inscrição!</strong></p>".
 		"<br/>".
 		"<p>Pagar via Boleto no Shalom da Paz, Rua Maria Tomásia, n&deg; 72, Aldeota, Fortaleza:</p>".
-		"<p><a href=\"http://projeto.comshalom.org/acamps/".$this->CI->config->item('missao_dir')."/inscricao/boleto/".md5($id_pessoa.$ds_email)."\">Imprimir Boleto</a></p>".
+		"<p><a href=\"http://projeto.comshalom.org/acamps/inscricao/boleto/".md5($id_pessoa.$ds_email)."\">Imprimir Boleto</a></p>".
 		"</html></body>";
 		//***************************************************   
 		

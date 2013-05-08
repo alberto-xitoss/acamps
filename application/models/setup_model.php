@@ -25,8 +25,8 @@ class Setup_model extends CI_Model
 		$script = str_replace('{data_fim}', $params['data_fim'], $script);
 		$script = str_replace('{usuario}', $params['usuario'], $script);
 		$script = str_replace('{senha}', $params['senha'], $script);
-		$script = str_replace('{form_online}', $params['senha'], $script);
-		$script = str_replace('{pagamento_simples}', $params['senha'], $script);
+		$script = str_replace('{form_online}', $params['form_online'], $script);
+		$script = str_replace('{pagamento_simples}', $params['pagamento_simples'], $script);
 		//print_r($script);
 		$queries = explode('--#',$script);
 		//var_dump($queries);

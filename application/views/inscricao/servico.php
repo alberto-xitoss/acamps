@@ -105,6 +105,13 @@
 		</label>
 	</div>
 </div>
+<div class="alert alert-info alert-block control-group">
+	<label for="id_onibus_local_preferencia" class="control-label">Os ônibus sairão preferencialmente da praça
+		do Cristo Rei, na Aldeota. Você gostaria de sair de outro local?</label>
+	<div class="controls">
+		<?php echo form_dropdown('id_onibus_local_preferencia', $onibus_locais, $this->input->post('id_onibus_local_preferencia')); ?>
+	</div>
+</div>
 <hr>
 <!-- ALergia a Remédios -->
 <div class="control-group">

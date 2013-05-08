@@ -92,7 +92,7 @@ class Relatorio extends CI_Controller {
 				$viewdata['tabela'][ $linha['nm_servico'] ][ $linha['id_status'] ] []= $linha;
 			}
 			
-			$this->load->model('servico');
+			$this->load->model('servico_model');
 			$viewdata['servico'] = $this->servico->buscar($this->input->post('id_servico'));
 			
 			$this->template->set_template('default');
@@ -102,7 +102,7 @@ class Relatorio extends CI_Controller {
 		}
 		else
 		{
-			$this->load->model('servico');
+			$this->load->model('servico_model');
 			$this->template->load_view('admin/relatorio_view', array('tipo'=>'servico'));
 		}
 	}
@@ -123,7 +123,7 @@ class Relatorio extends CI_Controller {
 				$viewdata['tabela'][$linha['nm_setor']] []= $linha;
 			}
 			
-			$this->load->model('setor');
+			$this->load->model('setor_model');
 			$viewdata['setor'] = $this->setor->buscar($this->input->post('id_setor'));
 			
 			$this->template->set_template('default');
@@ -133,7 +133,7 @@ class Relatorio extends CI_Controller {
 		}
 		else
 		{
-			$this->load->model('setor');
+			$this->load->model('setor_model');
 			$this->template->load_view('admin/relatorio_view', array('tipo'=>'cv'));
 		}
 	}
@@ -158,7 +158,7 @@ class Relatorio extends CI_Controller {
 		}
 		else
 		{
-			$this->load->model('familia');
+			$this->load->model('familia_model');
 			$this->template->load_view('admin/relatorio_view', array('tipo'=>'familia'));
 		}
 	}

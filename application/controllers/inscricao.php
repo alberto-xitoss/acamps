@@ -63,15 +63,18 @@ class Inscricao extends MY_Controller{
 				$form_data['erro'] = true;
 			}
 		}
-		$this->load->model('cidade');
+		$this->load->model('cidade_model');
 		
-		$form_data['cidades'] = $this->cidade->listar();
+		$form_data['cidades'] = $this->cidade_model->listar();
 		$form_data['cidades'] = array_reverse($form_data['cidades'], true);
 		$form_data['cidades'][0] = 'Selecione...';
 		$form_data['cidades'] = array_reverse($form_data['cidades'], true);
+
+		$this->load->model('onibus_local_model');
+		$form_data['onibus_locais'] = $this->onibus_local_model->listar();
 		
-		$this->load->model('divulgacao');
-		$form_data['divulgacao'] = $this->divulgacao->listar_meios();
+		$this->load->model('divulgacao_model');
+		$form_data['divulgacao'] = $this->divulgacao_model->listar_meios();
 		
 		$this->template->set('title', "Acamp's > Formulário de Inscrição");
 		$this->template->add_css('jquery-ui.css');
@@ -110,18 +113,21 @@ class Inscricao extends MY_Controller{
 				$form_data['erro'] = true;
 			}
 		}
-		$this->load->model('cidade');
-		$this->load->model('servico');
+		$this->load->model('cidade_model');
+		$this->load->model('servico_model');
 		
-		$form_data['cidades'] = $this->cidade->listar();
+		$form_data['cidades'] = $this->cidade_model->listar();
 		$form_data['cidades'] = array_reverse($form_data['cidades'], true);
 		$form_data['cidades'][0] = 'Selecione...';
 		$form_data['cidades'] = array_reverse($form_data['cidades'], true);
 		
-		$form_data['servicos'] = $this->servico->listar();
+		$form_data['servicos'] = $this->servico_model->listar();
 		$form_data['servicos'] = array_reverse($form_data['servicos'], true);
 		$form_data['servicos'][0] = 'Selecione...';
 		$form_data['servicos'] = array_reverse($form_data['servicos'], true);
+
+		$this->load->model('onibus_local_model');
+		$form_data['onibus_locais'] = $this->onibus_local_model->listar();
 		
 		$this->template->set('title', "Acamp's > Formulário de Incrição > Serviço");
 		$this->template->add_css('jquery-ui.css');
@@ -160,18 +166,21 @@ class Inscricao extends MY_Controller{
 			}
 		}
 		
-		$this->load->model('servico');
-		$this->load->model('setor');
+		$this->load->model('servico_model');
+		$this->load->model('setor_model');
 
-		$form_data['servicos'] = $this->servico->listar();
+		$form_data['servicos'] = $this->servico_model->listar();
 		$form_data['servicos'] = array_reverse($form_data['servicos'], true);
 		$form_data['servicos'][0] = 'Selecione...';
 		$form_data['servicos'] = array_reverse($form_data['servicos'], true);
 		
-		$form_data['setores'] = $this->setor->listar();
+		$form_data['setores'] = $this->setor_model->listar();
 		$form_data['setores'] = array_reverse($form_data['setores'], true);
 		$form_data['setores'][0] = 'Selecione...';
 		$form_data['setores'] = array_reverse($form_data['setores'], true);
+
+		$this->load->model('onibus_local_model');
+		$form_data['onibus_locais'] = $this->onibus_local_model->listar();
 		
 		$this->template->set('title', "Acamp's > Formulário de Incrição > Comunidade de Vida");
 		$this->template->add_css('jquery-ui.css');

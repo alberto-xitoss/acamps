@@ -78,55 +78,42 @@ class Pessoa_model extends CI_Model
 		$this->db->update($this->table, $foto);
 	}
 	
-	public function proximo_onibus()
+	public function escolher_local_onibus($id_pessoa, $id_onibus_local)
 	{
-		// Verificando qual ônibus tem vaga
-		$query = $this->db->query("SELECT nr_onibus, count(*) as nr_pessoas
-									FROM onibus
-									WHERE nr_onibus < 100
-									GROUP BY nr_onibus
-									ORDER BY nr_onibus ASC");
-		
-		if($query->num_rows() == 0) // Se nenhum ônibus começou a ser preeenchido
+		if(is_numeric($id_pessoa) && is_numeric($id_onibus_local))
 		{
-			$nr_onibus = 1; // Seleciona o ônibus 1
+			$query = $this->db->query("INSERT INTO pessoa_onibus(id_pessoa, id_onibus_local_preferencia)
+										VALUES ($id_pessoa, $id_onibus_local)");
 		}
-		else
+	}
+	
+	public function escolher_onibus_ida($id_pessoa, $id_onibus_ida)
+	{
+		if(is_numeric($id_pessoa) && is_numeric($id_onibus_ida))
 		{
-			foreach ($query->result() as $row)
-			{
-				if($row->nr_pessoas < 44) // Total de vagas é 46 -- 2 vagas são reservadas para o coordenador e seu assistente
-				{
-					$nr_onibus = $row->nr_onibus;
-					break;
-				}
-			}
-			if(!isset($nr_onibus))
-			{
-				$nr_onibus = $query->num_rows() + 1;
+			if($this->db->get_where('pessoa_onibus', array('id_pessoa' => $id_pessoa))->result()){
+				$query = $this->db->query("UPDATE pessoa_onibus SET
+											id_onibus_ida = $id_onibus_ida
+											WHERE id_pessoa = $id_pessoa");
+			}else{
+				$query = $this->db->query("INSERT INTO pessoa_onibus(id_pessoa, id_onibus_ida)
+										VALUES ($id_pessoa, $id_onibus_ida)");
 			}
 		}
-		return $nr_onibus;
 	}
-	
-	public function listar_onibus()
+
+	public function escolher_onibus_volta($id_pessoa, $id_onibus_volta)
 	{
-		return $this->db->query("SELECT nr_onibus, count(*) as nr_pessoas FROM onibus GROUP BY nr_onibus")->result();
-	}
-	
-	public function escolher_onibus($id_pessoa = false, $nr_onibus = false)
-	{
-		if($id_pessoa && $nr_onibus)
+		if(is_numeric($id_pessoa) && is_numeric($id_onibus_volta))
 		{
-			$query = $this->db->query("INSERT INTO onibus(id_pessoa, nr_onibus) VALUES ($id_pessoa, $nr_onibus)");
-		}
-	}
-	
-	public function remover_onibus($id_pessoa = false)
-	{
-		if($id_pessoa)
-		{
-			$this->db->query("DELETE FROM onibus WHERE id_pessoa = $id_pessoa");
+			if($this->db->get_where('pessoa_onibus', array('id_pessoa' => $id_pessoa))->result()){
+				$query = $this->db->query("UPDATE pessoa_onibus SET
+											id_onibus_volta = $id_onibus_volta
+											WHERE id_pessoa = $id_pessoa");
+			}else{
+				$query = $this->db->query("INSERT INTO pessoa_onibus(id_pessoa, id_onibus_volta)
+										VALUES ($id_pessoa, $id_onibus_volta)");
+			}
 		}
 	}
 

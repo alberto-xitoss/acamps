@@ -4,7 +4,7 @@ class Onibus_local_model extends CI_Model
 {	
 	public function listar()
 	{
-		$query = $this->db->query("SELECT id_onibus_local, nm_local FROM onibus_local");
+		$query = $this->db->query("SELECT id_onibus_local, nm_local FROM onibus_local ORDER BY id_onibus_local");
 		
 		$locais = array();
 		foreach ($query->result() as $row) {

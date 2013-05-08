@@ -105,11 +105,11 @@
             <th scope="col">Nome no crachá</th>
             <td><input type="text" class="span5" id="nm_cracha" value="<?php echo $pessoa['nm_cracha'] ?>" name="nm_cracha"></td>
         </tr>
-<!----------------------------------------------------------------------------->
-        <?php if ($pessoa['cd_tipo'] != 'e'): ?>
+<!----------------------------------------------------------------------------- >
+        <?php// if ($pessoa['cd_tipo'] != 'e'): ?>
         <tr>
 			<th scope="col">De onde prefere sair?</th>
-			<td><?php
+			<td><?php/*
 				$onibus_locais = $this->onibus_local_model->listar();
 				$onibus_locais = array_reverse($onibus_locais, true);
 				$onibus_locais[0] = 'Nenhuma preferência';
@@ -118,16 +118,16 @@
 					$pessoa['id_onibus_local'] = 0;
 				}
 				echo form_dropdown('id_onibus_local', $onibus_locais, $pessoa['id_onibus_local']);
-			?>
+		*/?>
 			</td>
 		</tr>
-		<?php endif ?>
+		<?php// endif ?>
 <!----------------------------------------------------------------------------->
         <?php if($pessoa['cd_tipo'] != 'p'): // Se não for Participante ?>
             <tr>
                 <th scope="col">Serviço</th>
                 <td><?php
-                    $servicos = $this->servico->listar();
+                    $servicos = $this->servico_model->listar();
                     echo form_dropdown('id_servico', $servicos, $pessoa['id_servico']);
                 ?></td>
             </tr>
@@ -137,7 +137,7 @@
             <tr>
                 <th scope="col">Setor</th>
                 <td><?php
-                    $setores = $this->setor->listar();
+                    $setores = $this->setor_model->listar();
                     echo form_dropdown('id_setor', $setores, $pessoa['id_setor']);
                 ?></td>
             </tr>
@@ -147,7 +147,7 @@
             <tr>
                 <th scope="col">Família</th>
                 <td><?php
-                    $familias = $this->familia->listar();
+                    $familias = $this->familia_model->listar();
 					$familias = array_reverse($familias, true);
 					$familias[0] = 'Sem família';
 					$familias = array_reverse($familias, true);
@@ -201,7 +201,7 @@
             <tr>
                 <th scope="col">Cidade</th>
                 <td><?php
-                    $cidades = $this->cidade->listar();
+                    $cidades = $this->cidade_model->listar();
                     echo form_dropdown('id_cidade', $cidades, $pessoa['id_cidade']);
                 ?></td>
             </tr>

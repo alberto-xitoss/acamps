@@ -1,6 +1,6 @@
 <?php
 
-class Onibus_saida_model extends CI_Model
+class Onibus_model extends CI_Model
 {	
 	public function proximo_onibus()
 	{
@@ -11,15 +11,15 @@ class Onibus_saida_model extends CI_Model
 									GROUP BY nr_onibus
 									ORDER BY nr_onibus ASC");
 		
-		if($query->num_rows() == 0) // Se nenhum �nibus come�ou a ser preeenchido
+		if($query->num_rows() == 0) // Se nenhum ônibus começou a ser preeenchido
 		{
-			$nr_onibus = 1; // Seleciona o �nibus 1
+			$nr_onibus = 1; // Seleciona o ônibus 1
 		}
 		else
 		{
 			foreach ($query->result() as $row)
 			{
-				if($row->nr_pessoas < 44) // Total de vagas � 46 -- 2 vagas s�o reservadas para o coordenador e seu assistente
+				if($row->nr_pessoas < 44)
 				{
 					$nr_onibus = $row->nr_onibus;
 					break;

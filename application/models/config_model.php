@@ -17,10 +17,13 @@ class Config_model extends CI_Model
 	{
 		$query = $this->db->get($this->table);
 		
+		$config = array();
+
 		foreach ($query->result() as $row) {
 			$config[$row->nm_config] = $row->nm_valor;
 		}
-		
+		// Se $config estiver vazio?
+		// Na verdade, se a tabela estiver vazia $config nem existirá, pq está dentro do foreach
 		return $config;
 	}
 	

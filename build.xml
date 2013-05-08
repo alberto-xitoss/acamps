@@ -1,24 +1,173 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="assets" default="build">
+<project name="assets" default="all">
+	<property name="build.dir" value="build" />
 	
-	<target name="compile.less">
-		<exec command="lessc assets/less/inscricao.less > assets/css/inscricao.css --yui-compress"/>
-		<exec command="lessc assets/less/admin.less > assets/css/admin.css --yui-compress"/>
-		<exec command="lessc assets/less/boleto.less > assets/css/boleto.css --yui-compress"/>
-		<exec command="lessc assets/less/relatorio.less > assets/css/relatorio.css --yui-compress"/>
+	<target name="build.css">
+		<mkdir dir="${build.dir}/assets/css" />
+		<exec command="lessc assets/less/inscricao.less > ${build.dir}/assets/css/inscricao.css --yui-compress"/>
+		<exec command="lessc assets/less/admin.less > ${build.dir}/assets/css/admin.css --yui-compress"/>
+		<exec command="lessc assets/less/boleto.less > ${build.dir}/assets/css/boleto.css --yui-compress"/>
+		<exec command="lessc assets/less/relatorio.less > ${build.dir}/assets/css/relatorio.css --yui-compress"/>
+		<copy todir="${build.dir}/assets/css" >
+			<fileset dir="assets/css">
+				<include name="**/*" />
+			</fileset>
+		</copy>
 	</target>
 	
-	<target name="minify.js">
-		<jsMin targetDir="./assets/js" suffix=".min" failOnError="false">
-			<fileset dir="./assets/js">
+	<target name="build.js">
+		<jsMin targetDir="${build.dir}/assets/js" suffix=".min" failOnError="false">
+			<fileset dir="assets/js">
 				<include name="valida.js"/>
 			</fileset>
 		</jsMin>
+		<copy todir="${build.dir}/assets/js" >
+			<fileset dir="./assets/js">
+				<include name="**/*.js" />
+				<exclude name="valida.js" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="build.img">
+		<copy todir="${build.dir}/assets/image" >
+			<fileset dir="assets/image">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="build.font">
+		<copy todir="${build.dir}/assets/font" >
+			<fileset dir="assets/font">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="build.php">
+		<copy todir="${build.dir}/application" >
+			<fileset dir="application">
+				<include name="**/*" />
+				<exclude name="config/database.php" />
+				<exclude name="config/acamps.php" />
+				<exclude name="config/autoload.php" />
+				<exclude name="config/config.php" />
+				<exclude name="config/email.php" />
+				<exclude name="controllers/setup.php" />
+			</fileset>
+		</copy>
+		<if>
+			<available file="${build.dir}/application/config/database.php"/>
+			<then>
+				<echo msg="Mantendo database.php existente." />
+			</then>
+			<else>
+				<echo msg="Arquivo database.php não existia. Copiando novo arquivo." />
+				<copy file="application/config/database.php" todir="${build.dir}/application/config" haltonerror="false" />
+			</else>
+		</if>
+		<if>
+			<available file="${build.dir}/application/config/acamps.php"/>
+			<then>
+				<echo msg="Mantendo acamps.php existente." />
+			</then>
+			<else>
+				<echo msg="Arquivo acamps.php não existia. Copiando novo arquivo." />
+				<copy file="application/config/acamps.php" todir="${build.dir}/application/config" haltonerror="false" />
+			</else>
+		</if>
+		<if>
+			<available file="${build.dir}/application/config/autoload.php"/>
+			<then>
+				<echo msg="Mantendo autoload.php existente." />
+			</then>
+			<else>
+				<echo msg="Arquivo autoload.php não existia. Copiando novo arquivo." />
+				<copy file="application/config/autoload.php" todir="${build.dir}/application/config" haltonerror="false" />
+			</else>
+		</if>
+		<if>
+			<available file="${build.dir}/application/config/config.php"/>
+			<then>
+				<echo msg="Mantendo config.php existente." />
+			</then>
+			<else>
+				<echo msg="Arquivo config.php não existia. Copiando novo arquivo." />
+				<copy file="application/config/config.php" todir="${build.dir}/application/config" haltonerror="false" />
+			</else>
+		</if>
+		<if>
+			<available file="${build.dir}/application/config/email.php"/>
+			<then>
+				<echo msg="Mantendo email.php existente." />
+			</then>
+			<else>
+				<echo msg="Arquivo email.php não existia. Copiando novo arquivo." />
+				<copy file="application/config/email.php" todir="${build.dir}/application/config" haltonerror="false" />
+			</else>
+		</if>
+		<if>
+			<available file="${build.dir}/index.php"/>
+			<then>
+				<echo msg="Mantendo index.php existente." />
+			</then>
+			<else>
+				<echo msg="Arquivo index.php não existia. Copiando novo arquivo." />
+				<copy file="index.php" todir="${build.dir}" />
+			</else>
+		</if>
+		<if>
+			<available file="${build.dir}/.htaccess"/>
+			<then>
+				<echo msg="Mantendo .htaccess existente." />
+			</then>
+			<else>
+				<echo msg="Arquivo .htaccess não existia. Copiando novo arquivo." />
+				<copy file=".htaccess" todir="${build.dir}" />
+			</else>
+		</if>
+		<if>
+			<available file="${build.dir}/application/controllers/setup.php"/>
+			<then>
+				<echo msg="Mantendo setup.php existente." />
+			</then>
+			<else>
+				<echo msg="Arquivo setup.php não existia. Copiando novo arquivo." />
+				<copy file="application/controllers/setup.php" todir="${build.dir}/application/controllers/" />
+			</else>
+		</if>
+		<!-- Verificar filterChains, para otimizar os arquivos, diminuir o tamanho, algo do tipo -->
+		<copy file="barcode/index.html" todir="${build.dir}/barcode" />
+		<copy file="cache/index.html" todir="${build.dir}/cache" />
+		<copy file="cache/secretaria/index.html" todir="${build.dir}/cache/secretaria" />
+		<copy file="fotos/index.html" todir="${build.dir}/fotos" />
+		<copy file="logs/index.html" todir="${build.dir}/logs" />
 	</target>
 	
-	<target name="build" depends="compile.less, minify.js">
-		
+	<target name="app" depends="build.php"></target>
+	<target name="assets" depends="build.css, build.js, build.img, build.font"></target>
+	<target name="all" depends="build.php, build.css, build.js, build.img, build.font"></target>
+
+	<target name="clean">
+		<delete dir="${build.dir}/assets" />
+		<delete dir="${build.dir}/logs" />
+		<delete dir="${build.dir}/cache" />
+		<delete dir="${build.dir}/fotos" />
+		<delete dir="${build.dir}/barcode" />
+		<delete>
+			<fileset dir="${build.dir}/application">
+				<include name="**.*" />
+				<exclude name="config/database.php" />
+				<exclude name="config/acamps.php" />
+				<exclude name="config/autoload.php" />
+				<exclude name="config/config.php" />
+				<exclude name="config/email.php" />
+				<exclude name="config/development/**" />
+				<exclude name="controller/setup.php" />
+			</fileset>
+		</delete>
 	</target>
-	
+
 </project>
