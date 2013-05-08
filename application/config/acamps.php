@@ -36,7 +36,8 @@ $config['upload'] = array(
     'allowed_types' => 'bmp|gif|jpg|png',
     'max_size'      => '8192', // 8MiB
     'max_width'     => '4096',
-    'max_height'    => '4096'
+    'max_height'    => '4096',
+    'overwrite'		=> TRUE
 );
 
 /*
@@ -48,4 +49,4 @@ $config['upload'] = array(
 |
 */
 
-define('FPDF_FONTPATH', $_SERVER['DOCUMENT_ROOT'].'/acamps/assets/font/');
+define('FPDF_FONTPATH', str_replace('\\','/',FCPATH).'assets/font/');
